@@ -137,25 +137,25 @@ myMidiInput:input({0x90,0x45,0x6F})
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#__init">__init (args)</a></td>
-	<td class="summary">Constructor</td>
+	<td class="summary">[Constructor] accepts a single table as argument</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#input">input (msg, port_name)</a></td>
-	<td class="summary">process incoming message - will invoke the callback function when able
+	<td class="summary">[Class] Process incoming message - will invoke the callback function when able
  to construct a xMidiMessage from the data that has been received</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#_create_fingerprint">_create_fingerprint (msg_type, midi_msgs)</a></td>
-	<td class="summary">Create MIDI 'fingerprint' for the provided message(s)
+	<td class="summary">[Class] Create MIDI 'fingerprint' for the provided message(s)
  (just enough information to identify the CC/NRPN source)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#add_multibyte_exempt">add_multibyte_exempt (msg_type, msgs)</a></td>
-	<td class="summary">convenience method for adding messages to the exempt list</td>
+	<td class="summary">[Class] Convenience method for adding messages to the exempt list</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_idle">on_idle ()</a></td>
-	<td class="summary">Idle loop : process (or discard) multibyte messages,
+	<td class="summary">[Class] Idle loop : process (or discard) multibyte messages,
   output messages which got delayed due to throttling</td>
 	</tr>
 </table>
@@ -244,7 +244,7 @@ myMidiInput:input({0x90,0x45,0x6F})
     <strong>__init (args)</strong>
     </dt>
     <dd>
-    Constructor
+    [Constructor] accepts a single table as argument
 
 
     <h3>Parameters:</h3>
@@ -269,7 +269,7 @@ myMidiInput:input({0x90,0x45,0x6F})
     <strong>input (msg, port_name)</strong>
     </dt>
     <dd>
-    process incoming message - will invoke the callback function when able
+    [Class] Process incoming message - will invoke the callback function when able
  to construct a xMidiMessage from the data that has been received
 
 
@@ -293,7 +293,7 @@ myMidiInput:input({0x90,0x45,0x6F})
     <strong>_create_fingerprint (msg_type, midi_msgs)</strong>
     </dt>
     <dd>
-    Create MIDI 'fingerprint' for the provided message(s)
+    [Class] Create MIDI 'fingerprint' for the provided message(s)
  (just enough information to identify the CC/NRPN source)
 
 
@@ -326,7 +326,7 @@ myMidiInput:input({0x90,0x45,0x6F})
     <strong>add_multibyte_exempt (msg_type, msgs)</strong>
     </dt>
     <dd>
-    convenience method for adding messages to the exempt list
+    [Class] Convenience method for adding messages to the exempt list
 
 
     <h3>Parameters:</h3>
@@ -353,7 +353,7 @@ myMidiInput:input({0x90,0x45,0x6F})
     <strong>on_idle ()</strong>
     </dt>
     <dd>
-    Idle loop : process (or discard) multibyte messages,
+    [Class] Idle loop : process (or discard) multibyte messages,
   output messages which got delayed due to throttling
 
 
