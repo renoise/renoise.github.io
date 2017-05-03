@@ -97,8 +97,8 @@
 
 <h1></h1>
 
-<p>Note: for control of the pattern section (including sections),
-see xPatternSequencer</p>
+<p>See also:
+<a href="../modules/xPatternSequencer.html#">xPatternSequencer</a>, for control of the pattern section (including sections)  </p>
 
 </p>
 
@@ -107,13 +107,35 @@ see xPatternSequencer</p>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#forward">forward ()</a></td>
-	<td class="summary">Basic transport controls</td>
+	<td class="summary">[Static] Move playback position into next pattern
+ if the pattern doesn't exist, stay at the current one
+ if the line doesn't exist, play from the first one</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#rewind">rewind ()</a></td>
-	<td class="summary">move playback position into previous pattern
+	<td class="summary">[Static] Move playback position into previous pattern
  if the pattern doesn't exist, stay at the current one
  if the line doesn't exist, play from the first one</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pause">pause ()</a></td>
+	<td class="summary">[Static] Stop/pause playback in Renoise</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#resume">resume ()</a></td>
+	<td class="summary">[Static] Resume playback in Renoise (start from current line)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#restart">restart ()</a></td>
+	<td class="summary">[Static] Restart playback in Renoise (start from first line)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#toggle_loop">toggle_loop ()</a></td>
+	<td class="summary">[Static] Toogle pattern-loop in Renoise</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#toggle_record">toggle_record ()</a></td>
+	<td class="summary">[Static] Toggle edit/record-mode in Renoise</td>
 	</tr>
 </table>
 
@@ -128,7 +150,7 @@ see xPatternSequencer</p>
     <strong>forward ()</strong>
     </dt>
     <dd>
-    Basic transport controls  move playback position into next pattern
+    [Static] Move playback position into next pattern
  if the pattern doesn't exist, stay at the current one
  if the line doesn't exist, play from the first one
 
@@ -144,9 +166,79 @@ see xPatternSequencer</p>
     <strong>rewind ()</strong>
     </dt>
     <dd>
-    move playback position into previous pattern
+    [Static] Move playback position into previous pattern
  if the pattern doesn't exist, stay at the current one
  if the line doesn't exist, play from the first one
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pause"></a>
+    <strong>pause ()</strong>
+    </dt>
+    <dd>
+    [Static] Stop/pause playback in Renoise
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "resume"></a>
+    <strong>resume ()</strong>
+    </dt>
+    <dd>
+    [Static] Resume playback in Renoise (start from current line)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "restart"></a>
+    <strong>restart ()</strong>
+    </dt>
+    <dd>
+    [Static] Restart playback in Renoise (start from first line)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "toggle_loop"></a>
+    <strong>toggle_loop ()</strong>
+    </dt>
+    <dd>
+    [Static] Toogle pattern-loop in Renoise
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "toggle_record"></a>
+    <strong>toggle_record ()</strong>
+    </dt>
+    <dd>
+    [Static] Toggle edit/record-mode in Renoise
 
 
 

@@ -114,71 +114,73 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#__init">__init (pos)</a></td>
-	<td class="summary">constructor - create new position
+	<td class="summary">[Constructor] Create new position
  at the very least, you need to specify a table containing {sequence,line}</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#normalize">normalize ()</a></td>
+	<td class="summary">[Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
+ that respect the actual pattern length/sequence plus loops
+ TODO skip return value?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#increase_by_lines">increase_by_lines (num_lines)</a></td>
+	<td class="summary">[Class] Increase position by X number of lines</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#decrease_by_lines">decrease_by_lines (num_lines)</a></td>
+	<td class="summary">[Class] Subtract a number of lines from position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#enforce_boundary">enforce_boundary (direction, seq_idx, line_idx)</a></td>
+	<td class="summary">[Class] Restrict the position to boundaries (sequence, loop)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#enforce_block_boundary">enforce_block_boundary (direction, line_idx, line_delta)</a></td>
+	<td class="summary">[Class] Restrict position to boundaries (block-loop)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_beat">next_beat ()</a></td>
+	<td class="summary">[Class] Set to the next beat position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_bar">next_bar ()</a></td>
+	<td class="summary">[Class] Set to the next bar position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_block">next_block ()</a></td>
+	<td class="summary">[Class] Set to the next block position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_pattern">next_pattern ()</a></td>
+	<td class="summary">[Class] Set to the beginning of next pattern</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#get_pattern_index">get_pattern_index (seq_idx)</a></td>
-	<td class="summary">Static methods</td>
+	<td class="summary">[Static] Retrieve the pattern index</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_pattern_num_lines">get_pattern_num_lines (seq_idx)</a></td>
-	<td class="summary">Retrieve the pattern index
+	<td class="summary">[Static] Retrieve the pattern index
  OPTIMIZE how to implement a caching mechanism?</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#end_of_sequence_loop">end_of_sequence_loop (seq_idx)</a></td>
-	<td class="summary">
-
-</td>
+	<td class="summary">[Static] Return number if equal to end of sequence loop
+ TODO refactor to xPatternSequence?</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#start_of_sequence_loop">start_of_sequence_loop (seq_idx)</a></td>
-	<td class="summary">
-
-</td>
+	<td class="summary">[Static] Return number if equal to start of sequence loop
+ TODO refactor to xPatternSequence?</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#within_bounds">within_bounds (seq_idx, line_idx)</a></td>
-	<td class="summary">check if position is within actual song boundaries</td>
+	<td class="summary">[Static] Check if position is within actual song boundaries</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_line_diff">get_line_diff (pos1, pos2)</a></td>
-	<td class="summary">
-
-</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#increase_by_lines">increase_by_lines (num_lines)</a></td>
-	<td class="summary">increase the position by X number of lines</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#decrease_by_lines">decrease_by_lines (num_lines)</a></td>
-	<td class="summary">subtract a number of lines from position</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#enforce_boundary">enforce_boundary (direction, seq_idx, line_idx)</a></td>
-	<td class="summary">restrict the position to boundaries (sequence, loop)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#enforce_block_boundary">enforce_block_boundary (direction, line_idx, line_delta)</a></td>
-	<td class="summary">restrict the position to boundaries (block-loop)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#next_beat">next_beat ()</a></td>
-	<td class="summary">return the next beat position</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#next_bar">next_bar ()</a></td>
-	<td class="summary">return the next bar position</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#next_block">next_block ()</a></td>
-	<td class="summary">return the next block position</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#next_pattern">next_pattern ()</a></td>
-	<td class="summary">return the beginning of next pattern</td>
+	<td class="summary">[Static] Get the difference in lines between two song-positions</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -250,7 +252,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>__init (pos)</strong>
     </dt>
     <dd>
-    constructor - create new position
+    [Constructor] Create new position
  at the very least, you need to specify a table containing {sequence,line}
 
 
@@ -267,162 +269,20 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 
 </dd>
     <dt>
-    <a name = "get_pattern_index"></a>
-    <strong>get_pattern_index (seq_idx)</strong>
+    <a name = "normalize"></a>
+    <strong>normalize ()</strong>
     </dt>
     <dd>
-    Static methods  Retrieve the pattern index
+    [Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
+ that respect the actual pattern length/sequence plus loops
+ TODO skip return value?  Not a static method
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        int or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_pattern_num_lines"></a>
-    <strong>get_pattern_num_lines (seq_idx)</strong>
-    </dt>
-    <dd>
-    Retrieve the pattern index
- OPTIMIZE how to implement a caching mechanism?
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-        int or nil</li>
-        <li>
-        int, sequence index or nil</li>
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "end_of_sequence_loop"></a>
-    <strong>end_of_sequence_loop (seq_idx)</strong>
-    </dt>
-    <dd>
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-        int, sequence index or nil</li>
-        <li>
-        int, sequence index or nil</li>
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "start_of_sequence_loop"></a>
-    <strong>start_of_sequence_loop (seq_idx)</strong>
-    </dt>
-    <dd>
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int, sequence index or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "within_bounds"></a>
-    <strong>within_bounds (seq_idx, line_idx)</strong>
-    </dt>
-    <dd>
-    check if position is within actual song boundaries
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , int
-        </li>
-        <li><span class="parameter">line_idx</span>
-        , int
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-        bool</li>
-        <li>
-        int</li>
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_line_diff"></a>
-    <strong>get_line_diff (pos1, pos2)</strong>
-    </dt>
-    <dd>
-
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">pos1</span>
-         (SongPos)
-        </li>
-        <li><span class="parameter">pos2</span>
-         (SongPos)
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int
+        table (renoise.SongPos-alike)
     </ol>
 
 
@@ -434,15 +294,13 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>increase_by_lines (num_lines)</strong>
     </dt>
     <dd>
-    increase the position by X number of lines
+    [Class] Increase position by X number of lines
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">num_lines</span>
-
-
-
+         (number)
         </li>
     </ul>
 
@@ -456,7 +314,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>decrease_by_lines (num_lines)</strong>
     </dt>
     <dd>
-    subtract a number of lines from position
+    [Class] Subtract a number of lines from position
 
 
     <h3>Parameters:</h3>
@@ -476,7 +334,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>enforce_boundary (direction, seq_idx, line_idx)</strong>
     </dt>
     <dd>
-    restrict the position to boundaries (sequence, loop)
+    [Class] Restrict the position to boundaries (sequence, loop)
 
 
     <h3>Parameters:</h3>
@@ -510,7 +368,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>enforce_block_boundary (direction, line_idx, line_delta)</strong>
     </dt>
     <dd>
-    restrict the position to boundaries (block-loop)
+    [Class] Restrict position to boundaries (block-loop)
 
 
     <h3>Parameters:</h3>
@@ -541,7 +399,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>next_beat ()</strong>
     </dt>
     <dd>
-    return the next beat position
+    [Class] Set to the next beat position
 
 
 
@@ -555,7 +413,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>next_bar ()</strong>
     </dt>
     <dd>
-    return the next bar position
+    [Class] Set to the next bar position
 
 
 
@@ -569,7 +427,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>next_block ()</strong>
     </dt>
     <dd>
-    return the next block position
+    [Class] Set to the next block position
 
 
 
@@ -583,10 +441,169 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <strong>next_pattern ()</strong>
     </dt>
     <dd>
-    return the beginning of next pattern
+    [Class] Set to the beginning of next pattern
 
 
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_pattern_index"></a>
+    <strong>get_pattern_index (seq_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Retrieve the pattern index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , sequence index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_pattern_num_lines"></a>
+    <strong>get_pattern_num_lines (seq_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Retrieve the pattern index
+ OPTIMIZE how to implement a caching mechanism?
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , sequence index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "end_of_sequence_loop"></a>
+    <strong>end_of_sequence_loop (seq_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Return number if equal to end of sequence loop
+ TODO refactor to xPatternSequence?
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , sequence index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int, sequence index or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "start_of_sequence_loop"></a>
+    <strong>start_of_sequence_loop (seq_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Return number if equal to start of sequence loop
+ TODO refactor to xPatternSequence?
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , sequence index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int, sequence index or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "within_bounds"></a>
+    <strong>within_bounds (seq_idx, line_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Check if position is within actual song boundaries
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , int
+        </li>
+        <li><span class="parameter">line_idx</span>
+        , int
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_line_diff"></a>
+    <strong>get_line_diff (pos1, pos2)</strong>
+    </dt>
+    <dd>
+    [Static] Get the difference in lines between two song-positions
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos1</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">pos2</span>
+         (SongPos)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int
+    </ol>
 
 
 

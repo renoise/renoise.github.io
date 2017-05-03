@@ -104,54 +104,52 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#get_master_track_index">get_master_track_index ()</a></td>
-	<td class="summary">get<em>master</em>track_index</td>
+	<td class="summary">[Static] Get master track index</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_master_track">get_master_track ()</a></td>
-	<td class="summary">get<em>master</em>track</td>
+	<td class="summary">[Static] Get the master track</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_send_track">get_send_track (send_index)</a></td>
-	<td class="summary">get send track</td>
+	<td class="summary">[Static] Get send track with specific index</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_track_count">get_track_count (track_type)</a></td>
-	<td class="summary">
-
-</td>
+	<td class="summary">[Static] Get total number of tracks matching the "type"</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_group_track_index">get_group_track_index (track_index, match_self)</a></td>
-	<td class="summary">get the group track associated with the provided track</td>
+	<td class="summary">[Static] Get the group track index associated with the provided track</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_first_sequencer_track_in_group">get_first_sequencer_track_in_group (track_index)</a></td>
-	<td class="summary">get the first sequencer-track associated with the provided group</td>
+	<td class="summary">[Static] Get the first sequencer-track associated with the provided group</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#determine_track_type">determine_track_type (track_index)</a></td>
-	<td class="summary">get the type of track: sequencer/master/send</td>
+	<td class="summary">[Static] Get the type of track: sequencer/master/send</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#next_sequencer_track">next_sequencer_track (wrap_pattern)</a></td>
-	<td class="summary">navigate to the next sequencer track (skip other types)</td>
+	<td class="summary">[Static] Navigate to the next sequencer track (skip other types)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#previous_sequencer_track">previous_sequencer_track (wrap_pattern)</a></td>
-	<td class="summary">navigate to the previous sequencer track (skip other types)</td>
+	<td class="summary">[Static] Navigate to the previous sequencer track (skip other types)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_pattern_track">get_pattern_track (seq_idx, track_index)</a></td>
-	<td class="summary">obtain a specific pattern-track</td>
+	<td class="name" nowrap><a href="#get_pattern_track">get_pattern_track (seq_idx, trk_idx)</a></td>
+	<td class="summary">[Static] Obtain a specific pattern-track</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_selected_column_index">get_selected_column_index ()</a></td>
-	<td class="summary">get column_index, based on visible columns
+	<td class="summary">[Static] Get column_index, based on visible columns
  (similar to e.g.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_selected_column_index">set_selected_column_index (track, col_idx)</a></td>
-	<td class="summary">set column_index, based on visible columns
+	<td class="summary">[Static] Set column_index, based on visible columns
  (similar to e.g.</td>
 	</tr>
 </table>
@@ -167,10 +165,15 @@
     <strong>get_master_track_index ()</strong>
     </dt>
     <dd>
-    get<em>master</em>track_index
+    [Static] Get master track index
 
 
 
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
 
 
 
@@ -181,10 +184,15 @@
     <strong>get_master_track ()</strong>
     </dt>
     <dd>
-    get<em>master</em>track
+    [Static] Get the master track
 
 
 
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.Track
+    </ol>
 
 
 
@@ -195,20 +203,20 @@
     <strong>get_send_track (send_index)</strong>
     </dt>
     <dd>
-    get send track
+    [Static] Get send track with specific index
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">send_index</span>
-         (int)
+         (int), 1 == first, 2 == second, etc.
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        int, number of tracks matching the type
+        renoise.Track or nil
     </ol>
 
 
@@ -220,7 +228,7 @@
     <strong>get_track_count (track_type)</strong>
     </dt>
     <dd>
-
+    [Static] Get total number of tracks matching the "type"
 
 
     <h3>Parameters:</h3>
@@ -233,7 +241,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        int, number of tracks matching the type
+        int,
     </ol>
 
 
@@ -245,27 +253,23 @@
     <strong>get_group_track_index (track_index, match_self)</strong>
     </dt>
     <dd>
-    get the group track associated with the provided track
+    [Static] Get the group track index associated with the provided track
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">track_index</span>
-
-
-
+         (number)
         </li>
         <li><span class="parameter">match_self</span>
-
-
-
+         (boolean), allow matching the provided track
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        number, group track index
+        number or nil
     </ol>
 
 
@@ -277,18 +281,21 @@
     <strong>get_first_sequencer_track_in_group (track_index)</strong>
     </dt>
     <dd>
-    get the first sequencer-track associated with the provided group
+    [Static] Get the first sequencer-track associated with the provided group
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">track_index</span>
-
-
-
+         (number)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil, [error message (string)]
+    </ol>
 
 
 
@@ -299,7 +306,7 @@
     <strong>determine_track_type (track_index)</strong>
     </dt>
     <dd>
-    get the type of track: sequencer/master/send
+    [Static] Get the type of track: sequencer/master/send
 
 
     <h3>Parameters:</h3>
@@ -309,6 +316,11 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.Track.TRACK<em>TYPE</em>xxx or nil
+    </ol>
 
 
 
@@ -319,18 +331,21 @@
     <strong>next_sequencer_track (wrap_pattern)</strong>
     </dt>
     <dd>
-    navigate to the next sequencer track (skip other types)
+    [Static] Navigate to the next sequencer track (skip other types)
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">wrap_pattern</span>
-
-
-
+         (boolean)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, true when able to navigate
+    </ol>
 
 
 
@@ -341,7 +356,7 @@
     <strong>previous_sequencer_track (wrap_pattern)</strong>
     </dt>
     <dd>
-    navigate to the previous sequencer track (skip other types)
+    [Static] Navigate to the previous sequencer track (skip other types)
 
 
     <h3>Parameters:</h3>
@@ -353,6 +368,11 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, true when able to navigate
+    </ol>
 
 
 
@@ -360,23 +380,19 @@
 </dd>
     <dt>
     <a name = "get_pattern_track"></a>
-    <strong>get_pattern_track (seq_idx, track_index)</strong>
+    <strong>get_pattern_track (seq_idx, trk_idx)</strong>
     </dt>
     <dd>
-    obtain a specific pattern-track
+    [Static] Obtain a specific pattern-track
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">seq_idx</span>
-
-
-
+         (number)
         </li>
-        <li><span class="parameter">track_index</span>
-
-
-
+        <li><span class="parameter">trk_idx</span>
+         (number)
         </li>
     </ul>
 
@@ -397,7 +413,7 @@
     <strong>get_selected_column_index ()</strong>
     </dt>
     <dd>
-    get column<em>index, based on visible columns
+    [Static] Get column<em>index, based on visible columns
  (similar to e.g.  renoise.song().selection</em>in_pattern)
 
 
@@ -412,21 +428,17 @@
     <strong>set_selected_column_index (track, col_idx)</strong>
     </dt>
     <dd>
-    set column<em>index, based on visible columns
+    [Static] Set column<em>index, based on visible columns
  (similar to e.g.  renoise.song().selection</em>in_pattern)
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">track</span>
-
-
-
+         (renoise.Track)
         </li>
         <li><span class="parameter">col_idx</span>
-
-
-
+         (number)
         </li>
     </ul>
 

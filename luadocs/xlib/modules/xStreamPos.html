@@ -102,8 +102,8 @@
 
 <p>Create an instance, and supply it with a steady flow of song-position changes (idle loop). </p>
 
-<h3>Requires</h3>
-<p><a href="../modules/xPlayPos.html#">xPlayPos</a>
+<p>See also:
+<a href="../modules/xPlayPos.html#">xPlayPos</a>
 <a href="../modules/xSongPos.html#">xSongPos</a>
 <a href="../modules/xBlockLoop.html#">xBlockLoop</a></p>
 
@@ -113,20 +113,44 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#__init">__init ()</a></td>
+	<td class="summary">[Constructor] does not accept any arguments</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reset">reset ()</a></td>
+	<td class="summary">[Class] Initialize read/write position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#start">start ()</a></td>
+	<td class="summary">[Class] Start/continue playing</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#play">play ()</a></td>
+	<td class="summary">[Class] Start playing</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_writeahead_factor">get_writeahead_factor ()</a></td>
+	<td class="summary">Get/Set methods</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#_set_pos">_set_pos (pos)</a></td>
-	<td class="summary">Update the write position as a result of a changed playback position.</td>
+	<td class="summary">[Class] Update the write position as a result of a changed playback position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create_xblock">create_xblock ()</a></td>
+	<td class="summary">[Class] Create an instance of xBlockLoop</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#track_pos">track_pos ()</a></td>
-	<td class="summary">This function is designed to be called in an idle loop</td>
+	<td class="summary">[Class] This function is designed to be called in an idle loop</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#attach_to_song">attach_to_song ()</a></td>
-	<td class="summary">call when a new document becomes available</td>
+	<td class="summary">[Class] Call when a new document becomes available</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#determine_writeahead">determine_writeahead ()</a></td>
-	<td class="summary">[app] decide the writeahead amount, depending on the song tempo</td>
+	<td class="summary">[Class] Decide the writeahead amount, depending on the song tempo</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -188,11 +212,81 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
+    <a name = "__init"></a>
+    <strong>__init ()</strong>
+    </dt>
+    <dd>
+    [Constructor] does not accept any arguments
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "reset"></a>
+    <strong>reset ()</strong>
+    </dt>
+    <dd>
+    [Class] Initialize read/write position
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "start"></a>
+    <strong>start ()</strong>
+    </dt>
+    <dd>
+    [Class] Start/continue playing
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "play"></a>
+    <strong>play ()</strong>
+    </dt>
+    <dd>
+    [Class] Start playing
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_writeahead_factor"></a>
+    <strong>get_writeahead_factor ()</strong>
+    </dt>
+    <dd>
+    Get/Set methods
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "_set_pos"></a>
     <strong>_set_pos (pos)</strong>
     </dt>
     <dd>
-    Update the write position as a result of a changed playback position.
+    [Class] Update the write position as a result of a changed playback position.
  Most of the time we want the stream to continue smoothly forward - this is
  true for any kind of pattern, sequence or block loop. However, when we
  detect 'user events', the position can also jump backwards
@@ -211,11 +305,25 @@
 
 </dd>
     <dt>
+    <a name = "create_xblock"></a>
+    <strong>create_xblock ()</strong>
+    </dt>
+    <dd>
+    [Class] Create an instance of xBlockLoop
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "track_pos"></a>
     <strong>track_pos ()</strong>
     </dt>
     <dd>
-    This function is designed to be called in an idle loop
+    [Class] This function is designed to be called in an idle loop
 
 
 
@@ -229,7 +337,7 @@
     <strong>attach_to_song ()</strong>
     </dt>
     <dd>
-    call when a new document becomes available
+    [Class] Call when a new document becomes available
 
 
 
@@ -243,7 +351,7 @@
     <strong>determine_writeahead ()</strong>
     </dt>
     <dd>
-    [app] decide the writeahead amount, depending on the song tempo
+    [Class] Decide the writeahead amount, depending on the song tempo
 
 
 

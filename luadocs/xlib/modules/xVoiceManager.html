@@ -101,13 +101,19 @@
 
 <h3>In more detail</h3>
 
-<p>This class offers advanced voice-management for your own applications. This includes the ability to trigger and release specific instruments in specific tracks, while preserving the ability to freely move around in Renoise while doing so. </p>
+<p>This class offers advanced voice-management for your own applications.
+This includes the ability to trigger and release specific instruments in specific tracks,
+while preserving the ability to freely move around in Renoise while doing so. </p>
 
-<p>Without voice-management it would be too easy to create hanging notes. Everything from switching track, instrument or octave while playing, to having multiple MIDI sources could cause trouble. A good voice-manager will understand this and be able to determine the originating 'place' where the voice got triggered. </p>
+<p>Without voice-management it would be too easy to create hanging notes. Everything from
+switching track, instrument or octave while playing, to having multiple MIDI sources
+could cause trouble. A good voice-manager will understand this and be able to determine
+the originating 'place' where the voice got triggered. </p>
 
 <h3>Column allocation</h3>
 
-<p>The class is able to assist with automatic note-column allocation while recording. It's a basic approach, but close enough to how Renoise usually works to feel familiar. </p>
+<p>The class is able to assist with automatic note-column allocation while recording.
+It's a basic approach, but close enough to how Renoise usually works to feel familiar. </p>
 
 <ul>
     <li>Recordings start from the currently selected note column </li>
@@ -117,17 +123,25 @@
 
 <h3>Polyphony limits</h3>
 
-<p>In Renoise, you can play a maximum of 12 voices in a single track (equal to the maximum number of note-columns). </p>
+<p>In Renoise, you can play a maximum of 12 voices in a single track (maximum number of note-columns).</p>
 
-<p>If you are familiar with MIDI recording in Renoise, you probably have noticed that there exist a monophonic trigger option. Enabling this option will restrict the number of possible voices (and note-columns) during a recording session. xVoiceManager has no "monophonic" mode as such, but setting the voice_limit to 1 will yield the same result. </p>
+<p>If you are familiar with MIDI recording in Renoise, you probably have noticed that there exist a
+monophonic trigger option. Enabling this option will restrict the number of possible voices
+(and note-columns) during a recording session. xVoiceManager has no "monophonic" mode as such,
+but setting the voice_limit to 1 should yield the same result. </p>
 
 <h3>Column allocation</h3>
 
-<p>When automatic column-allocation is enabled, new note columns are allocated as the need arises. When this feature is enabled, the polyphonic limit can never be larger than the number of available columns, starting from the column_index of the first voice. So if you start recording while in note-column 11, you have a maximum polyphony of 2 voices before voice stealing kicks in.</p>
+<p>When automatic column-allocation is enabled, new note columns are allocated as the need arises.
+When this feature is enabled, the polyphonic limit can never be larger than the number of
+available columns, starting from the column_index of the first voice. So if you start recording
+while in note-column 11, you have a maximum polyphony of 2 voices before voice stealing kicks in.</p>
 
 <h3>Voice stealing</h3>
 
-<p>Voice stealing takes effect the moment you feed a xVoiceManager with more voices than the current polyphony limit allows. xVoiceManager is using a simple heuristic which will replace the oldest voice with the new one (just like how Renoise does it). </p>
+<p>Voice stealing takes effect the moment you feed a xVoiceManager with more voices than the current
+polyphony limit allows. xVoiceManager is using a simple heuristic which will replace the oldest
+voice with the new one (just like how Renoise does it). </p>
 
 <h3>Observable events</h3>
 
@@ -136,7 +150,8 @@
 <p><code>triggered_observable</code> -> fired right <em>after</em> a voice starts playing <br/>
 <code>released_observable</code> -> fired right <em>before</em> a voice is released  </p>
 
-<p>After you have attached a notifier, you will receive a 'bang', but no argument. Instead, you should look for the <code>triggered/released_index</code> properties - they will contain the value you need.</p>
+<p>After you have attached a notifier, you will receive a 'bang', but no argument. Instead, you
+should look for the <code>triggered/released_index</code> properties - they will contain the value you need.</p>
 
 <h3>Usage example</h3>
 
@@ -165,72 +180,78 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#__init">__init (table)</a></td>
+	<td class="summary">[Constructor] accepts a single argument for initializing the class</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#input_message">input_message (xmsg)</a></td>
+	<td class="summary">[Class] Input a message into the voice-manager</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#input_note_column">input_note_column (xnotecol, col_idx, line_idx)</a></td>
-	<td class="summary">alternative input method, convert notecol to xmsg (when possible)
+	<td class="summary">[Class] Alternative input method, convert notecol to xmsg (when possible)
  and invoke input_message</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#register">register (xmsg)</a></td>
-	<td class="summary">register/add a voice</td>
+	<td class="summary">[Class] Register/add a voice</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#release_all">release_all ()</a></td>
-	<td class="summary">Release all active voices</td>
+	<td class="summary">[Class] Release all active voices</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#release_all_instrument">release_all_instrument (instr_idx)</a></td>
-	<td class="summary">Release all voices associated with a specific instrument</td>
+	<td class="summary">[Class] Release all voices associated with a specific instrument</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#release_all_track">release_all_track (track_idx)</a></td>
-	<td class="summary">Release all voices associated with a specific track</td>
+	<td class="summary">[Class] Release all voices associated with a specific track</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#release">release (voice_idx)</a></td>
-	<td class="summary">release specific voice</td>
+	<td class="summary">[Class] Release specific voice</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#check_expired">check_expired ()</a></td>
-	<td class="summary">check if any voices have expired (when duration is set)</td>
+	<td class="summary">[Class] Check if any voices have expired (when duration is set)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_voice_index">get_voice_index (xmsg)</a></td>
-	<td class="summary">locate among active voices, taking the pitch + track + instrument into
+	<td class="summary">[Class] Locate among active voices, taking the pitch + track + instrument into
  consideration (if all match, the voice is considered active...)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_available_columns">get_available_columns (track_idx)</a></td>
-	<td class="summary">
-
-</td>
+	<td class="summary">[Class] Get the first column which does not have a playing voice assigned to it</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#steal_voice">steal_voice ()</a></td>
-	<td class="summary">Release the oldest voice (release, then trigger stolen_observable)</td>
+	<td class="summary">[Class] Release the oldest voice (release, then trigger stolen_observable)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#attach_to_song">attach_to_song ()</a></td>
-	<td class="summary">Monitor changes to tracks and instruments</td>
+	<td class="summary">[Class] Monitor changes to tracks and instruments</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_by_pitch">get_by_pitch (pitch)</a></td>
-	<td class="summary">Get a voice with a specific pitch</td>
+	<td class="summary">[Class] Get a voice with a specific pitch</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_higher">get_higher (idx)</a></td>
-	<td class="summary">Get a voice which has a higher pitch than the provided one</td>
+	<td class="summary">[Class] Get a voice which has a higher pitch than the provided one</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_highest">get_highest ()</a></td>
-	<td class="summary">Get the voice with the highest pitch</td>
+	<td class="summary">[Class] Get the voice with the highest pitch</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_lower">get_lower (idx)</a></td>
-	<td class="summary">Get a voice which has a lower pitch than the provided one</td>
+	<td class="summary">[Class] Get a voice which has a lower pitch than the provided one</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_lowest">get_lowest ()</a></td>
-	<td class="summary">Get the voice with the lowest pitch</td>
+	<td class="summary">[Class] Get the voice with the lowest pitch</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -275,11 +296,66 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
+    <a name = "__init"></a>
+    <strong>__init (table)</strong>
+    </dt>
+    <dd>
+    [Constructor] accepts a single argument for initializing the class
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">table</span>
+         {</p>
+<pre><code>voice_limit (number)
+duration (number)
+column_allocation (boolean)
+follow_track (boolean)
+follow_instrument (boolean)
+follow_octave (boolean)
+</code></pre>
+<p> }
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "input_message"></a>
+    <strong>input_message (xmsg)</strong>
+    </dt>
+    <dd>
+    [Class] Input a message into the voice-manager
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">xmsg</span>
+         (xMidiMessage)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        xMidiMessage (added/removed), false (ignored/active) or nil (invalid)</li>
+        <li>
+        int (voice index), when added or active</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "input_note_column"></a>
     <strong>input_note_column (xnotecol, col_idx, line_idx)</strong>
     </dt>
     <dd>
-    alternative input method, convert notecol to xmsg (when possible)
+    [Class] Alternative input method, convert notecol to xmsg (when possible)
  and invoke input_message
 
 
@@ -306,7 +382,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>register (xmsg)</strong>
     </dt>
     <dd>
-    register/add a voice
+    [Class] Register/add a voice
 
 
     <h3>Parameters:</h3>
@@ -328,7 +404,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>release_all ()</strong>
     </dt>
     <dd>
-    Release all active voices
+    [Class] Release all active voices
 
 
 
@@ -342,7 +418,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>release_all_instrument (instr_idx)</strong>
     </dt>
     <dd>
-    Release all voices associated with a specific instrument
+    [Class] Release all voices associated with a specific instrument
 
 
     <h3>Parameters:</h3>
@@ -364,7 +440,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>release_all_track (track_idx)</strong>
     </dt>
     <dd>
-    Release all voices associated with a specific track
+    [Class] Release all voices associated with a specific track
 
 
     <h3>Parameters:</h3>
@@ -386,7 +462,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>release (voice_idx)</strong>
     </dt>
     <dd>
-    release specific voice
+    [Class] Release specific voice
 
 
     <h3>Parameters:</h3>
@@ -408,7 +484,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>check_expired ()</strong>
     </dt>
     <dd>
-    check if any voices have expired (when duration is set)
+    [Class] Check if any voices have expired (when duration is set)
 
 
 
@@ -422,7 +498,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_voice_index (xmsg)</strong>
     </dt>
     <dd>
-    locate among active voices, taking the pitch + track + instrument into
+    [Class] Locate among active voices, taking the pitch + track + instrument into
  consideration (if all match, the voice is considered active...)
 
 
@@ -435,10 +511,8 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
 
     <h3>Returns:</h3>
     <ol>
-        <li>
-        number or nil</li>
-        <li>
-        table</li>
+
+        number or nil
     </ol>
 
 
@@ -450,7 +524,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_available_columns (track_idx)</strong>
     </dt>
     <dd>
-
+    [Class] Get the first column which does not have a playing voice assigned to it
 
 
     <h3>Parameters:</h3>
@@ -465,7 +539,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <h3>Returns:</h3>
     <ol>
 
-        table
+        table<number>, available column indices
     </ol>
 
 
@@ -477,7 +551,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>steal_voice ()</strong>
     </dt>
     <dd>
-    Release the oldest voice (release, then trigger stolen_observable)
+    [Class] Release the oldest voice (release, then trigger stolen_observable)
 
 
 
@@ -491,7 +565,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>attach_to_song ()</strong>
     </dt>
     <dd>
-    Monitor changes to tracks and instruments
+    [Class] Monitor changes to tracks and instruments
 
 
 
@@ -505,15 +579,13 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_by_pitch (pitch)</strong>
     </dt>
     <dd>
-    Get a voice with a specific pitch
+    [Class] Get a voice with a specific pitch
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pitch</span>
-
-
-
+         (number)
         </li>
     </ul>
 
@@ -534,15 +606,13 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_higher (idx)</strong>
     </dt>
     <dd>
-    Get a voice which has a higher pitch than the provided one
+    [Class] Get a voice which has a higher pitch than the provided one
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">idx</span>
-
-
-
+         (number)
         </li>
     </ul>
 
@@ -563,7 +633,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_highest ()</strong>
     </dt>
     <dd>
-    Get the voice with the highest pitch
+    [Class] Get the voice with the highest pitch
 
 
 
@@ -584,15 +654,13 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_lower (idx)</strong>
     </dt>
     <dd>
-    Get a voice which has a lower pitch than the provided one
+    [Class] Get a voice which has a lower pitch than the provided one
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">idx</span>
-
-
-
+         (number)
         </li>
     </ul>
 
@@ -611,7 +679,7 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
     <strong>get_lowest ()</strong>
     </dt>
     <dd>
-    Get the voice with the lowest pitch
+    [Class] Get the voice with the lowest pitch
 
 
 
