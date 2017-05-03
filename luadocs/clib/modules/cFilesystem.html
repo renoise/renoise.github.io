@@ -1,0 +1,715 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><strong>cFilesystem</strong></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cFilesystem</code></h1>
+<p>Static methods for dealing with the file-system
+.</p>
+<p>
+#
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#get_path_parts">get_path_parts (file_path)</a></td>
+	<td class="summary">split path into parts, seperated by slashes
+ important - folders should end with a slash
+ note: this is a virtual function which doesn't require I/O access</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_raw_filename">get_raw_filename (file_path)</a></td>
+	<td class="summary">provided with a complete path, returns just the filename (no extension)
+ note: this is a virtual function which doesn't require I/O access</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_root_folder">is_root_folder (str)</a></td>
+	<td class="summary">check if the given string indicates a root folder
+ note: a root folder is considered "/" on unix-based systems, and
+  [drive letter]:/ on windows systems
+ note: this is a virtual function which doesn't require I/O access</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_parent_directory">get_parent_directory (file_path)</a></td>
+	<td class="summary">provided with a string, this method will find the parent folder
+ note: returned string is using unix slashes
+ note: this is a virtual function which doesn't require I/O access</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#copy_file">copy_file (file_in, file_out)</a></td>
+	<td class="summary">this will work for small files, but is not recommended on larger ones</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ensure_unique_filename">ensure_unique_filename (file_path)</a></td>
+	<td class="summary">if file already exist, return a name with (number) appended to it</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_directories">get_directories (file_path)</a></td>
+	<td class="summary">break a string into directories
+ note: this is a virtual function which doesn't require I/O access</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#makedir">makedir (file_path)</a></td>
+	<td class="summary">create a whole folder structure in one go
+ (unlike the standard os.mkdir, which is limited to a single folder)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rename">rename (old_f, new_f)</a></td>
+	<td class="summary">rename a file or folder</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rmdir">rmdir (folder_path)</a></td>
+	<td class="summary">on non-posix systems (windows), you can't remove a folder which is not
+ empty - this method will iterate through and delete all files/folders</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#validate_filename">validate_filename (file_path)</a></td>
+	<td class="summary">make sure a file/folder name does not contain anything considered bad
+ (such as special characters or preceding ./ dot-slash combinations)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#unixslashes">unixslashes (file_path)</a></td>
+	<td class="summary">convert windows-style paths to unix-style
+  also: remove doubleslashes</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sanitize_filename">sanitize_filename (file_path)</a></td>
+	<td class="summary">remove illegal characters (similar to validate, but attempts to fix)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#file_add_extension">file_add_extension (file_path, extension)</a></td>
+	<td class="summary">add file extension (if it hasn't already got it)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#file_strip_extension">file_strip_extension (file_path, extension)</a></td>
+	<td class="summary">remove file extension (if present and matching)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#assert_string">assert_string (str, str_name)</a></td>
+	<td class="summary">so widely used it got it's own function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#load_string">load_string (file_path)</a></td>
+	<td class="summary">load string from disk</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#list_files">list_files (str_path, file_ext, include_path)</a></td>
+	<td class="summary">list files in a given folder</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#write_string_to_file">write_string_to_file (file_path, str)</a></td>
+	<td class="summary">save string to disk</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#recurse">recurse (str_path, callback_fn, file_ext, level)</a></td>
+	<td class="summary">iterate through folders, starting from the provided path</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "get_path_parts"></a>
+    <strong>get_path_parts (file_path)</strong>
+    </dt>
+    <dd>
+    split path into parts, seperated by slashes
+ important - folders should end with a slash
+ note: this is a virtual function which doesn't require I/O access
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        string, folder</li>
+        <li>
+        string, filename</li>
+        <li>
+        string, extension</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_raw_filename"></a>
+    <strong>get_raw_filename (file_path)</strong>
+    </dt>
+    <dd>
+    provided with a complete path, returns just the filename (no extension)
+ note: this is a virtual function which doesn't require I/O access
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_root_folder"></a>
+    <strong>is_root_folder (str)</strong>
+    </dt>
+    <dd>
+    check if the given string indicates a root folder
+ note: a root folder is considered "/" on unix-based systems, and
+  [drive letter]:/ on windows systems
+ note: this is a virtual function which doesn't require I/O access
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_parent_directory"></a>
+    <strong>get_parent_directory (file_path)</strong>
+    </dt>
+    <dd>
+    provided with a string, this method will find the parent folder
+ note: returned string is using unix slashes
+ note: this is a virtual function which doesn't require I/O access
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        string or nil if failed</li>
+        <li>
+        int, error code</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "copy_file"></a>
+    <strong>copy_file (file_in, file_out)</strong>
+    </dt>
+    <dd>
+    this will work for small files, but is not recommended on larger ones
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_in</span>
+         (string)
+        </li>
+        <li><span class="parameter">file_out</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean,string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ensure_unique_filename"></a>
+    <strong>ensure_unique_filename (file_path)</strong>
+    </dt>
+    <dd>
+    if file already exist, return a name with (number) appended to it
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_directories"></a>
+    <strong>get_directories (file_path)</strong>
+    </dt>
+    <dd>
+    break a string into directories
+ note: this is a virtual function which doesn't require I/O access
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "makedir"></a>
+    <strong>makedir (file_path)</strong>
+    </dt>
+    <dd>
+    create a whole folder structure in one go
+ (unlike the standard os.mkdir, which is limited to a single folder)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool, true when folder(s) were created</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rename"></a>
+    <strong>rename (old_f, new_f)</strong>
+    </dt>
+    <dd>
+    rename a file or folder
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">old_f</span>
+         (string)
+        </li>
+        <li><span class="parameter">new_f</span>
+         (string)
+ TODO @param options (table)
+    "replace" - for existing files/folders
+    "merge" - for existing folders
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rmdir"></a>
+    <strong>rmdir (folder_path)</strong>
+    </dt>
+    <dd>
+    on non-posix systems (windows), you can't remove a folder which is not
+ empty - this method will iterate through and delete all files/folders
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">folder_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool, true when folder was removed</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "validate_filename"></a>
+    <strong>validate_filename (file_path)</strong>
+    </dt>
+    <dd>
+    make sure a file/folder name does not contain anything considered bad
+ (such as special characters or preceding ./ dot-slash combinations)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool,string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "unixslashes"></a>
+    <strong>unixslashes (file_path)</strong>
+    </dt>
+    <dd>
+    convert windows-style paths to unix-style
+  also: remove doubleslashes
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sanitize_filename"></a>
+    <strong>sanitize_filename (file_path)</strong>
+    </dt>
+    <dd>
+    remove illegal characters (similar to validate, but attempts to fix)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "file_add_extension"></a>
+    <strong>file_add_extension (file_path, extension)</strong>
+    </dt>
+    <dd>
+    add file extension (if it hasn't already got it)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+        <li><span class="parameter">extension</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "file_strip_extension"></a>
+    <strong>file_strip_extension (file_path, extension)</strong>
+    </dt>
+    <dd>
+    remove file extension (if present and matching)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+        <li><span class="parameter">extension</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "assert_string"></a>
+    <strong>assert_string (str, str_name)</strong>
+    </dt>
+    <dd>
+    so widely used it got it's own function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+        <li><span class="parameter">str_name</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "load_string"></a>
+    <strong>load_string (file_path)</strong>
+    </dt>
+    <dd>
+    load string from disk
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "list_files"></a>
+    <strong>list_files (str_path, file_ext, include_path)</strong>
+    </dt>
+    <dd>
+    list files in a given folder
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_path</span>
+         (string)
+        </li>
+        <li><span class="parameter">file_ext</span>
+         (table), valid file extensions
+        </li>
+        <li><span class="parameter">include_path</span>
+         (bool), when true we append path to string
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "write_string_to_file"></a>
+    <strong>write_string_to_file (file_path, str)</strong>
+    </dt>
+    <dd>
+    save string to disk
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+         (string)
+        </li>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool, true when successful, false when not</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "recurse"></a>
+    <strong>recurse (str_path, callback_fn, file_ext, level)</strong>
+    </dt>
+    <dd>
+    iterate through folders, starting from the provided path
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_path</span>
+         (string)
+        </li>
+        <li><span class="parameter">callback_fn</span>
+         (function) return false to stop recursion
+        </li>
+        <li><span class="parameter">file_ext</span>
+         (table)
+        </li>
+        <li><span class="parameter">level</span>
+         (int)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

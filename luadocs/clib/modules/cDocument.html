@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><strong>cDocument</strong></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cDocument</code></h1>
+<p>Create lightweight classes with import/export features
+.</p>
+<p>
+#
+<p>For the cDocument to work, you need to define a static DOC_PROPS property.
+You can define integers, floating point values, strings and booleans
+<p>    MyClass.DOC_PROPS = {
+      {
+        name = "my_integer",    -- class/property name
+        title = "IntegerValue", -- display name
+        value_min = 1,          -- only for numbers
+        value_max = 12,         -- -//-
+        value_quantum = 1,      -- -//-
+        value_default = 4,      -- always define this!!
+      },
+      {
+        name = "my_float",
+        title = "A floating point value between 0-1",
+        value_min = 0,
+        value_max = 1,
+        value_default = 0.0,
+      },
+    }
+<p>
+<p>FIXME
+  * Re-implement as ipairs (changed implementation)
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#import">import (str)</a></td>
+	<td class="summary">import serialized values that match one of our DOC_PROPS</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#export">export ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#serialize">serialize (obj, props)</a></td>
+	<td class="summary">collect properties from object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#deserialize">deserialize (str, props)</a></td>
+	<td class="summary">deserialize string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_property">get_property (props, key)</a></td>
+	<td class="summary">find property descriptor by key</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#apply_value">apply_value (obj, prop, val)</a></td>
+	<td class="summary">apply value to object
+ * will clamp/cast value when outside range / wrong type</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "import"></a>
+    <strong>import (str)</strong>
+    </dt>
+    <dd>
+    import serialized values that match one of our DOC_PROPS
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string) serialized values
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string, serialized values
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "export"></a>
+    <strong>export ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string, serialized values
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "serialize"></a>
+    <strong>serialize (obj, props)</strong>
+    </dt>
+    <dd>
+    collect properties from object
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obj</span>
+         (class instance)
+        </li>
+        <li><span class="parameter">props</span>
+         (table) DOC_PROPS
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "deserialize"></a>
+    <strong>deserialize (str, props)</strong>
+    </dt>
+    <dd>
+    deserialize string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (str) serialized string
+        </li>
+        <li><span class="parameter">props</span>
+         (table) DOC_PROPS
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_property"></a>
+    <strong>get_property (props, key)</strong>
+    </dt>
+    <dd>
+    find property descriptor by key
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">props</span>
+
+        </li>
+        <li><span class="parameter">key</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "apply_value"></a>
+    <strong>apply_value (obj, prop, val)</strong>
+    </dt>
+    <dd>
+    apply value to object
+ * will clamp/cast value when outside range / wrong type
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obj</span>
+
+        </li>
+        <li><span class="parameter">prop</span>
+
+        </li>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        value (boolean,string,number)
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

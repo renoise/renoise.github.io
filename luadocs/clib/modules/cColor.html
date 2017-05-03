@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><strong>cColor</strong></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cColor</code></h1>
+<p>brighten/darken color by variable amount, using HSV color space</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#color_table_to_value">color_table_to_value (t)</a></td>
+	<td class="summary">convert r,g,b into numeric representation valid for hex display (#RRGGBB)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#color_table_to_hex_string">color_table_to_hex_string (t)</a></td>
+	<td class="summary">convert r,g,b table to string representation (e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#value_to_color_table">value_to_color_table (val)</a></td>
+	<td class="summary">convert numeric representation into r,g,b table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#value_to_hex_string">value_to_hex_string (val)</a></td>
+	<td class="summary">convert value to hexadecimal string (e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hex_string_to_value">hex_string_to_value (str_val)</a></td>
+	<td class="summary">convert hexadecimal string to value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rgb_to_hsv">rgb_to_hsv (rgb)</a></td>
+	<td class="summary">Converts an RGB color value to HSV.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hsv_to_rgb">hsv_to_rgb (hsv)</a></td>
+	<td class="summary">Converts an HSV color value to RGB.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "color_table_to_value"></a>
+    <strong>color_table_to_value (t)</strong>
+    </dt>
+    <dd>
+    convert r,g,b into numeric representation valid for hex display (#RRGGBB)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "color_table_to_hex_string"></a>
+    <strong>color_table_to_hex_string (t)</strong>
+    </dt>
+    <dd>
+    convert r,g,b table to string representation (e.g.  "0xFFCC66")
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "value_to_color_table"></a>
+    <strong>value_to_color_table (val)</strong>
+    </dt>
+    <dd>
+    convert numeric representation into r,g,b table
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (int)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        (table)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "value_to_hex_string"></a>
+    <strong>value_to_hex_string (val)</strong>
+    </dt>
+    <dd>
+    convert value to hexadecimal string (e.g.  0xFFCC66)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (int)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hex_string_to_value"></a>
+    <strong>hex_string_to_value (str_val)</strong>
+    </dt>
+    <dd>
+    convert hexadecimal string to value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_val</span>
+         (string), e.g. "5FEC99", "#5FEC99" or "0x5FEC99"
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int or nil if unable to convert
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rgb_to_hsv"></a>
+    <strong>rgb_to_hsv (rgb)</strong>
+    </dt>
+    <dd>
+    Converts an RGB color value to HSV.  Conversion formula
+ adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">rgb</span>
+         (table), the RGB representation
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table, the HSV representation
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hsv_to_rgb"></a>
+    <strong>hsv_to_rgb (hsv)</strong>
+    </dt>
+    <dd>
+    Converts an HSV color value to RGB.  Conversion formula
+ adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">hsv</span>
+         (table), the HSV representation
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table, the RGB representation
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

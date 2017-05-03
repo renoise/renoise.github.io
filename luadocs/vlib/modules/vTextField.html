@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><a href="../modules/vEditField.html">vEditField</a></li>
+  <li><a href="../modules/vFileBrowser.html">vFileBrowser</a></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><a href="../modules/vLib.html">vLib</a></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><a href="../modules/vScrollbar.html">vScrollbar</a></li>
+  <li><a href="../modules/vSearchField.html">vSearchField</a></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><strong>vTextField</strong></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vTextField</code></h1>
+<p>Editable textfield with auto-sizing and support for placeholder-text
+.</p>
+<p>
+#
+<p>## Features
+* Support for "placeholder" text
+* Listen to characters as they are entered (based on a multiline_textfield)
+* Auto-size control as text is entered
+* Detect when Return is pressed ('submit' event)
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#build_textfield">build_textfield ()</a></td>
+	<td class="summary">re-usable (make it possible to define separate build() methods for
+ classes that inherit this one</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text">set_text (val, user_input)</a></td>
+	<td class="summary">Getter & Setter methods</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.placeholder">self.placeholder</a></td>
+	<td class="summary">string, placeholder text (when empty)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.edit_mode">self.edit_mode</a></td>
+	<td class="summary">boolean, decide if textfield has focus</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.edit_mode_observable">self.edit_mode_observable</a></td>
+	<td class="summary">ObservableBoolean (implemented via idle notifier)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.auto_size">self.auto_size</a></td>
+	<td class="summary">boolean, decide if size of textfield follows the text entered</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.text">self.text</a></td>
+	<td class="summary">string, empty string is ""</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.value">self.value</a></td>
+	<td class="summary">string, alias for text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.submitted">self.submitted</a></td>
+	<td class="summary">ObservableBang, fired when using Return to submit</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._suppress_notifier">self._suppress_notifier</a></td>
+	<td class="summary">boolean</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "build_textfield"></a>
+    <strong>build_textfield ()</strong>
+    </dt>
+    <dd>
+    re-usable (make it possible to define separate build() methods for
+ classes that inherit this one
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_text"></a>
+    <strong>set_text (val, user_input)</strong>
+    </dt>
+    <dd>
+    Getter & Setter methods
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (string), input text to display
+        </li>
+        <li><span class="parameter">user_input</span>
+         (boolean), programmatic input
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "self.placeholder"></a>
+    <strong>self.placeholder</strong>
+    </dt>
+    <dd>
+    string, placeholder text (when empty)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.edit_mode"></a>
+    <strong>self.edit_mode</strong>
+    </dt>
+    <dd>
+    boolean, decide if textfield has focus
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.edit_mode_observable"></a>
+    <strong>self.edit_mode_observable</strong>
+    </dt>
+    <dd>
+    ObservableBoolean (implemented via idle notifier)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.auto_size"></a>
+    <strong>self.auto_size</strong>
+    </dt>
+    <dd>
+    boolean, decide if size of textfield follows the text entered
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.text"></a>
+    <strong>self.text</strong>
+    </dt>
+    <dd>
+    string, empty string is ""
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.value"></a>
+    <strong>self.value</strong>
+    </dt>
+    <dd>
+    string, alias for text
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.submitted"></a>
+    <strong>self.submitted</strong>
+    </dt>
+    <dd>
+    ObservableBang, fired when using Return to submit
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._suppress_notifier"></a>
+    <strong>self._suppress_notifier</strong>
+    </dt>
+    <dd>
+    boolean
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

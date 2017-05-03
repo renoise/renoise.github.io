@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><a href="../modules/vEditField.html">vEditField</a></li>
+  <li><a href="../modules/vFileBrowser.html">vFileBrowser</a></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><a href="../modules/vLib.html">vLib</a></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><strong>vScrollbar</strong></li>
+  <li><a href="../modules/vSearchField.html">vSearchField</a></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><a href="../modules/vTextField.html">vTextField</a></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vScrollbar</code></h1>
+<p>An emulated scrollbar widget (using a minislider)</p>
+<p></p>
+
+
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#BUTTON_LAYOUT">BUTTON_LAYOUT</a></td>
+	<td class="summary">Placement of buttons</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.button_height">self.button_height</a></td>
+	<td class="summary">(int)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.position">self.position</a></td>
+	<td class="summary">(number) scroll position, between 0-1</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.button_layout">self.button_layout</a></td>
+	<td class="summary">(vScrollbar.BUTTON_LAYOUT)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.orientation">self.orientation</a></td>
+	<td class="summary">(vScrollbar.ORIENTATION)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.index">self.index</a></td>
+	<td class="summary">(int) 1-[step_count] derived from position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.step_count">self.step_count</a></td>
+	<td class="summary">(int) the number of "steps"</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.step_size">self.step_size</a></td>
+	<td class="summary">(int) how far to travel when navigation button is pressed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.do_change">self.do_change</a></td>
+	<td class="summary">(function) callbacks for when changed</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "BUTTON_LAYOUT"></a>
+    <strong>BUTTON_LAYOUT</strong>
+    </dt>
+    <dd>
+    Placement of buttons
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">HIDDEN</span>
+        do not show buttons
+        </li>
+        <li><span class="parameter">ABOVE</span>
+        show buttons above track
+        </li>
+        <li><span class="parameter">BELOW</span>
+        show buttons below track
+        </li>
+        <li><span class="parameter">BOTH</span>
+        show buttons on either side
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "self.button_height"></a>
+    <strong>self.button_height</strong>
+    </dt>
+    <dd>
+    (int)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.position"></a>
+    <strong>self.position</strong>
+    </dt>
+    <dd>
+    (number) scroll position, between 0-1
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.button_layout"></a>
+    <strong>self.button_layout</strong>
+    </dt>
+    <dd>
+    (vScrollbar.BUTTON_LAYOUT)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.orientation"></a>
+    <strong>self.orientation</strong>
+    </dt>
+    <dd>
+    (vScrollbar.ORIENTATION)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.index"></a>
+    <strong>self.index</strong>
+    </dt>
+    <dd>
+    (int) 1-[step_count] derived from position
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.step_count"></a>
+    <strong>self.step_count</strong>
+    </dt>
+    <dd>
+    (int) the number of "steps"
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.step_size"></a>
+    <strong>self.step_size</strong>
+    </dt>
+    <dd>
+    (int) how far to travel when navigation button is pressed
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.do_change"></a>
+    <strong>self.do_change</strong>
+    </dt>
+    <dd>
+    (function) callbacks for when changed
+
+
+    <ul>
+        <li><span class="parameter">elm</span>
+         (vScrollbar)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

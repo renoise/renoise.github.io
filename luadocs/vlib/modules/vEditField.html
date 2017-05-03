@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><strong>vEditField</strong></li>
+  <li><a href="../modules/vFileBrowser.html">vFileBrowser</a></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><a href="../modules/vLib.html">vLib</a></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><a href="../modules/vScrollbar.html">vScrollbar</a></li>
+  <li><a href="../modules/vSearchField.html">vSearchField</a></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><a href="../modules/vTextField.html">vTextField</a></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vEditField</code></h1>
+<p>cValue-based edit field, inspired by the Advanced-Edit panel
+.</p>
+<p>
+#
+<p>## Features
+* Support cValues - numbers with restricted range, etc.
+* Works with all basic value-type (boolean, string and number)
+* Expose different operators for each type of value
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#update">update (cval)</a></td>
+	<td class="summary">update control according to set value-type</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update_result">update_result ()</a></td>
+	<td class="summary">display 'preview' of value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_result">get_result ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#apply">apply ()</a></td>
+	<td class="summary">apply operator to value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_type_ops">get_type_ops ()</a></td>
+	<td class="summary">get list of operators associated with the current data-type</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_value">set_value (cval)</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_operator">set_operator (val)</a></td>
+	<td class="summary"></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "update"></a>
+    <strong>update (cval)</strong>
+    </dt>
+    <dd>
+    update control according to set value-type
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cval</span>
+         (cValue)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update_result"></a>
+    <strong>update_result ()</strong>
+    </dt>
+    <dd>
+    display 'preview' of value
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        value (with the current operator applied...)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_result"></a>
+    <strong>get_result ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        value (with the current operator applied...)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "apply"></a>
+    <strong>apply ()</strong>
+    </dt>
+    <dd>
+    apply operator to value
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_type_ops"></a>
+    <strong>get_type_ops ()</strong>
+    </dt>
+    <dd>
+    get list of operators associated with the current data-type
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_value"></a>
+    <strong>set_value (cval)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cval</span>
+         (table), value descriptor - converted to cValue
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_operator"></a>
+    <strong>set_operator (val)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (vEditField.OPERATOR)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><strong>cSandbox</strong></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cSandbox</code></h1>
+<p>cSandbox allows you to execute code in a controlled environment
+.</p>
+<p>
+#
+<p>## How to use
+<p>    -- create instance
+    sandbox = cSandbox()
+<p>    -- supply function
+    sandbox.callback_str =
+      "print('hello world')"
+<p>    -- and call it...
+    sandback.callback()
+<p>
+## Arguments and return values
+<p>    -- if you need to supply arguments and define return value,
+    -- one approach is to define a 'prefix' and 'suffix'
+    -- (always added to the generated code)
+<p>    -- define arguments
+    sandbox.str_prefix = "local some_arg = select(1, ...)"
+
+    -- define return value
+    sandbox.str_suffix = "return some_arg"
+
+    -- supply function
+    sandbox.callback_str =
+      "some_arg = some_arg + 'foo'"..
+      "print(some_arg)"
+<p>    -- now call the function like this:
+    local result = sandback.callback('my_arg')
+<p>
+## Custom properties
+<p>TODO how to ...
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#compile">compile ()</a></td>
+	<td class="summary">call method to evaluate function (ensure that it's safe to run)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#contains_comment_blocks">contains_comment_blocks (str)</a></td>
+	<td class="summary">nested block comments/longstrings are depricated and will fail</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#test_syntax">test_syntax (str_fn)</a></td>
+	<td class="summary">check for syntax errors
+  (assert provides better error messages)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#strip_comments">strip_comments (str_fn)</a></td>
+	<td class="summary">strip code comments from a string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#contains_code">contains_code (str_fn)</a></td>
+	<td class="summary">check if a given string consists of comments only</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#insert_return">insert_return (str_fn)</a></td>
+	<td class="summary">automatically insert a return statement into a code snippet
+ step 1: detect if return statement is present</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rename_string_token">rename_string_token (str_fn, old_name, new_name, prefix)</a></td>
+	<td class="summary">"safer" renaming of a string token (for example, a variable name)</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.callback">self.callback</a></td>
+	<td class="summary">function, compiled function (when set, always valid)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.str_prefix">self.str_prefix</a></td>
+	<td class="summary">string, code to insert into all generated functions</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.compile_at_once">self.compile_at_once</a></td>
+	<td class="summary">boolean, set to true for instant compilation of callback string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.callback_str">self.callback_str</a></td>
+	<td class="summary">string, text representation of the function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.properties">self.properties</a></td>
+	<td class="summary">properties can contain custom get/set methods</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.modified_observable">self.modified_observable</a></td>
+	<td class="summary">invoked when callback has changed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.env">self.env</a></td>
+	<td class="summary">table, sandbox environment</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "compile"></a>
+    <strong>compile ()</strong>
+    </dt>
+    <dd>
+    call method to evaluate function (ensure that it's safe to run)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, true when method passed</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "contains_comment_blocks"></a>
+    <strong>contains_comment_blocks (str)</strong>
+    </dt>
+    <dd>
+    nested block comments/longstrings are depricated and will fail
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "test_syntax"></a>
+    <strong>test_syntax (str_fn)</strong>
+    </dt>
+    <dd>
+    check for syntax errors
+  (assert provides better error messages)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_fn</span>
+         (string) function as string
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, true when passed</li>
+        <li>
+        string, when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "strip_comments"></a>
+    <strong>strip_comments (str_fn)</strong>
+    </dt>
+    <dd>
+    strip code comments from a string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_fn</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "contains_code"></a>
+    <strong>contains_code (str_fn)</strong>
+    </dt>
+    <dd>
+    check if a given string consists of comments only
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_fn</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "insert_return"></a>
+    <strong>insert_return (str_fn)</strong>
+    </dt>
+    <dd>
+    automatically insert a return statement into a code snippet
+ step 1: detect if return statement is present
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_fn</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rename_string_token"></a>
+    <strong>rename_string_token (str_fn, old_name, new_name, prefix)</strong>
+    </dt>
+    <dd>
+    "safer" renaming of a string token (for example, a variable name)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_fn</span>
+         (string), the function text
+        </li>
+        <li><span class="parameter">old_name</span>
+         (string)
+        </li>
+        <li><span class="parameter">new_name</span>
+         (string)
+        </li>
+        <li><span class="parameter">prefix</span>
+         (string), prepend to old/new name when defined
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "self.callback"></a>
+    <strong>self.callback</strong>
+    </dt>
+    <dd>
+    function, compiled function (when set, always valid)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.str_prefix"></a>
+    <strong>self.str_prefix</strong>
+    </dt>
+    <dd>
+    string, code to insert into all generated functions
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.compile_at_once"></a>
+    <strong>self.compile_at_once</strong>
+    </dt>
+    <dd>
+    boolean, set to true for instant compilation of callback string
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.callback_str"></a>
+    <strong>self.callback_str</strong>
+    </dt>
+    <dd>
+    string, text representation of the function
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.properties"></a>
+    <strong>self.properties</strong>
+    </dt>
+    <dd>
+    properties can contain custom get/set methods
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.modified_observable"></a>
+    <strong>self.modified_observable</strong>
+    </dt>
+    <dd>
+    invoked when callback has changed
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.env"></a>
+    <strong>self.env</strong>
+    </dt>
+    <dd>
+    table, sandbox environment
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><strong>cString</strong></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cString</code></h1>
+<p>Common string-manipulation methods
+.</p>
+<p>
+#
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#split">split (str, pat)</a></td>
+	<td class="summary">split string - original script: http://lua-users.org/wiki/SplitJoin</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#trim">trim (s)</a></td>
+	<td class="summary">remove trailing and leading whitespace from string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#capitalize">capitalize (s)</a></td>
+	<td class="summary">capitalize first letter of every word</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#soft_wrap">soft_wrap (str)</a></td>
+	<td class="summary">insert return code whenever we encounter dashes or spaces in a string
+ TODO keep dashes, and allow a certain length per line</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#detect_counter_in_str">detect_counter_in_str (str)</a></td>
+	<td class="summary">detect counter in string (used for incrementing, unique names)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sanitize_string">sanitize_string (str)</a></td>
+	<td class="summary">prepare a string so it can be stored in XML attributes
+ (strip illegal characters instead of trying to fix them)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_sortable_time">get_sortable_time (tstamp)</a></td>
+	<td class="summary">sortable time - date which can be sorted alphabetically</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#strip_line">strip_line (str, patt)</a></td>
+	<td class="summary">Strip line matching pattern, from multiline string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#strip_leading_trailing_chars">strip_leading_trailing_chars (str, chr, rlead, rtrail)</a></td>
+	<td class="summary">Strip leading and/or trailing character from string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_to_string">table_to_string (t, args)</a></td>
+	<td class="summary">present a lua table as a formatted string</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "split"></a>
+    <strong>split (str, pat)</strong>
+    </dt>
+    <dd>
+    split string - original script: http://lua-users.org/wiki/SplitJoin
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+        <li><span class="parameter">pat</span>
+         (string) pattern
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "trim"></a>
+    <strong>trim (s)</strong>
+    </dt>
+    <dd>
+    remove trailing and leading whitespace from string.
+ http://en.wikipedia.org/wiki/Trim_(8programming)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "capitalize"></a>
+    <strong>capitalize (s)</strong>
+    </dt>
+    <dd>
+    capitalize first letter of every word
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "soft_wrap"></a>
+    <strong>soft_wrap (str)</strong>
+    </dt>
+    <dd>
+    insert return code whenever we encounter dashes or spaces in a string
+ TODO keep dashes, and allow a certain length per line
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "detect_counter_in_str"></a>
+    <strong>detect_counter_in_str (str)</strong>
+    </dt>
+    <dd>
+    detect counter in string (used for incrementing, unique names)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sanitize_string"></a>
+    <strong>sanitize_string (str)</strong>
+    </dt>
+    <dd>
+    prepare a string so it can be stored in XML attributes
+ (strip illegal characters instead of trying to fix them)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_sortable_time"></a>
+    <strong>get_sortable_time (tstamp)</strong>
+    </dt>
+    <dd>
+    sortable time - date which can be sorted alphabetically
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tstamp</span>
+        [[
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "strip_line"></a>
+    <strong>strip_line (str, patt)</strong>
+    </dt>
+    <dd>
+    Strip line matching pattern, from multiline string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+        <li><span class="parameter">patt</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        str, resulting string</li>
+        <li>
+        int, #stripped lines</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "strip_leading_trailing_chars"></a>
+    <strong>strip_leading_trailing_chars (str, chr, rlead, rtrail)</strong>
+    </dt>
+    <dd>
+    Strip leading and/or trailing character from string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string) the string to search
+        </li>
+        <li><span class="parameter">chr</span>
+         (string) the character to match, e.g. "\n" or " "
+        </li>
+        <li><span class="parameter">rlead</span>
+         (bool) remove leading
+        </li>
+        <li><span class="parameter">rtrail</span>
+         (bool) remove trailing
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        str
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_to_string"></a>
+    <strong>table_to_string (t, args)</strong>
+    </dt>
+    <dd>
+    present a lua table as a formatted string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+        <li><span class="parameter">args</span>
+         (table) formatting directives
+  multiline: if false, create single-line string
+  number_format: formatting for numeric values (e.g. precision)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

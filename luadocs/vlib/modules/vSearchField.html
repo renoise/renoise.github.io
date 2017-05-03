@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><a href="../modules/vEditField.html">vEditField</a></li>
+  <li><a href="../modules/vFileBrowser.html">vFileBrowser</a></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><a href="../modules/vLib.html">vLib</a></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><a href="../modules/vScrollbar.html">vScrollbar</a></li>
+  <li><strong>vSearchField</strong></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><a href="../modules/vTextField.html">vTextField</a></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vSearchField</code></h1>
+<p>Text input that allows you to search among pre-defined entries (auto-complete)
+.</p>
+<p>
+#
+<p>## About
+<p>An auto-completing text widget + popup menu shows matching entries (if any) - a bit like the familiar browser address bar.
+<p>Note: press return to select the currently matched item, if any.
+<p>## TODO
+<p>* FIXME set index_observable to 0 when match is not complete
+* FIXME input text partially obscured (when setting programmatically)
+* FIXME long 'initial text' can exceed view width (check with many items)
+* FIXME error when setting index while having some input text
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#update">update ()</a></td>
+	<td class="summary">[[</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#auto_resize">auto_resize ()</a></td>
+	<td class="summary">overridden method</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_initial_chars">get_initial_chars ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#match_item">match_item ()</a></td>
+	<td class="summary">match item, display first match as text and all matches in popup
+ called as text is entered, and widget obtains/looses focus</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#display_items">display_items (t)</a></td>
+	<td class="summary">prefix items with 'none' entry</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#match_items">match_items ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#lost_focus">lost_focus ()</a></td>
+	<td class="summary">loosing focus is when we finalize the match (set the index or clear)
+ (typing was completed with a return, or we clicked elsewhere)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_index">set_index (val)</a></td>
+	<td class="summary">Getters & Setters</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.items">self.items</a></td>
+	<td class="summary">table<string>, items to search through</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.popup">self.popup</a></td>
+	<td class="summary">boolean, decide if we should show a popup menu</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.case_sensitive">self.case_sensitive</a></td>
+	<td class="summary">[TODO] boolean, determine if matching is case sensitive</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.selected_index">self.selected_index</a></td>
+	<td class="summary">number, active index (set when focus is lost with a matched index)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._matched_items">self._matched_items</a></td>
+	<td class="summary">table<string>, all items matching user input (nil if no match)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._vb_textfield">self._vb_textfield</a></td>
+	<td class="summary">viewbuilder components</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "update"></a>
+    <strong>update ()</strong>
+    </dt>
+    <dd>
+    [[
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "auto_resize"></a>
+    <strong>auto_resize ()</strong>
+    </dt>
+    <dd>
+    overridden method
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_initial_chars"></a>
+    <strong>get_initial_chars ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "match_item"></a>
+    <strong>match_item ()</strong>
+    </dt>
+    <dd>
+    match item, display first match as text and all matches in popup
+ called as text is entered, and widget obtains/looses focus
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "display_items"></a>
+    <strong>display_items (t)</strong>
+    </dt>
+    <dd>
+    prefix items with 'none' entry
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>, all items matching input string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "match_items"></a>
+    <strong>match_items ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>, all items matching input string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "lost_focus"></a>
+    <strong>lost_focus ()</strong>
+    </dt>
+    <dd>
+    loosing focus is when we finalize the match (set the index or clear)
+ (typing was completed with a return, or we clicked elsewhere)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_index"></a>
+    <strong>set_index (val)</strong>
+    </dt>
+    <dd>
+    Getters & Setters
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "self.items"></a>
+    <strong>self.items</strong>
+    </dt>
+    <dd>
+    table<string>, items to search through
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.popup"></a>
+    <strong>self.popup</strong>
+    </dt>
+    <dd>
+    boolean, decide if we should show a popup menu
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.case_sensitive"></a>
+    <strong>self.case_sensitive</strong>
+    </dt>
+    <dd>
+    [TODO] boolean, determine if matching is case sensitive
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.selected_index"></a>
+    <strong>self.selected_index</strong>
+    </dt>
+    <dd>
+    number, active index (set when focus is lost with a matched index)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._matched_items"></a>
+    <strong>self._matched_items</strong>
+    </dt>
+    <dd>
+    table<string>, all items matching user input (nil if no match)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._vb_textfield"></a>
+    <strong>self._vb_textfield</strong>
+    </dt>
+    <dd>
+    viewbuilder components
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><strong>cObservable</strong></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cObservable</code></h1>
+<p>Be 'smart' about observable properties in the Renoise API
+.</p>
+<p>
+#
+<p>This class tries to be clever and provide 'inside knowledge' about properties.
+For example, the valid range of a "selected_instrument_index" is an integer with a minimum of 1
+<p>For now, we only care about the "first level" properties - the ones that belong to the song object.
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#set_mode">set_mode (mode)</a></td>
+	<td class="summary">automatically attach to song (auto-renew registered observables)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_by_type">get_by_type (str_type, array)</a></td>
+	<td class="summary">get a specific type of observable</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_by_type_and_name">get_by_type_and_name (str_type, str_obs, str_prefix)</a></td>
+	<td class="summary">combine the above search with a match for a given name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_keys_by_type">get_keys_by_type (str_type, prefix, arr)</a></td>
+	<td class="summary">return a 'flattened' list of observable names, e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#detach">detach (obs, arg1, arg2)</a></td>
+	<td class="summary">Remove notifier - wrap in protected call (when observables are gone)
+ supports all three combinations of arguments:
+ function or (object, function) or (function, object)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#attach">attach (obs, arg1, arg2)</a></td>
+	<td class="summary">Add notifier, while checking for / removing existing one
+ supports all three combinations of arguments:
+ function or (object, function) or (function, object)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#retrieve_observable">retrieve_observable (obs)</a></td>
+	<td class="summary">support the use of string-based observable names</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#list_remove">list_remove (obs, val)</a></td>
+	<td class="summary">remove all entries from ObservableXXXList with specified value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#list_add">list_add (obs, val)</a></td>
+	<td class="summary">add to ObservableXXXList when not already present</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_song_names">get_song_names (prefix)</a></td>
+	<td class="summary">return table containing all names (using .dot syntax)</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "set_mode"></a>
+    <strong>set_mode (mode)</strong>
+    </dt>
+    <dd>
+    automatically attach to song (auto-renew registered observables)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">mode</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_by_type"></a>
+    <strong>get_by_type (str_type, array)</strong>
+    </dt>
+    <dd>
+    get a specific type of observable
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_type</span>
+        , string ("boolean","number" or "string")
+        </li>
+        <li><span class="parameter">array</span>
+        , list of cObservable descriptors
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_by_type_and_name"></a>
+    <strong>get_by_type_and_name (str_type, str_obs, str_prefix)</strong>
+    </dt>
+    <dd>
+    combine the above search with a match for a given name
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_type</span>
+         (string), one of xStreamArg.BASE_TYPES
+        </li>
+        <li><span class="parameter">str_obs</span>
+         (string), e.g. "transport.keyboard_velocity_enabled_observable"
+        </li>
+        <li><span class="parameter">str_prefix</span>
+         (string), e.g. "rns."
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_keys_by_type"></a>
+    <strong>get_keys_by_type (str_type, prefix, arr)</strong>
+    </dt>
+    <dd>
+    return a 'flattened' list of observable names, e.g.
+ "transport.keyboard_velocity_enabled_observable"
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str_type</span>
+         (string), one of xStreamArg.BASE_TYPES
+        </li>
+        <li><span class="parameter">prefix</span>
+         (string), e.g. "rns."
+        </li>
+        <li><span class="parameter">arr</span>
+         (table) supply observables (when we got them)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "detach"></a>
+    <strong>detach (obs, arg1, arg2)</strong>
+    </dt>
+    <dd>
+    Remove notifier - wrap in protected call (when observables are gone)
+ supports all three combinations of arguments:
+ function or (object, function) or (function, object)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obs</span>
+         (renoise.Document.ObservableXXX)
+        </li>
+        <li><span class="parameter">arg1</span>
+         (function or object)
+        </li>
+        <li><span class="parameter">arg2</span>
+         (function or object)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool, true when attached</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "attach"></a>
+    <strong>attach (obs, arg1, arg2)</strong>
+    </dt>
+    <dd>
+    Add notifier, while checking for / removing existing one
+ supports all three combinations of arguments:
+ function or (object, function) or (function, object)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obs</span>
+         (renoise.Document.ObservableXXX)
+        </li>
+        <li><span class="parameter">arg1</span>
+         (function or object)
+        </li>
+        <li><span class="parameter">arg2</span>
+         (function or object)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool, true when attached</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "retrieve_observable"></a>
+    <strong>retrieve_observable (obs)</strong>
+    </dt>
+    <dd>
+    support the use of string-based observable names
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obs</span>
+         (string or ObservableXXX)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        ObservableXXX
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "list_remove"></a>
+    <strong>list_remove (obs, val)</strong>
+    </dt>
+    <dd>
+    remove all entries from ObservableXXXList with specified value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obs</span>
+
+        </li>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "list_add"></a>
+    <strong>list_add (obs, val)</strong>
+    </dt>
+    <dd>
+    add to ObservableXXXList when not already present
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obs</span>
+
+        </li>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_song_names"></a>
+    <strong>get_song_names (prefix)</strong>
+    </dt>
+    <dd>
+    return table containing all names (using .dot syntax)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">prefix</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

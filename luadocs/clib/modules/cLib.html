@@ -1,0 +1,896 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><strong>cLib</strong></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cLib</code></h1>
+<p>This is the core cLib class, containing a bunch of static helper methods
+.</p>
+<p>
+#
+<p>Note that several classes in the cLib library invokes the LOG/TRACE statement -
+therefore, it is recommended that any cLib-powered tool includes this file
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#LOG">LOG (...)</a></td>
+	<td class="summary">[Static] LOG statement - invokes cLib.log().</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TRACE">TRACE (...)</a></td>
+	<td class="summary">[Static] Placeholder TRACE statement
+ (include cDebug for the full-featured implementation)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#log">log (...)</a></td>
+	<td class="summary">[Static] Print important messages to the console (errors and warnings)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#unpack_args">unpack_args (...)</a></td>
+	<td class="summary">[Static] Turn varargs into a table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#invoke_task">invoke_task (...)</a></td>
+	<td class="summary">[Static] Call a class method or function and show/log results
+ Note: currently with a maximum of 8 arguments can be passed (this is a
+ convenience function after all...)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create_cvalue">create_cvalue (t)</a></td>
+	<td class="summary">[Static] Turn value descriptor into instance</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#match_table_key">match_table_key (t, key)</a></td>
+	<td class="summary">Array/table methods</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#expand_table">expand_table (t, k1, k2, k3, k4)</a></td>
+	<td class="summary">[Static] Expand a multi-dimensional array with given keys</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_table_bounds">get_table_bounds (t)</a></td>
+	<td class="summary">[Static] Find the highest/lowest numeric key (index) in a sparsely populated table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#merge_tables">merge_tables (t1, t2)</a></td>
+	<td class="summary">[Static] Merge two tables into one (recursive)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#compact_table">compact_table (t)</a></td>
+	<td class="summary">[Static] Convert a sparsely populated table into a compact one</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_compare">table_compare (t1, t2)</a></td>
+	<td class="summary">[Static] Quick'n'dirty table compare (values in first level only)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#scale_value">scale_value (value, in_min, in_max, out_min, out_max)</a></td>
+	<td class="summary">Number methods</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#string_to_percentage">string_to_percentage (str)</a></td>
+	<td class="summary">[Static] Strip percentage sign from string, if present</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clamp_value">clamp_value (value, min_value, max_value)</a></td>
+	<td class="summary">[Static] Clamp value - ensure value is within min/max</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#note_to_hz">note_to_hz (note)</a></td>
+	<td class="summary">[Static] Convert between note/hertz</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#gcd">gcd (m, n)</a></td>
+	<td class="summary">[Static] Greatest common divisor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#lcm">lcm (m, n)</a></td>
+	<td class="summary">[Static] Least common multiplier (2 args)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#least_common">least_common (t)</a></td>
+	<td class="summary">[Static] Find least common multiplier</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#round_value">round_value (num)</a></td>
+	<td class="summary">[Static] Round value (from http://lua-users.org/wiki/SimpleRound)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#float_compare">float_compare (val1, val2, precision)</a></td>
+	<td class="summary">[Static] Compare two numbers with variable precision</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fraction">fraction (val)</a></td>
+	<td class="summary">[Static] Return the fractional part of a number</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_hex_digits">get_hex_digits (val)</a></td>
+	<td class="summary">[Static] Find number of hex digits needed to represent a number (e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#stringify_table">stringify_table (t, prefix, suffix)</a></td>
+	<td class="summary">[Static] Take a table and convert into strings - useful e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#parse_str">parse_str (str)</a></td>
+	<td class="summary">[Static] Receives a string argument and turn it into a proper object or value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#serialize_object">serialize_object (obj)</a></td>
+	<td class="summary">[Static] Try serializing a value or return "???"
+ the result should be a valid, quotable string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#serialize_table">serialize_table (t, max_depth, longstring)</a></td>
+	<td class="summary">[Static] Serialize table into string, with some formatting options</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "LOG"></a>
+    <strong>LOG (...)</strong>
+    </dt>
+    <dd>
+    [Static] LOG statement - invokes cLib.log().
+ you can override this method with your own custom implementation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (vararg)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TRACE"></a>
+    <strong>TRACE (...)</strong>
+    </dt>
+    <dd>
+    [Static] Placeholder TRACE statement
+ (include cDebug for the full-featured implementation)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (vararg)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "log"></a>
+    <strong>log (...)</strong>
+    </dt>
+    <dd>
+    [Static] Print important messages to the console (errors and warnings)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (vararg)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "unpack_args"></a>
+    <strong>unpack_args (...)</strong>
+    </dt>
+    <dd>
+    [Static] Turn varargs into a table
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (vararg)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "invoke_task"></a>
+    <strong>invoke_task (...)</strong>
+    </dt>
+    <dd>
+    [Static] Call a class method or function and show/log results
+ Note: currently with a maximum of 8 arguments can be passed (this is a
+ convenience function after all...)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (vararg), [class+function or function] + argument(s)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "create_cvalue"></a>
+    <strong>create_cvalue (t)</strong>
+    </dt>
+    <dd>
+    [Static] Turn value descriptor into instance
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        cNumber or cValue
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "match_table_key"></a>
+    <strong>match_table_key (t, key)</strong>
+    </dt>
+    <dd>
+    Array/table methods  [Static] Match item(s) in an associative array (provide key)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+        <li><span class="parameter">key</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "expand_table"></a>
+    <strong>expand_table (t, k1, k2, k3, k4)</strong>
+    </dt>
+    <dd>
+    [Static] Expand a multi-dimensional array with given keys
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+        <li><span class="parameter">k1</span>
+         (string)
+        </li>
+        <li><span class="parameter">k2</span>
+         (string)
+        </li>
+        <li><span class="parameter">k3</span>
+         (string)
+        </li>
+        <li><span class="parameter">k4</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_table_bounds"></a>
+    <strong>get_table_bounds (t)</strong>
+    </dt>
+    <dd>
+    [Static] Find the highest/lowest numeric key (index) in a sparsely populated table
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        lowest,highest
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "merge_tables"></a>
+    <strong>merge_tables (t1, t2)</strong>
+    </dt>
+    <dd>
+    [Static] Merge two tables into one (recursive)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t1</span>
+         (table)
+        </li>
+        <li><span class="parameter">t2</span>
+         (table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "compact_table"></a>
+    <strong>compact_table (t)</strong>
+    </dt>
+    <dd>
+    [Static] Convert a sparsely populated table into a compact one
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_compare"></a>
+    <strong>table_compare (t1, t2)</strong>
+    </dt>
+    <dd>
+    [Static] Quick'n'dirty table compare (values in first level only)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t1</span>
+         (table)
+        </li>
+        <li><span class="parameter">t2</span>
+         (table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, true if identical
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "scale_value"></a>
+    <strong>scale_value (value, in_min, in_max, out_min, out_max)</strong>
+    </dt>
+    <dd>
+    Number methods  [Static] Scale value to a range within a range
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+         (number) the value we wish to scale
+        </li>
+        <li><span class="parameter">in_min</span>
+         (number)
+        </li>
+        <li><span class="parameter">in_max</span>
+         (number)
+        </li>
+        <li><span class="parameter">out_min</span>
+         (number)
+        </li>
+        <li><span class="parameter">out_max</span>
+         (number)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "string_to_percentage"></a>
+    <strong>string_to_percentage (str)</strong>
+    </dt>
+    <dd>
+    [Static] Strip percentage sign from string, if present
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string), e.g. "33.3%"
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clamp_value"></a>
+    <strong>clamp_value (value, min_value, max_value)</strong>
+    </dt>
+    <dd>
+    [Static] Clamp value - ensure value is within min/max
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+         (number)
+        </li>
+        <li><span class="parameter">min_value</span>
+         (number)
+        </li>
+        <li><span class="parameter">max_value</span>
+         (number)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "note_to_hz"></a>
+    <strong>note_to_hz (note)</strong>
+    </dt>
+    <dd>
+    [Static] Convert between note/hertz
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">note</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "gcd"></a>
+    <strong>gcd (m, n)</strong>
+    </dt>
+    <dd>
+    [Static] Greatest common divisor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">m</span>
+
+        </li>
+        <li><span class="parameter">n</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "lcm"></a>
+    <strong>lcm (m, n)</strong>
+    </dt>
+    <dd>
+    [Static] Least common multiplier (2 args)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">m</span>
+
+        </li>
+        <li><span class="parameter">n</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "least_common"></a>
+    <strong>least_common (t)</strong>
+    </dt>
+    <dd>
+    [Static] Find least common multiplier
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table), use values in table as argument
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "round_value"></a>
+    <strong>round_value (num)</strong>
+    </dt>
+    <dd>
+    [Static] Round value (from http://lua-users.org/wiki/SimpleRound)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num</span>
+         (number)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "float_compare"></a>
+    <strong>float_compare (val1, val2, precision)</strong>
+    </dt>
+    <dd>
+    [Static] Compare two numbers with variable precision
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val1</span>
+
+        </li>
+        <li><span class="parameter">val2</span>
+
+        </li>
+        <li><span class="parameter">precision</span>
+        , '10000000' is suitable for parameter values
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fraction"></a>
+    <strong>fraction (val)</strong>
+    </dt>
+    <dd>
+    [Static] Return the fractional part of a number
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_hex_digits"></a>
+    <strong>get_hex_digits (val)</strong>
+    </dt>
+    <dd>
+    [Static] Find number of hex digits needed to represent a number (e.g.  255 = 2)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (int)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "stringify_table"></a>
+    <strong>stringify_table (t, prefix, suffix)</strong>
+    </dt>
+    <dd>
+    [Static] Take a table and convert into strings - useful e.g.  for viewbuilder popup
+ (if table is associative, will use values)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+        <li><span class="parameter">prefix</span>
+         (string) insert before each entry
+        </li>
+        <li><span class="parameter">suffix</span>
+         (string) insert after each entry
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<string>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "parse_str"></a>
+    <strong>parse_str (str)</strong>
+    </dt>
+    <dd>
+    [Static] Receives a string argument and turn it into a proper object or value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string), e.g. "renoise.song().transport.keyboard_velocity"
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        value (can be nil)</li>
+        <li>
+        string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "serialize_object"></a>
+    <strong>serialize_object (obj)</strong>
+    </dt>
+    <dd>
+    [Static] Try serializing a value or return "???"
+ the result should be a valid, quotable string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obj</span>
+        , value or object
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "serialize_table"></a>
+    <strong>serialize_table (t, max_depth, longstring)</strong>
+    </dt>
+    <dd>
+    [Static] Serialize table into string, with some formatting options
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table)
+        </li>
+        <li><span class="parameter">max_depth</span>
+         (int), determine how many levels to process - optional
+        </li>
+        <li><span class="parameter">longstring</span>
+         (boolean), use longstring format for multiline text
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><strong>cReflection</strong></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cReflection</code></h1>
+<p>Pull off some API tricks to achieve reflection-alike abilities
+.</p>
+<p>
+#
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#copy_object_properties">copy_object_properties (from_class, to_class, level)</a></td>
+	<td class="summary">Copy properties from one class instance to another</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cast_value">cast_value (val, val_type)</a></td>
+	<td class="summary">cast variable as basic datatype (boolean,number,string)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_object_properties">get_object_properties (class, level)</a></td>
+	<td class="summary">get properties from class instance</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_object_info">get_object_info (class)</a></td>
+	<td class="summary">get information about native object (renoise API)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_standard_type">is_standard_type (val)</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_property">set_property (str, value)</a></td>
+	<td class="summary">evaluate string, assign value to the resulting object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_valid_identifier">is_valid_identifier (str)</a></td>
+	<td class="summary"></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "copy_object_properties"></a>
+    <strong>copy_object_properties (from_class, to_class, level)</strong>
+    </dt>
+    <dd>
+    Copy properties from one class instance to another
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">from_class</span>
+         (userdata)
+        </li>
+        <li><span class="parameter">to_class</span>
+         (userdata)
+        </li>
+        <li><span class="parameter">level</span>
+         (int) for internal use
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool, true when copied
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cast_value"></a>
+    <strong>cast_value (val, val_type)</strong>
+    </dt>
+    <dd>
+    cast variable as basic datatype (boolean,number,string)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+
+        </li>
+        <li><span class="parameter">val_type</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_object_properties"></a>
+    <strong>get_object_properties (class, level)</strong>
+    </dt>
+    <dd>
+    get properties from class instance
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">class</span>
+         (userdata)
+        </li>
+        <li><span class="parameter">level</span>
+         (int) internal counter
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_object_info"></a>
+    <strong>get_object_info (class)</strong>
+    </dt>
+    <dd>
+    get information about native object (renoise API)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">class</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int, or nil if not a recognized type
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_standard_type"></a>
+    <strong>is_standard_type (val)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         (string), the type we want to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int, or nil if not a recognized type
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_property"></a>
+    <strong>set_property (str, value)</strong>
+    </dt>
+    <dd>
+    evaluate string, assign value to the resulting object
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string), e.g. "renoise.song().transport.keyboard_velocity"
+        </li>
+        <li><span class="parameter">value</span>
+         (vararg), any basic lua type
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, string (error message when failed)</li>
+        <li>
+        boolean, string (error message when failed)</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_valid_identifier"></a>
+    <strong>is_valid_identifier (str)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string), name of indentifier
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, string (error message when failed)
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><strong>cProcessSlicer</strong></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cProcessSlicer</code></h1>
+<p>ProcessSlicer allows you to slice up a function which takes a lot of
+processing time into multiple calls via Lua coroutines.</p>
+<p>
+<p>### Example usage:
+<p>    local slicer = ProcessSlicer(my_process_func, argument1, argumentX)
+<p>This starts calling 'my_process_func' in idle, passing all arguments
+you've specified in the ProcessSlicer constructor.
+<p>    slicer:start()
+<p>To abort a running sliced process, you can call "stop" at any time
+from within your processing function of outside of it in the main thread.
+As soon as your process function returns, the slicer is automatically
+stopped.
+<p>    slicer:stop()
+<p>To give processing time back to Renoise, call 'coroutine.yield()'
+anywhere in your process function to temporarily yield back to Renoise:
+<p>    function my_process_func()
+      for j=1,100 do
+        -- do something that needs a lot of time, and periodically call
+        -- "coroutine.yield()" to give processing time back to Renoise. Renoise
+        -- will switch back to this point of the function as soon as has done
+        -- "its" job:
+        coroutine.yield()
+      end
+    end
+<p>
+### Drawbacks:
+<p>By slicing your processing function, you will also slice any changes that are
+done to the Renoise song into multiple undo actions (one action per slice/yield).
+<p>Modal dialogs will block the slicer, cause on_idle notifications are not fired then.
+It will even block your own process GUI when trying to show it modal.
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#ProcessSlicer:running">ProcessSlicer:running ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ProcessSlicer:start">ProcessSlicer:start ()</a></td>
+	<td class="summary">start a process</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ProcessSlicer:stop">ProcessSlicer:stop ()</a></td>
+	<td class="summary">stop a running process</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ProcessSlicer:__on_idle">ProcessSlicer:__on_idle ()</a></td>
+	<td class="summary">function that gets called from Renoise to do idle stuff.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#process_func">process_func</a></td>
+	<td class="summary"></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "ProcessSlicer:running"></a>
+    <strong>ProcessSlicer:running ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true when the current process currently is running
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ProcessSlicer:start"></a>
+    <strong>ProcessSlicer:start ()</strong>
+    </dt>
+    <dd>
+    start a process
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ProcessSlicer:stop"></a>
+    <strong>ProcessSlicer:stop ()</strong>
+    </dt>
+    <dd>
+    stop a running process
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ProcessSlicer:__on_idle"></a>
+    <strong>ProcessSlicer:__on_idle ()</strong>
+    </dt>
+    <dd>
+    function that gets called from Renoise to do idle stuff.  switches back
+ into the processing function or detaches the thread
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "process_func"></a>
+    <strong>process_func</strong>
+    </dt>
+    <dd>
+
+
+
+    <ul>
+        <li><span class="parameter">process_func</span>
+         (function)
+        </li>
+        <li><span class="parameter">VarArg</span>
+         (...)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

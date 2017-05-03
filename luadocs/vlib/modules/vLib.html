@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><a href="../modules/vEditField.html">vEditField</a></li>
+  <li><a href="../modules/vFileBrowser.html">vFileBrowser</a></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><strong>vLib</strong></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><a href="../modules/vScrollbar.html">vScrollbar</a></li>
+  <li><a href="../modules/vSearchField.html">vSearchField</a></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><a href="../modules/vTextField.html">vTextField</a></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vLib</code></h1>
+<p></p>
+<p>This class provides static members and methods for the vLib library
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#generate_uid">generate_uid ()</a></td>
+	<td class="summary">generate a unique string that you is used as viewbuilder id for widgets
+ (avoids clashes in names between multiple instances of the same widget)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_skin_color">get_skin_color (name)</a></td>
+	<td class="summary">retrieve values from the default skin/theme</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#uid_counter">uid_counter</a></td>
+	<td class="summary">(int) when you instantiate a vLib component, it will register itself
+ with a unique viewbuilder ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#lazy_updates">lazy_updates</a></td>
+	<td class="summary">(bool) when true, complex widgets will schedule their updates,
+ possibly saving a little CPU along the way</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#config">config</a></td>
+	<td class="summary">(table) set once we access the XML configuration</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#imageroot">imageroot</a></td>
+	<td class="summary">(string) location of images</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DEFAULT_BMP">DEFAULT_BMP</a></td>
+	<td class="summary">specify a bitmap which is *guaranteed* to exist (required when
+ creating bitmap views before assigning the final value)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#CONTROL_H">CONTROL_H</a></td>
+	<td class="summary">(number), standard height for controls</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "generate_uid"></a>
+    <strong>generate_uid ()</strong>
+    </dt>
+    <dd>
+    generate a unique string that you is used as viewbuilder id for widgets
+ (avoids clashes in names between multiple instances of the same widget)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string, e.g. "vlib12"
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_skin_color"></a>
+    <strong>get_skin_color (name)</strong>
+    </dt>
+    <dd>
+    retrieve values from the default skin/theme
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "uid_counter"></a>
+    <strong>uid_counter</strong>
+    </dt>
+    <dd>
+    (int) when you instantiate a vLib component, it will register itself
+ with a unique viewbuilder ID.  This is the global incrementer
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "lazy_updates"></a>
+    <strong>lazy_updates</strong>
+    </dt>
+    <dd>
+    (bool) when true, complex widgets will schedule their updates,
+ possibly saving a little CPU along the way
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "config"></a>
+    <strong>config</strong>
+    </dt>
+    <dd>
+    (table) set once we access the XML configuration
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "imageroot"></a>
+    <strong>imageroot</strong>
+    </dt>
+    <dd>
+    (string) location of images
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "DEFAULT_BMP"></a>
+    <strong>DEFAULT_BMP</strong>
+    </dt>
+    <dd>
+    specify a bitmap which is *guaranteed* to exist (required when
+ creating bitmap views before assigning the final value)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "CONTROL_H"></a>
+    <strong>CONTROL_H</strong>
+    </dt>
+    <dd>
+    (number), standard height for controls
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

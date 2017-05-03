@@ -1,0 +1,688 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/helpers.vDataProvider.html">helpers.vDataProvider</a></li>
+  <li><a href="../modules/helpers.vMetrics.html">helpers.vMetrics</a></li>
+  <li><a href="../modules/helpers.vSelection.html">helpers.vSelection</a></li>
+  <li><a href="../modules/helpers.vVector.html">helpers.vVector</a></li>
+  <li><a href="../modules/parsers.vXML.html">parsers.vXML</a></li>
+  <li><a href="../modules/vCell.html">vCell</a></li>
+  <li><a href="../modules/vCellBitmap.html">vCellBitmap</a></li>
+  <li><a href="../modules/vCellButton.html">vCellButton</a></li>
+  <li><a href="../modules/vCellCheckBox.html">vCellCheckBox</a></li>
+  <li><a href="../modules/vCellPopup.html">vCellPopup</a></li>
+  <li><a href="../modules/vCellText.html">vCellText</a></li>
+  <li><a href="../modules/vCellTextField.html">vCellTextField</a></li>
+  <li><a href="../modules/vCellValueBox.html">vCellValueBox</a></li>
+  <li><a href="../modules/vCompositeControl.html">vCompositeControl</a></li>
+  <li><a href="../modules/vControl.html">vControl</a></li>
+  <li><a href="../modules/vDialog.html">vDialog</a></li>
+  <li><a href="../modules/vDialogWizard.html">vDialogWizard</a></li>
+  <li><a href="../modules/vEditField.html">vEditField</a></li>
+  <li><strong>vFileBrowser</strong></li>
+  <li><a href="../modules/vGraph.html">vGraph</a></li>
+  <li><a href="../modules/vLib.html">vLib</a></li>
+  <li><a href="../modules/vLogView.html">vLogView</a></li>
+  <li><a href="../modules/vPathSelector.html">vPathSelector</a></li>
+  <li><a href="../modules/vPopup.html">vPopup</a></li>
+  <li><a href="../modules/vPrompt.html">vPrompt</a></li>
+  <li><a href="../modules/vScrollbar.html">vScrollbar</a></li>
+  <li><a href="../modules/vSearchField.html">vSearchField</a></li>
+  <li><a href="../modules/vTable.html">vTable</a></li>
+  <li><a href="../modules/vTabs.html">vTabs</a></li>
+  <li><a href="../modules/vTextField.html">vTextField</a></li>
+  <li><a href="../modules/vTree.html">vTree</a></li>
+  <li><a href="../modules/vView.html">vView</a></li>
+  <li><a href="../modules/vWaveform.html">vWaveform</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>vFileBrowser</code></h1>
+<p>int, number of visible rows (stored in vtable)</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#open_item">open_item (item)</a></td>
+	<td class="summary">choose action (depends on item type)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_header_def">get_header_def ()</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_items">get_items ()</a></td>
+	<td class="summary">get all items in table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_selected_item">get_selected_item ()</a></td>
+	<td class="summary">get selected item (first one, if multiple)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create_path">create_path (str)</a></td>
+	<td class="summary">return bool</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#delete_selected">delete_selected ()</a></td>
+	<td class="summary">delete selected items in table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#delete_folder">delete_folder (str)</a></td>
+	<td class="summary">delete selected folder (including workaround for non-POSIX systems)
+ TODO refactor into Filesys</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#match_file_type">match_file_type (file_path)</a></td>
+	<td class="summary">get icon and extension in case of recognized file type</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rename_file">rename_file ()</a></td>
+	<td class="summary">rename the currently selected file (single item)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_path">set_path (str)</a></td>
+	<td class="summary">display the indicated path</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_root_folder">is_root_folder (str)</a></td>
+	<td class="summary">check if current folder is "root" (TODO: custom root folder)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update_row_styling">update_row_styling ()</a></td>
+	<td class="summary">decorate selection rows (visible on next update)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear_row_styling">clear_row_styling ()</a></td>
+	<td class="summary">reset row styling (taking effect immediately)</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.path">self.path</a></td>
+	<td class="summary">string, absolute folder path - file part is ignored</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._file_ext">self._file_ext</a></td>
+	<td class="summary">string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._file_types">self._file_types</a></td>
+	<td class="summary">table>{ext1 = {icon},ext2 = {icon},...}</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._show_columns">self._show_columns</a></td>
+	<td class="summary">table{string,string,string...}
+ decide which columns to show (leave blank to show all)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._show_header">self._show_header</a></td>
+	<td class="summary">boolean, show_header (stored in vtable)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._show_parent_folder">self._show_parent_folder</a></td>
+	<td class="summary">boolean, whether to show a "..." entry at the top
+  (note: this option is only relevant when @show_folders is set)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self._single_select">self._single_select</a></td>
+	<td class="summary">boolean, use single-click to select (open) item</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.root_folder">self.root_folder</a></td>
+	<td class="summary">string, enforce this as root folder (restrict browsing)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.on_file_open">self.on_file_open</a></td>
+	<td class="summary">function, callback event</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.on_checked">self.on_checked</a></td>
+	<td class="summary">(function) callback event</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#elm">elm</a></td>
+	<td class="summary">(function) callback event</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#elm">elm</a></td>
+	<td class="summary">(function) callback event</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.selection">self.selection</a></td>
+	<td class="summary">(vSelection)</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "open_item"></a>
+    <strong>open_item (item)</strong>
+    </dt>
+    <dd>
+    choose action (depends on item type)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">item</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_header_def"></a>
+    <strong>get_header_def ()</strong>
+    </dt>
+    <dd>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_items"></a>
+    <strong>get_items ()</strong>
+    </dt>
+    <dd>
+    get all items in table
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_selected_item"></a>
+    <strong>get_selected_item ()</strong>
+    </dt>
+    <dd>
+    get selected item (first one, if multiple)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "create_path"></a>
+    <strong>create_path (str)</strong>
+    </dt>
+    <dd>
+    return bool
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "delete_selected"></a>
+    <strong>delete_selected ()</strong>
+    </dt>
+    <dd>
+    delete selected items in table
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "delete_folder"></a>
+    <strong>delete_folder (str)</strong>
+    </dt>
+    <dd>
+    delete selected folder (including workaround for non-POSIX systems)
+ TODO refactor into Filesys
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        bool</li>
+        <li>
+        string (error message)</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "match_file_type"></a>
+    <strong>match_file_type (file_path)</strong>
+    </dt>
+    <dd>
+    get icon and extension in case of recognized file type
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_path</span>
+            <span class="types"><span class="type">TRACE("vFileBrowser</span></span>
+        match_file_type(file_path)",file_path)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string(icon) or nil when not matched
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rename_file"></a>
+    <strong>rename_file ()</strong>
+    </dt>
+    <dd>
+    rename the currently selected file (single item)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_path"></a>
+    <strong>set_path (str)</strong>
+    </dt>
+    <dd>
+    display the indicated path
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_root_folder"></a>
+    <strong>is_root_folder (str)</strong>
+    </dt>
+    <dd>
+    check if current folder is "root" (TODO: custom root folder)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update_row_styling"></a>
+    <strong>update_row_styling ()</strong>
+    </dt>
+    <dd>
+    decorate selection rows (visible on next update)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clear_row_styling"></a>
+    <strong>clear_row_styling ()</strong>
+    </dt>
+    <dd>
+    reset row styling (taking effect immediately)
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "self.path"></a>
+    <strong>self.path</strong>
+    </dt>
+    <dd>
+    string, absolute folder path - file part is ignored
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._file_ext"></a>
+    <strong>self._file_ext</strong>
+    </dt>
+    <dd>
+    string
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._file_types"></a>
+    <strong>self._file_types</strong>
+    </dt>
+    <dd>
+    table>{ext1 = {icon},ext2 = {icon},...}
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._show_columns"></a>
+    <strong>self._show_columns</strong>
+    </dt>
+    <dd>
+    table{string,string,string...}
+ decide which columns to show (leave blank to show all)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._show_header"></a>
+    <strong>self._show_header</strong>
+    </dt>
+    <dd>
+    boolean, show_header (stored in vtable)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._show_parent_folder"></a>
+    <strong>self._show_parent_folder</strong>
+    </dt>
+    <dd>
+    boolean, whether to show a "..." entry at the top
+  (note: this option is only relevant when @show_folders is set)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self._single_select"></a>
+    <strong>self._single_select</strong>
+    </dt>
+    <dd>
+    boolean, use single-click to select (open) item
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.root_folder"></a>
+    <strong>self.root_folder</strong>
+    </dt>
+    <dd>
+    string, enforce this as root folder (restrict browsing)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.on_file_open"></a>
+    <strong>self.on_file_open</strong>
+    </dt>
+    <dd>
+    function, callback event
+
+
+    <ul>
+        <li><span class="parameter">elm</span>
+         (vFileBrowser)
+        </li>
+        <li><span class="parameter">item</span>
+         (table)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.on_checked"></a>
+    <strong>self.on_checked</strong>
+    </dt>
+    <dd>
+    (function) callback event
+
+
+    <ul>
+        <li><span class="parameter">elm</span>
+         (vFileBrowser)
+        </li>
+        <li><span class="parameter">item_id</span>
+         (int)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "elm"></a>
+    <strong>elm</strong>
+    </dt>
+    <dd>
+    (function) callback event
+
+
+    <ul>
+        <li><span class="parameter">elm</span>
+         (vFileBrowser)
+self.on_changed_path = args.on_changed_path or nil
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "elm"></a>
+    <strong>elm</strong>
+    </dt>
+    <dd>
+    (function) callback event
+
+
+    <ul>
+        <li><span class="parameter">elm</span>
+         (vFileBrowser)
+self.on_resize = args.on_resize or nil
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.selection"></a>
+    <strong>self.selection</strong>
+    </dt>
+    <dd>
+    (vSelection)
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
