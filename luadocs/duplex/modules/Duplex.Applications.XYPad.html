@@ -89,9 +89,7 @@
   <li><a href="../modules/Duplex.OscDevice.html">Duplex.OscDevice</a></li>
   <li><a href="../modules/Duplex.OscVoiceMgr.html">Duplex.OscVoiceMgr</a></li>
   <li><a href="../modules/Duplex.Preferences.html">Duplex.Preferences</a></li>
-  <li><a href="../modules/Duplex.ProcessSlicer.html">Duplex.ProcessSlicer</a></li>
   <li><a href="../modules/Duplex.RoamingDSP.html">Duplex.RoamingDSP</a></li>
-  <li><a href="../modules/Duplex.Scheduler.html">Duplex.Scheduler</a></li>
   <li><a href="../modules/Duplex.StateController.html">Duplex.StateController</a></li>
   <li><a href="../modules/Duplex.UIButton.html">Duplex.UIButton</a></li>
   <li><a href="../modules/Duplex.UIButtonStrip.html">Duplex.UIButtonStrip</a></li>
@@ -106,7 +104,6 @@
   <li><a href="../modules/Duplex.UISpinner.html">Duplex.UISpinner</a></li>
   <li><a href="../modules/Duplex.WidgetHooks.html">Duplex.WidgetHooks</a></li>
   <li><a href="../modules/Duplex.WidgetKeyboard.html">Duplex.WidgetKeyboard</a></li>
-  <li><a href="../modules/Duplex.html">Duplex</a></li>
   <li><a href="../modules/main.html">main</a></li>
 </ul>
 
@@ -116,63 +113,11 @@
 
 <h1>Module <code>Duplex.Applications.XYPad</code></h1>
 <p>Control any XYPad device in any Renoise DSP Chain.</p>
-<p>
-<p>
-Inheritance: <a href="../modules/Duplex.Application.html#">Duplex.Application</a> > <a href="../modules/Duplex.RoamingDSP.html#">Duplex.RoamingDSP</a> > Duplex.Application.XYPad </p>
+<p> </p>
 
-<h3>Features</h3>
-<p>* Built-in automation recording
-* Supports knobs, a MIDI keyboard's touchpad or an OSC device's accelerometer
-* Free roaming - jump between different XYPad devices in the song
-* Device Lock - remember focused device between sessions</p>
+<h1></h1>
 
-<h3>Usage</h3>
-
-<p>  For basic operation, you can map <em>either</em> <code>xy_pad</code> or <code>xy_grid</code> to your controller. Without any of these mappings, the application will refuse to start.</p>
-
-<p>  To map an OSC device, add a <code>Param</code> node to the control-map which look like this:</p>
-
-<pre><code>&lt;Param name="MyDevicePad" type="xypad"  minimum="0" maximum="127"/&gt;
-</code></pre>
-
-<p>  To map a MIDI device, add a <code>Param</code> node to the control-map which look like this:</p>
-
-<pre><code>&lt;Param name="XYPad_X" type="xypad" size="4" skip_echo="true"&gt;
-  &lt;SubParam value="CC#56" orientation="vertical" minimum="0" maximum="127" /&gt;
-  &lt;SubParam value="CC#57" orientation="horizontal" minimum="0" maximum="127" /&gt;
-&lt;/Param&gt;
-</code></pre>
-
-<p>  Note: to enter the correct minimum and maximum values, it's important you know a bit about your device as the application will base it's min/max/axis values
-  directly on the information specified here. </p>
-
-
-<h3>Discuss</h3>
-
-<p>Tool discussion is located on the <a href="http://forum.renoise.com/index.php?/topic/33154-new-tool-duplex-xypad/">Renoise forum</a></p>
-
-<h3>Changes</h3>
-
-<p>  0.99.12</p>
-<pre><code>- Supports &lt;SubParam&gt; nodes (proper support for MIDI devices)
-- Broadcasting of MIDI values
-</code></pre>
-
-<p>  0.98.19</p>
-<pre><code>- Simplified setup: use unique, automatically-generated names to identify
-  “managed” XYPads (no more need for manually specified id’s)
-</code></pre>
-
-<p>  0.98.15</p>
-<pre><code>- Fixed: No longer looses focus when navigating to a new track
-</code></pre>
-
-<p>  0.98 </p>
-<pre><code>- First release
-</code></pre>
-
-
-</p>
+<p><a href="https://github.com/renoise/xrnx/blob/master/Tools/com.renoise.Duplex.xrnx/Docs/Applications/XYPad.md">View the README.md</a> (github)</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>

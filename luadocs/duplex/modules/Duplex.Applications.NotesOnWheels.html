@@ -89,9 +89,7 @@
   <li><a href="../modules/Duplex.OscDevice.html">Duplex.OscDevice</a></li>
   <li><a href="../modules/Duplex.OscVoiceMgr.html">Duplex.OscVoiceMgr</a></li>
   <li><a href="../modules/Duplex.Preferences.html">Duplex.Preferences</a></li>
-  <li><a href="../modules/Duplex.ProcessSlicer.html">Duplex.ProcessSlicer</a></li>
   <li><a href="../modules/Duplex.RoamingDSP.html">Duplex.RoamingDSP</a></li>
-  <li><a href="../modules/Duplex.Scheduler.html">Duplex.Scheduler</a></li>
   <li><a href="../modules/Duplex.StateController.html">Duplex.StateController</a></li>
   <li><a href="../modules/Duplex.UIButton.html">Duplex.UIButton</a></li>
   <li><a href="../modules/Duplex.UIButtonStrip.html">Duplex.UIButtonStrip</a></li>
@@ -106,7 +104,6 @@
   <li><a href="../modules/Duplex.UISpinner.html">Duplex.UISpinner</a></li>
   <li><a href="../modules/Duplex.WidgetHooks.html">Duplex.WidgetHooks</a></li>
   <li><a href="../modules/Duplex.WidgetKeyboard.html">Duplex.WidgetKeyboard</a></li>
-  <li><a href="../modules/Duplex.html">Duplex</a></li>
   <li><a href="../modules/main.html">main</a></li>
 </ul>
 
@@ -116,59 +113,11 @@
 
 <h1>Module <code>Duplex.Applications.NotesOnWheels</code></h1>
 <p>Notes On Wheels (N.O.W) is an arpeggiating step sequencer.</p>
-<p>
-<p>
-Inheritance: <a href="../modules/Duplex.Application.html#">Duplex.Application</a> > Duplex.Application.NotesOnWheels </p>
+<p> </p>
 
-<h3>Features</h3>
-<p>N.O.W. allows you to create a sequence and control all aspects of each step (such as the pitch, velocity etc.) in realtime. </p>
+<h1></h1>
 
-<p>As for input, N.O.W. is very flexible, as you can control it via an additional MIDI input. Also, the virtual control surface will, when focused, detect and respond to keypresses within a specific range. </p>
-
-<p>The virtual keyboard supports both ordinary transpose (one octave up/down from the middle C), and multi-step sequences (press keys while holding the SHIFT modifier). Same goes for the external MIDI keyboard, which can be set up to act upon CC messages and pitch bend. </p>
-
-
-<h3>Controller setup</h3>
-
-<p>A dedicated control surface is located in the Renoise tools menu:
-Duplex > Custombuilt > Notes On Wheels</p>
-<pre><code>_________________________________________________
-|  _  _  _  _  _  _  _  _  _  _  _  _   _  _    |
-| |_||_||_||_||_||_||_||_||_||_||_||_| |_||_|   | &lt;- Position + Line offset
-|  _  _  _  _  _  _  _  _  _  _  _  _   ______  |
-| (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_) |__||__| | &lt;- Pitch controls
-|  _  _  _  _  _  _  _  _  _  _  _  _   ______  |
-| (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_) |__||__| | &lt;- Velocity controls
-|  _  _  _  _  _  _  _  _  _  _  _  _   ______  |
-| (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_) |__||__| | &lt;- Offset controls
-|  _  _  _  _  _  _  _  _  _  _  _  _   ______  |
-| (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_) |__||__| | &lt;- Gate controls
-|  _  _  _  _  _  _  _  _  _  _  _  _   ______  |
-| (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_) |__||__| | &lt;- Retrigger controls
-|  _  _  _  _  _  _  _  _  _  _  _  _   _  _    |
-| |_||_||_||_||_||_||_||_||_||_||_||_| (_)(_)   | &lt;- Steps + Spacing/Length
-|                                               |
-| |Write| |Learn| |Fill| |Global| |Modes...|    | &lt;- Various controls
-| ______________________________________________|
-</code></pre>
-
-<p>Also, check out the compact version, which use fewer controls, but still manages to contain every feature of it's bigger brother. This is possible because the sliders in that version are switching between the currently active mode (pitch, velocity etc.), and therefore, require only a small set of physical controls. Perhaps it's a more realistic starting point for your wn controller mapping than the fully expanded version? It's located here:
-Duplex > Custombuilt > Notes On Wheels (compact)</p>
-
-
-<h3>Discuss</h3>
-
-<p>Tool discussion is located on the <a href="http://forum.renoise.com/index.php?/topic/31136-notes-on-wheels-now/">Renoise forum</a></p>
-
-
-<h3>Changelog</h3>
-
-<p>  0.98  </p>
-<pre><code>- First release
-</code></pre>
-
-
-</p>
+<p><a href="https://github.com/renoise/xrnx/blob/master/Tools/com.renoise.Duplex.xrnx/Docs/Applications/NotesOnWheels.md">View the README.md</a> (github)</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -259,13 +208,7 @@ Duplex > Custombuilt > Notes On Wheels (compact)</p>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#available_mappings">available_mappings</a></td>
-	<td class="summary">These are the available mappings for the application</p>
-
-<p> Note: the <code>set<em>mode</em>[...]</code> mappings allow you to assign a mode directly to a specific button.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#white_keys">white_keys</a></td>
-	<td class="summary">list of white keys</td>
+	<td class="summary">These are the available mappings for the application</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self._controls">self._controls</a></td>
@@ -788,30 +731,33 @@ Duplex > Custombuilt > Notes On Wheels (compact)</p>
     <ul>
         <li><span class="parameter">write_method</span>
 
-<p> Select the desired write method </p>
-<pre><code>WRITE_METHOD_TOUCH will only output notes while the controller is being used
-WRITE_METHOD_LATCH will start output once the controller is being used
-WRITE_METHOD_WRITE will output notes continously, no matter what
-</code></pre>
+
 
         </li>
-        <li><span class="parameter">edit_sync</span>
-         Enable output when recording/edit-mode in Renoise is active
+        <li><span class="parameter">description</span>
+
+
+
         </li>
-        <li><span class="parameter">global_mode</span>
-         Enable this to start the application in global mode
+        <li><span class="parameter">on_change</span>
+
+
+
         </li>
-        <li><span class="parameter">fill_mode</span>
-         Enable this to start the application in fill mode
+        <li><span class="parameter">items</span>
+
+
+
         </li>
-        <li><span class="parameter">offset_quantize</span>
-         Adjust this to divide a sample into a number of equally sized segments when (applied when using the sample-offset controls).
+        <li><span class="parameter">Latch: touch to start output</span>
+
+
+
         </li>
-        <li><span class="parameter">offset_wrap</span>
-         Enable this to wrap the sample-offset
-        </li>
-        <li><span class="parameter">midi_keyboard</span>
-         Select among available MIDI devices
+        <li><span class="parameter">Write: constant output</span>
+
+
+
         </li>
     </ul>
 
@@ -825,128 +771,15 @@ WRITE_METHOD_WRITE will output notes continously, no matter what
     <strong>available_mappings</strong>
     </dt>
     <dd>
-    These are the available mappings for the application</p>
-
-<p> Note: the <code>set<em>mode</em>[...]</code> mappings allow you to assign a mode directly to a specific button.  If two or more modes are assigned in this way, they will act as radio buttons.
- As a secondary feature, hold any of these buttons for a moment, and the sequence will be written to the pattern, <code>fill mode</code>
+    These are the available mappings for the application
 
 
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">choose_mode</span>
 
-<p> (UISlider) The mode determine which kind of output the 'Steps' dials will generate</p>
-<pre><code>1 = Pitch - set the pitch of each step - max/min value will clear
-2 = Velocity - set the volume of each step
-3 = Offset - set the sample offset of each step
-4 = Gate - set the length of each step, max is infinite
-5 = Retrig - set the retrig rate of each step
-</code></pre>
-
-        </li>
-        <li><span class="parameter">set_mode_pitch</span>
-         (UIButton) Set mode to Pitch*
-        </li>
-        <li><span class="parameter">set_mode_velocity</span>
-         (UIButton) Set mode to Velocity*
-        </li>
-        <li><span class="parameter">set_mode_offset</span>
-         (UIButton) Set mode to Offset*
-        </li>
-        <li><span class="parameter">set_mode_gate</span>
-         (UIButton) Set mode to Gate*
-        </li>
-        <li><span class="parameter">set_mode_retrig</span>
-         (UIButton) Set mode to Gate*
-        </li>
-        <li><span class="parameter">multi_sliders</span>
-         (group of UISliders) Specifies mode-dependant input dials (can control any parameter by switching mode)
-        </li>
-        <li><span class="parameter">pitch_sliders</span>
-         (group of UISliders) Direct pitch control of each step
-        </li>
-        <li><span class="parameter">velocity_sliders</span>
-         (group of UISliders) Direct velocity control of each step
-        </li>
-        <li><span class="parameter">offset_sliders</span>
-         (group of UISliders) Direct offset control of each step
-        </li>
-        <li><span class="parameter">gate_sliders</span>
-         (group of UISliders) Direct gate control of each step
-        </li>
-        <li><span class="parameter">retrig_sliders</span>
-         (group of UISliders) Direct retrig control of each step
-        </li>
-        <li><span class="parameter">num_steps</span>
-         (UISlider, 1-12) Set the number of steps in the sequence (mode-dependant)
-        </li>
-        <li><span class="parameter">step_spacing</span>
-         (UISlider, 1-16) This value will determine the space between each note in lines (a value of 0 will output all notes simultaneously)
-        </li>
-        <li><span class="parameter">pitch_adjust</span>
-         (UISlider) global pitch adjust (affects all steps)
-        </li>
-        <li><span class="parameter">velocity_adjust</span>
-         (UISlider) global velocity adjust (affects all steps)
-        </li>
-        <li><span class="parameter">offset_adjust</span>
-         (UISlider) global offset adjust (affects all steps)
-        </li>
-        <li><span class="parameter">gate_adjust</span>
-         (UISlider) global gate adjust (affects all steps)
-        </li>
-        <li><span class="parameter">retrig_adjust</span>
-         (UISlider) global retrig adjust (affects all steps)
-        </li>
-        <li><span class="parameter">multi_adjust</span>
-         (UISlider) global adjust (affects all steps in given mode)
-        </li>
-        <li><span class="parameter">write</span>
-         (UIButton) Toggles between output and no output (if you don't have room for this, check out @edit_sync)
-        </li>
-        <li><span class="parameter">learn</span>
-         (UIButton) Import pattern editor data beginning from the cursor position
-        </li>
-        <li><span class="parameter">fill</span>
-         (UIButton) Fill the entire track with the sequence, each time something changes. Use with caution, as this might be heavy on the CPU (with long patterns and many note columns)
-        </li>
-        <li><span class="parameter">global</span>
-         (UIButton) Enable 'global' to output all parameters (pitch, velocity, etc.) at the same time. When off, only the modified parameter type is output
-        </li>
-        <li><span class="parameter">shift_up</span>
-         (UIButton) Control the line-number offset (increase offset by a single line)
-        </li>
-        <li><span class="parameter">shift_down</span>
-         (UIButton) Control the line-number offset (decrease offset by a single line)
-        </li>
-        <li><span class="parameter">extend</span>
-         (UIButton) The 'extend' button will multiply the sequence's length by two, by cloning all steps and doubling the global retrig rate.
-        </li>
-        <li><span class="parameter">shrink</span>
-         (UIButton) Pressing 'shrink' will reduce the length of the sequence and global retrig rate by 50%
-        </li>
-        <li><span class="parameter">position</span>
-         (UIButton) Set the position of the sequence, based on the position of the edit cursor
-        </li>
-    </ul>
 
 
-
-
-
-</dd>
-    <dt>
-    <a name = "white_keys"></a>
-    <strong>white_keys</strong>
-    </dt>
-    <dd>
-    list of white keys
-
-
-    <h3>Fields:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-         lot of keys
         </li>
     </ul>
 

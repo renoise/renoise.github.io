@@ -87,9 +87,7 @@
   <li><a href="../modules/Duplex.OscDevice.html">Duplex.OscDevice</a></li>
   <li><a href="../modules/Duplex.OscVoiceMgr.html">Duplex.OscVoiceMgr</a></li>
   <li><a href="../modules/Duplex.Preferences.html">Duplex.Preferences</a></li>
-  <li><a href="../modules/Duplex.ProcessSlicer.html">Duplex.ProcessSlicer</a></li>
   <li><a href="../modules/Duplex.RoamingDSP.html">Duplex.RoamingDSP</a></li>
-  <li><a href="../modules/Duplex.Scheduler.html">Duplex.Scheduler</a></li>
   <li><a href="../modules/Duplex.StateController.html">Duplex.StateController</a></li>
   <li><a href="../modules/Duplex.UIButton.html">Duplex.UIButton</a></li>
   <li><a href="../modules/Duplex.UIButtonStrip.html">Duplex.UIButtonStrip</a></li>
@@ -104,7 +102,6 @@
   <li><a href="../modules/Duplex.UISpinner.html">Duplex.UISpinner</a></li>
   <li><a href="../modules/Duplex.WidgetHooks.html">Duplex.WidgetHooks</a></li>
   <li><a href="../modules/Duplex.WidgetKeyboard.html">Duplex.WidgetKeyboard</a></li>
-  <li><a href="../modules/Duplex.html">Duplex</a></li>
   <li><a href="../modules/main.html">main</a></li>
 </ul>
 
@@ -113,85 +110,14 @@
 <div id="content">
 
 <h1>Module <code>Duplex.Applications.Mixer</code></h1>
-<p>The Mixer is a generic class for controlling the Renoise mixer, featuring an endlessly scrollable number of tracks.</p>
 <p>
 
-<p>Inheritance: <a href="../modules/Duplex.Application.html#">Duplex.Application</a> > Duplex.Application.Mixer </p>
-
-<h3>Grid controller layout</h3>
-
-<p>Assigning the levels, mute and/or solo mapping to the same group (the grid) will automaticaly produce the following layout:</p>
-
-<pre><code>+---- - --- - --- - --- +    +---- +  The master track
-|mute1|mute2|mute3|mute4| -&gt; |  m  |  will, when specified,
-+---- - --- - --- - --- +    +  a  +  show up in the
-|solo1|solo2|solo3|solo4| -&gt; |  s  |  rightmost side
-+---- - --- - --- - --- +    +  t  +  and use full height
-|  l  |  l  |  l  |  l  | -&gt; |  e  |
-+  e  +  e  +  e  +  e  +    +  r  +
-|  v  |  v  |  v  |  v  |    |     |
-+  e  +  e  +  e  +  e  +    +     +
-|  l  |  l  |  l  |  l  |    |     |
-+     +     +     +     +    +     +
-|  1  |  2  |  3  |  4  |    |     |
-+---- - --- - --- - --- +    +---- +
-</code></pre>
-
-<p>  Note that you can have any number of tracks, but each group (levels, mute and/or solo) needs to contain the same number of parameters.</p>
-
-
-<h3>Other features</h3>
-
-<ul>
-    <li>Parameter pick-up: when this feature is enabled, values will not be changed until you move a fader across the threshold point (the current value). This will make it possible to avoid sudden jumps in levels as you are scrolling between pages and adjusting levels.</li>
-</ul>
-
-<h3>Changes</h3>
-
-<p>  0.99</p>
-<pre><code>- UIComponent: when possible, supply mapping as construction argument
-- UIComponent references stored within self._controls
-</code></pre>
-
-<p>  0.98</p>
-<pre><code>- Track navigation removed (delegated to TrackSelector app)
-</code></pre>
-
-<p>  0.97  </p>
-<pre><code>- Renoise's 2.7 multi-solo mode supported/visualized
-- Main display updates now happen in on_idle loop
-- Ability to embed both mute &amp; solo mappings into grid
-- New option: "sync_pre_post" (Renoise 2.7+)
-</code></pre>
-
-<p>  0.96  </p>
-<pre><code>- Option: paged navigation features (page_size)
-- Option: offset tracks by X (for the Ohm64 configuration)
-</code></pre>
-
-<p>  0.95  </p>
-<pre><code>- The various mappings now have less dependancies
-- Feature: hold mute button to toggle solo state for the given track
-- Applied feedback fix (cascading mutes when solo'ing)
-- Options: follow_track, mute_mode
-</code></pre>
-
-<p>  0.92  </p>
-<pre><code>- Remove the destroy_app() method (not needed anymore)
-- Assign tooltips to the virtual control surface
-</code></pre>
-
-<p>  0.90  </p>
-<pre><code>- Use the new UIComponent.set_pos() method throughout the class
-- Adjusted colors to degrade better on various devices
-</code></pre>
-
-<p>  0.81  </p>
-<pre><code>- First release
-</code></pre>
-
-
 </p>
+<p>Use the Mixer for controlling the Renoise mixer</p>
+
+<h1></h1>
+
+<p><a href="https://github.com/renoise/xrnx/blob/master/Tools/com.renoise.Duplex.xrnx/Docs/Applications/Mixer.md">View the README.md</a> (github)</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>

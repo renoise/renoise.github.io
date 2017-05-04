@@ -88,9 +88,7 @@
   <li><a href="../modules/Duplex.OscDevice.html">Duplex.OscDevice</a></li>
   <li><a href="../modules/Duplex.OscVoiceMgr.html">Duplex.OscVoiceMgr</a></li>
   <li><a href="../modules/Duplex.Preferences.html">Duplex.Preferences</a></li>
-  <li><a href="../modules/Duplex.ProcessSlicer.html">Duplex.ProcessSlicer</a></li>
   <li><a href="../modules/Duplex.RoamingDSP.html">Duplex.RoamingDSP</a></li>
-  <li><a href="../modules/Duplex.Scheduler.html">Duplex.Scheduler</a></li>
   <li><a href="../modules/Duplex.StateController.html">Duplex.StateController</a></li>
   <li><a href="../modules/Duplex.UIButton.html">Duplex.UIButton</a></li>
   <li><a href="../modules/Duplex.UIButtonStrip.html">Duplex.UIButtonStrip</a></li>
@@ -105,7 +103,6 @@
   <li><a href="../modules/Duplex.UISpinner.html">Duplex.UISpinner</a></li>
   <li><a href="../modules/Duplex.WidgetHooks.html">Duplex.WidgetHooks</a></li>
   <li><a href="../modules/Duplex.WidgetKeyboard.html">Duplex.WidgetKeyboard</a></li>
-  <li><a href="../modules/Duplex.html">Duplex</a></li>
   <li><a href="../modules/main.html">main</a></li>
 </ul>
 
@@ -114,26 +111,33 @@
 <div id="content">
 
 <h1>Module <code>Duplex.Message</code></h1>
-<p>Initialize Message class</p>
 <p>
 
 </p>
+<p>The Message class is a container for messages, closely related to the ControlMap</p>
+
+<p>See also:
+<a href="../modules/Duplex.ControlMap.html#">Duplex.ControlMap</a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#__init">__init (device)</a></td>
+	<td class="summary">Initialize Message class</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#get_numeric_value">get_numeric_value ()</a></td>
-	<td class="summary">This method is called when we need to match against a value
- (for example, we might match a C#4 against a certain velocity level)</td>
+	<td class="summary">[Class] Retrieve the 'default', numeric value for a message
+ v2: It's too obscure what this method does</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#__eq">__eq (other)</a></td>
-	<td class="summary">Compare with another instance (only check for object identity)</td>
+	<td class="summary">[Class] Compare with another instance (only check for object identity)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#__tostring">__tostring ()</a></td>
-	<td class="summary">Return message (for debugging purposes)</td>
+	<td class="summary">[Class] For debugging purposes</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -188,12 +192,32 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
+    <a name = "__init"></a>
+    <strong>__init (device)</strong>
+    </dt>
+    <dd>
+    Initialize Message class
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">device</span>
+         (Device)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "get_numeric_value"></a>
     <strong>get_numeric_value ()</strong>
     </dt>
     <dd>
-    This method is called when we need to match against a value
- (for example, we might match a C#4 against a certain velocity level)
+    [Class] Retrieve the 'default', numeric value for a message
+ v2: It's too obscure what this method does
 
 
 
@@ -212,7 +236,7 @@
     <strong>__eq (other)</strong>
     </dt>
     <dd>
-    Compare with another instance (only check for object identity)
+    [Class] Compare with another instance (only check for object identity)
 
 
     <h3>Parameters:</h3>
@@ -237,7 +261,7 @@
     <strong>__tostring ()</strong>
     </dt>
     <dd>
-    Return message (for debugging purposes)
+    [Class] For debugging purposes
 
 
 

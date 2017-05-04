@@ -89,9 +89,7 @@
   <li><a href="../modules/Duplex.OscDevice.html">Duplex.OscDevice</a></li>
   <li><a href="../modules/Duplex.OscVoiceMgr.html">Duplex.OscVoiceMgr</a></li>
   <li><a href="../modules/Duplex.Preferences.html">Duplex.Preferences</a></li>
-  <li><a href="../modules/Duplex.ProcessSlicer.html">Duplex.ProcessSlicer</a></li>
   <li><strong>Duplex.RoamingDSP</strong></li>
-  <li><a href="../modules/Duplex.Scheduler.html">Duplex.Scheduler</a></li>
   <li><a href="../modules/Duplex.StateController.html">Duplex.StateController</a></li>
   <li><a href="../modules/Duplex.UIButton.html">Duplex.UIButton</a></li>
   <li><a href="../modules/Duplex.UIButtonStrip.html">Duplex.UIButtonStrip</a></li>
@@ -106,7 +104,6 @@
   <li><a href="../modules/Duplex.UISpinner.html">Duplex.UISpinner</a></li>
   <li><a href="../modules/Duplex.WidgetHooks.html">Duplex.WidgetHooks</a></li>
   <li><a href="../modules/Duplex.WidgetKeyboard.html">Duplex.WidgetKeyboard</a></li>
-  <li><a href="../modules/Duplex.html">Duplex</a></li>
   <li><a href="../modules/main.html">main</a></li>
 </ul>
 
@@ -115,28 +112,10 @@
 <div id="content">
 
 <h1>Module <code>Duplex.RoamingDSP</code></h1>
-<p>Extend this class if you want an application to lock onto a specific type of device, or navigate between similar devices.</p>
 <p>
 
-<p>Inheritance: <a href="../modules/Duplex.Application.html#">Duplex.Application</a> > Duplex.RoamingDSP</p>
-
-<p>The application can target any device that has been selected in Renoise, freely roaming the tracks. If the lock button starts to blink slowly, it is to remind you that the application is currently 'homeless', has no matching device to control. </p>
-
-<p>Opposite to the "free-roaming mode" we have the "locked mode" which will lock to a single device. The locked mode can either be set by being mapped to a button, or via the options dialog. In either case, the application will 'tag' the device with a unique name. </p>
-
-<p>To complement the "lock" button, we also have a "focus" button. This button brings focus back to the locked device, whenever you have (manually) selected an un-locked device.</p>
-
-<p>Finally, we can navigate between devices by using the 'next' and 'previous' buttons. In case we have locked to a device, previous/next will "transfer" the lock to that device.</p>
-
-
-<h3>Changes</h3>
-
-<p>  0.98</p>
-<pre><code>- First release
-</code></pre>
-
-
 </p>
+<p>Extend this class for 'roaming' control of a DSP device </p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
