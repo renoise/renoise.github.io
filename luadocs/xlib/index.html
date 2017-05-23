@@ -38,6 +38,7 @@
   <li><a href="modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="modules/xLFO.html">xLFO</a></li>
   <li><a href="modules/xLib.html">xLib</a></li>
   <li><a href="modules/xLine.html">xLine</a></li>
   <li><a href="modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -56,7 +57,7 @@
   <li><a href="modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="modules/xOscValue.html">xOscValue</a></li>
   <li><a href="modules/xParameter.html">xParameter</a></li>
-  <li><a href="modules/xPattern.html">xPattern</a></li>
+  <li><a href="modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="modules/xPhrase.html">xPhrase</a></li>
   <li><a href="modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -70,6 +71,8 @@
   <li><a href="modules/xScale.html">xScale</a></li>
   <li><a href="modules/xSelection.html">xSelection</a></li>
   <li><a href="modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="modules/xTrack.html">xTrack</a></li>
   <li><a href="modules/xTransport.html">xTransport</a></li>
@@ -91,18 +94,19 @@
 <table class="module_list">
 	<tr>
 		<td class="name"  nowrap><a href="modules/xAudioDevice.html">xAudioDevice</a></td>
-		<td class="summary">Static methods for dealing with Audio Devices
-.</td>
+		<td class="summary">
+
+</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xAutomation.html">xAutomation</a></td>
-		<td class="summary">Easy control of parameter automation
-.</td>
+		<td class="summary">
+
+</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xBlockLoop.html">xBlockLoop</a></td>
-		<td class="summary">Methods for working with the Renoise loop-block
-.</td>
+		<td class="summary">Methods for working with the Renoise loop-block.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xColumns.html">xColumns</a></td>
@@ -111,13 +115,11 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xCursorPos.html">xCursorPos</a></td>
-		<td class="summary">Describes the position of the edit cursor within the project timeline
-.</td>
+		<td class="summary">Describes the position of the edit cursor within the project timeline.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xEffectColumn.html">xEffectColumn</a></td>
-		<td class="summary">Use xEffectColumn to create 'virtual' renoise.EffectColumn objects
-.</td>
+		<td class="summary">Use xEffectColumn to create 'virtual' renoise.EffectColumn objects.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xInstrument.html">xInstrument</a></td>
@@ -125,19 +127,23 @@
 .</td>
 	</tr>
 	<tr>
+		<td class="name"  nowrap><a href="modules/xLFO.html">xLFO</a></td>
+		<td class="summary">
+
+</td>
+	</tr>
+	<tr>
 		<td class="name"  nowrap><a href="modules/xLib.html">xLib</a></td>
-		<td class="summary">Global constants and static methods for xLib
+		<td class="summary">Global constants and static methods for xLib, the eXtended Renoise API library
 .</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xLine.html">xLine</a></td>
-		<td class="summary">Use xLine to represent a single line (note/effect-columns + automation)
-.</td>
+		<td class="summary">Represents a single line, including note/effect-columns and automation.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xLineAutomation.html">xLineAutomation</a></td>
-		<td class="summary">A representation of automation data within a single line
-.</td>
+		<td class="summary">A representation of automation data within a single line.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xLinePattern.html">xLinePattern</a></td>
@@ -166,8 +172,7 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xMidiMessage.html">xMidiMessage</a></td>
-		<td class="summary">A higher-level MIDI message, as employed by various xLib classes
-.</td>
+		<td class="summary">An extended MIDI message.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xNoteCapture.html">xNoteCapture</a></td>
@@ -181,7 +186,7 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xOscClient.html">xOscClient</a></td>
-		<td class="summary">xOscClient is a simple OSC client
+		<td class="summary">xOscClient wraps a renoise.Socket with some handy methods
 .</td>
 	</tr>
 	<tr>
@@ -215,8 +220,8 @@ receive OSC messages
 .</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/xPattern.html">xPattern</a></td>
-		<td class="summary">Static methods for dealing with a renoise.Pattern
+		<td class="name"  nowrap><a href="modules/xPatternPos.html">xPatternPos</a></td>
+		<td class="summary">Static methods for manipulating the position within a renoise.Pattern
 .</td>
 	</tr>
 	<tr>
@@ -236,8 +241,7 @@ receive OSC messages
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xPlayPos.html">xPlayPos</a></td>
-		<td class="summary">Extended play-position which support fractional time (between lines)
-.</td>
+		<td class="summary">Extended play-position which support fractional time (between lines).</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xRule.html">xRule</a></td>
@@ -246,8 +250,12 @@ receive OSC messages
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xRules.html">xRules</a></td>
-		<td class="summary">Rewrite MIDI/OSC messages on-the-fly using generated code
-.</td>
+		<td class="summary">Rewrite MIDI/OSC messages on-the-fly using generated code</p>
+
+<h2>About</h2>
+
+<p>xRules works by applying "rules" to the input, using specific conditions as
+triggers.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xRuleset.html">xRuleset</a></td>
@@ -281,13 +289,31 @@ receive OSC messages
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xSongPos.html">xSongPos</a></td>
-		<td class="summary">Describes a position within the project timeline
-.</td>
+		<td class="summary">Static methods for working with renoise.SongPos (or alike).</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/xSongSettings.html">xSongSettings</a></td>
+		<td class="summary">
+
+</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/xStreamBuffer.html">xStreamBuffer</a></td>
+		<td class="summary">
+<p>choose a mute mode
+ NONE = do nothing except to output 'nothing'</p>
+<pre><code>note: when combined with 'clear', this makes it possible to
+record into a track, using the mute button as a 'output switch'
+</code></pre>
+<p> OFF = insert OFF across columns, then nothing</p>
+<pre><code>TODO when 'clear_undefined' is true, OFF is only written when
+there is not an existing note at that position
+</code></pre>
+</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xStreamPos.html">xStreamPos</a></td>
-		<td class="summary">This class can track playback progression in a song
-.</td>
+		<td class="summary">This class can track playback progression in a song.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/xTrack.html">xTrack</a></td>
