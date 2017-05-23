@@ -45,6 +45,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -63,7 +64,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -77,6 +78,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><strong>xTrack</strong></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -115,8 +118,13 @@
 	<td class="summary">[Static] Get send track with specific index</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_track_count">get_track_count (track_type)</a></td>
-	<td class="summary">[Static] Get total number of tracks matching the "type"</td>
+	<td class="name" nowrap><a href="#any_track_is_soloed">any_track_is_soloed ()</a></td>
+	<td class="summary">[Static] check if any track is soloed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_tracks_by_type">get_tracks_by_type (track_type)</a></td>
+	<td class="summary">[Static] Get total number of tracks matching the "type"
+ Necessary as <code>renoise.song().sequencer<em>track</em>count</code> doesn't consider group tracks</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_group_track_index">get_group_track_index (track_index, match_self)</a></td>
@@ -151,6 +159,10 @@
 	<td class="name" nowrap><a href="#set_selected_column_index">set_selected_column_index (track, col_idx)</a></td>
 	<td class="summary">[Static] Set column_index, based on visible columns
  (similar to e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_column_mute">set_column_mute (col_idx)</a></td>
+	<td class="summary">[Static] Set mute state for a note column in the selected track</td>
 	</tr>
 </table>
 
@@ -224,11 +236,31 @@
 
 </dd>
     <dt>
-    <a name = "get_track_count"></a>
-    <strong>get_track_count (track_type)</strong>
+    <a name = "any_track_is_soloed"></a>
+    <strong>any_track_is_soloed ()</strong>
+    </dt>
+    <dd>
+    [Static] check if any track is soloed
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_tracks_by_type"></a>
+    <strong>get_tracks_by_type (track_type)</strong>
     </dt>
     <dd>
     [Static] Get total number of tracks matching the "type"
+ Necessary as <code>renoise.song().sequencer<em>track</em>count</code> doesn't consider group tracks
 
 
     <h3>Parameters:</h3>
@@ -241,7 +273,7 @@
     <h3>Returns:</h3>
     <ol>
 
-        int,
+        table<int>
     </ol>
 
 
@@ -447,6 +479,26 @@
 
         string, error message when failed
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_column_mute"></a>
+    <strong>set_column_mute (col_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Set mute state for a note column in the selected track
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">col_idx</span>
+         (number)
+        </li>
+    </ul>
+
 
 
 

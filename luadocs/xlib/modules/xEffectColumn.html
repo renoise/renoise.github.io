@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><strong>xEffectColumn</strong></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -93,18 +96,21 @@
 <div id="content">
 
 <h1>Module <code>xEffectColumn</code></h1>
-<p>Use xEffectColumn to create 'virtual' renoise.EffectColumn objects
-.</p>
+<p>Use xEffectColumn to create 'virtual' renoise.EffectColumn objects.</p>
 <p>
+
 
 <h1></h1>
 
-<p>Unlike the renoise.EffectColumn, this one can be freely defined,
-without the need to have the line present in an actual song </p>
+<p>Unlike the renoise.EffectColumn, this one can be freely defined, without the need to have
+the line present somewhere in the actual song.</p>
 
-<p>You create an instance by feeding it a descriptive table in the constructor.
-All string-based values are automatically converted into their numeric
-counterparts. </p>
+<p>You can create an instance by feeding it a descriptive table in the constructor, or by letting
+the class read a specific effect-column (via the method <code>do_read()</code>)</p>
+
+<p>Note that all string-based values are automatically converted into numbers, and vice versa.
+Setting the <code>note_string</code> and then requesting the <code>note_value</code> will yield the same value,
+represented as string or number, respectively. </p>
 
 </p>
 
@@ -148,7 +154,7 @@ counterparts. </p>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#SUPPORTED_EFFECTS">SUPPORTED_EFFECTS</a></td>
-	<td class="summary">List of effect commands (names)</td>
+	<td class="summary">List of supported effect commands.</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -392,118 +398,77 @@ counterparts. </p>
     <strong>SUPPORTED_EFFECTS</strong>
     </dt>
     <dd>
-    List of effect commands (names)
+    List of supported effect commands.  <br>Values are represented
+ in the accompanying table, <code>xEffectColumn.SUPPORTED<em>EFFECT</em>CHARS</code>
 
 
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">Axy - Arpeggio</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 10
         </li>
         <li><span class="parameter">Bxx - Backwards</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 11
         </li>
         <li><span class="parameter">Cxy - Cut Volume</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 12
         </li>
         <li><span class="parameter">Dxx - Slide Pitch Down</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 13
         </li>
         <li><span class="parameter">Exx - Set Envelope Pos</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 14
         </li>
         <li><span class="parameter">Gxx - Glide Note </span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 16
         </li>
         <li><span class="parameter">Ixx - Fade Volume In</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 18
         </li>
         <li><span class="parameter">Jxx - Track Routing</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 19
         </li>
         <li><span class="parameter">Lxx - Set Track Level</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 21
         </li>
         <li><span class="parameter">Mxx - Set Note Volume</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 22
         </li>
         <li><span class="parameter">Nxy - Set Auto Pan</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 23
         </li>
         <li><span class="parameter">Pxx - Set Track Pan</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 25
         </li>
         <li><span class="parameter">Qxx - Delay By Ticks</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 26
         </li>
         <li><span class="parameter">Rxy - Retrigger Line</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 27
         </li>
         <li><span class="parameter">Sxx - Trigger Offset/Slice</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 28
         </li>
         <li><span class="parameter">Txy - Set Tremolo</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 29
         </li>
         <li><span class="parameter">Uxy - Slide Pitch Up</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 30
         </li>
         <li><span class="parameter">Vxy - Set Vibrato</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 31
         </li>
         <li><span class="parameter">Wxx - Set Track Width</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 32
         </li>
         <li><span class="parameter">Xxx - Stop All Notes</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 33
         </li>
         <li><span class="parameter">Yxx - MaYbe Trigger Line</span>
-
-
-
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 34
         </li>
         <li><span class="parameter">Zxy - Trigger Phrase</span>
-        API5
+        <code>SUPPORTED<em>EFFECT</em>CHARS</code> = 35 (API5 ONLY)
         </li>
     </ul>
 

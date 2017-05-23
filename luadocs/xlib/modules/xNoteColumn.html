@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -171,42 +174,42 @@ counterparts. </p>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#tokens">tokens</a></td>
-	<td class="summary">List of note-column properties</td>
+	<td class="summary">table, list of available note-column properties</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#output_tokens">output_tokens</a></td>
-	<td class="summary">Properties to use when writing to pattern</td>
+	<td class="summary">table, properties that can be used when writing to pattern</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#NOTE_ARRAY">NOTE_ARRAY</a></td>
-	<td class="summary">List of note-names, without the octave part</td>
+	<td class="summary">table, list of note-names (without the octave part)</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#EMPTY_NOTE_VALUE">EMPTY_NOTE_VALUE</a></td>
-	<td class="summary">Value representing an empty note</td>
+	<td class="summary">number, representing an empty note</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#EMPTY_NOTE_STRING">EMPTY_NOTE_STRING</a></td>
-	<td class="summary">String representing an empty note</td>
+	<td class="summary">string, representing an empty note</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#NOTE_OFF_VALUE">NOTE_OFF_VALUE</a></td>
-	<td class="summary">Value representing a note-off</td>
+	<td class="summary">number, representing a note-off</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#NOTE_OFF_STRING">NOTE_OFF_STRING</a></td>
-	<td class="summary">String representing a note-off</td>
+	<td class="summary">string, representing a note-off</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#EMPTY_VOLUME_VALUE">EMPTY_VOLUME_VALUE</a></td>
-	<td class="summary">Value representing an empty column</td>
+	<td class="summary">number, representing an empty column</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#EMPTY_COLUMN_STRING">EMPTY_COLUMN_STRING</a></td>
-	<td class="summary">String representing an empty column</td>
+	<td class="summary">string, representing an empty column</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.instrument_value">self.instrument_value</a></td>
@@ -587,7 +590,7 @@ counterparts. </p>
     <strong>tokens</strong>
     </dt>
     <dd>
-    List of note-column properties
+    table, list of available note-column properties
 
 
     <h3>Fields:</h3>
@@ -674,7 +677,7 @@ counterparts. </p>
     <strong>output_tokens</strong>
     </dt>
     <dd>
-    Properties to use when writing to pattern
+    table, properties that can be used when writing to pattern
 
 
     <h3>Fields:</h3>
@@ -726,7 +729,7 @@ counterparts. </p>
     <strong>NOTE_ARRAY</strong>
     </dt>
     <dd>
-    List of note-names, without the octave part
+    table, list of note-names (without the octave part)
 
 
     <h3>Fields:</h3>
@@ -806,7 +809,7 @@ counterparts. </p>
     <strong>EMPTY_NOTE_VALUE</strong>
     </dt>
     <dd>
-    Value representing an empty note
+    number, representing an empty note
 
 
 
@@ -820,7 +823,7 @@ counterparts. </p>
     <strong>EMPTY_NOTE_STRING</strong>
     </dt>
     <dd>
-    String representing an empty note
+    string, representing an empty note
 
 
 
@@ -834,7 +837,7 @@ counterparts. </p>
     <strong>NOTE_OFF_VALUE</strong>
     </dt>
     <dd>
-    Value representing a note-off
+    number, representing a note-off
 
 
 
@@ -848,7 +851,7 @@ counterparts. </p>
     <strong>NOTE_OFF_STRING</strong>
     </dt>
     <dd>
-    String representing a note-off
+    string, representing a note-off
 
 
 
@@ -862,7 +865,7 @@ counterparts. </p>
     <strong>EMPTY_VOLUME_VALUE</strong>
     </dt>
     <dd>
-    Value representing an empty column
+    number, representing an empty column
 
 
 
@@ -876,7 +879,7 @@ counterparts. </p>
     <strong>EMPTY_COLUMN_STRING</strong>
     </dt>
     <dd>
-    String representing an empty column
+    string, representing an empty column
 
 
 

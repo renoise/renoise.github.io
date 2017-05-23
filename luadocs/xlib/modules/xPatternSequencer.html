@@ -45,6 +45,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -63,7 +64,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><strong>xPatternSequencer</strong></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -77,6 +78,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -103,12 +106,13 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#get_next_pattern">get_next_pattern ()</a></td>
-	<td class="summary">TODO</td>
+	<td class="name" nowrap><a href="#within_bounds">within_bounds (seq_idx)</a></td>
+	<td class="summary">[Static] Check if position is within actual song boundaries</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_previous_pattern">get_previous_pattern ()</a></td>
-	<td class="summary">TODO</td>
+	<td class="name" nowrap><a href="#switch_to_sequence">switch_to_sequence (pos)</a></td>
+	<td class="summary">[Static] Switch to the specified position, while attempting to keep the beat
+ Intended for realtime usage, where jumping between differently-sized patterns can be tricky.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#loop_current_section">loop_current_section ()</a></td>
@@ -130,6 +134,15 @@
 	<td class="name" nowrap><a href="#set_scheduled_section">set_scheduled_section (section_index)</a></td>
 	<td class="summary">[Static] Schedule a given section-index for playback</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_playing_pattern">get_playing_pattern ()</a></td>
+	<td class="summary">[Static] Get<em>playing</em>pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_number_of_lines">get_number_of_lines (seq_idx)</a></td>
+	<td class="summary">[Static] Retrieve the pattern index
+ OPTIMIZE how to implement a caching mechanism?</td>
+	</tr>
 </table>
 
 <br/>
@@ -139,27 +152,45 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
-    <a name = "get_next_pattern"></a>
-    <strong>get_next_pattern ()</strong>
+    <a name = "within_bounds"></a>
+    <strong>within_bounds (seq_idx)</strong>
     </dt>
     <dd>
-    TODO
+    [Static] Check if position is within actual song boundaries
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , int
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "get_previous_pattern"></a>
-    <strong>get_previous_pattern ()</strong>
+    <a name = "switch_to_sequence"></a>
+    <strong>switch_to_sequence (pos)</strong>
     </dt>
     <dd>
-    TODO
+    [Static] Switch to the specified position, while attempting to keep the beat
+ Intended for realtime usage, where jumping between differently-sized patterns can be tricky.
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (renoise.SongPos)
+        </li>
+    </ul>
 
 
 
@@ -251,6 +282,53 @@
         </li>
     </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_playing_pattern"></a>
+    <strong>get_playing_pattern ()</strong>
+    </dt>
+    <dd>
+    [Static] Get<em>playing</em>pattern
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.Pattern
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_number_of_lines"></a>
+    <strong>get_number_of_lines (seq_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Retrieve the pattern index
+ OPTIMIZE how to implement a caching mechanism?
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+        , sequence index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        int or nil</li>
+        <li>
+        renoise.Pattern or nil</li>
+    </ol>
 
 
 

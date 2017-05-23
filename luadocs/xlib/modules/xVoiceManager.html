@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -193,10 +196,6 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
  and invoke input_message</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#register">register (xmsg)</a></td>
-	<td class="summary">[Class] Register/add a voice</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#release_all">release_all ()</a></td>
 	<td class="summary">[Class] Release all active voices</td>
 	</tr>
@@ -213,10 +212,6 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
 	<td class="summary">[Class] Release specific voice</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#check_expired">check_expired ()</a></td>
-	<td class="summary">[Class] Check if any voices have expired (when duration is set)</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get_voice_index">get_voice_index (xmsg)</a></td>
 	<td class="summary">[Class] Locate among active voices, taking the pitch + track + instrument into
  consideration (if all match, the voice is considered active...)</td>
@@ -226,11 +221,11 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
 	<td class="summary">[Class] Get the first column which does not have a playing voice assigned to it</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#steal_voice">steal_voice ()</a></td>
+	<td class="name" nowrap><a href="#_steal_voice">_steal_voice ()</a></td>
 	<td class="summary">[Class] Release the oldest voice (release, then trigger stolen_observable)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#attach_to_song">attach_to_song ()</a></td>
+	<td class="name" nowrap><a href="#_attach_to_song">_attach_to_song ()</a></td>
 	<td class="summary">[Class] Monitor changes to tracks and instruments</td>
 	</tr>
 	<tr>
@@ -252,6 +247,14 @@ voicemgr:input_message(xmsg) -- should trigger our notifier
 	<tr>
 	<td class="name" nowrap><a href="#get_lowest">get_lowest ()</a></td>
 	<td class="summary">[Class] Get the voice with the lowest pitch</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_register">_register (xmsg)</a></td>
+	<td class="summary">[Class] Register/add a voice</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_check_expired">_check_expired ()</a></td>
+	<td class="summary">[Class] Check if any voices have expired (when duration is set)</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -378,28 +381,6 @@ follow_octave (boolean)
 
 </dd>
     <dt>
-    <a name = "register"></a>
-    <strong>register (xmsg)</strong>
-    </dt>
-    <dd>
-    [Class] Register/add a voice
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">xmsg</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "release_all"></a>
     <strong>release_all ()</strong>
     </dt>
@@ -480,20 +461,6 @@ follow_octave (boolean)
 
 </dd>
     <dt>
-    <a name = "check_expired"></a>
-    <strong>check_expired ()</strong>
-    </dt>
-    <dd>
-    [Class] Check if any voices have expired (when duration is set)
-
-
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "get_voice_index"></a>
     <strong>get_voice_index (xmsg)</strong>
     </dt>
@@ -530,9 +497,7 @@ follow_octave (boolean)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">track_idx</span>
-
-
-
+        , which track to check
         </li>
     </ul>
 
@@ -547,8 +512,8 @@ follow_octave (boolean)
 
 </dd>
     <dt>
-    <a name = "steal_voice"></a>
-    <strong>steal_voice ()</strong>
+    <a name = "_steal_voice"></a>
+    <strong>_steal_voice ()</strong>
     </dt>
     <dd>
     [Class] Release the oldest voice (release, then trigger stolen_observable)
@@ -561,8 +526,8 @@ follow_octave (boolean)
 
 </dd>
     <dt>
-    <a name = "attach_to_song"></a>
-    <strong>attach_to_song ()</strong>
+    <a name = "_attach_to_song"></a>
+    <strong>_attach_to_song ()</strong>
     </dt>
     <dd>
     [Class] Monitor changes to tracks and instruments
@@ -688,6 +653,40 @@ follow_octave (boolean)
 
         xMidiMessage or nil
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_register"></a>
+    <strong>_register (xmsg)</strong>
+    </dt>
+    <dd>
+    [Class] Register/add a voice
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">xmsg</span>
+         (xMidiMessage) should be a MIDI note-message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_check_expired"></a>
+    <strong>_check_expired ()</strong>
+    </dt>
+    <dd>
+    [Class] Check if any voices have expired (when duration is set)
+
+
+
 
 
 

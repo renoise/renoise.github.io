@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 <li><a href="#Fields">Fields</a></li>
 </ul>
 
@@ -46,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><strong>xLine</strong></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,14 +96,13 @@
 <div id="content">
 
 <h1>Module <code>xLine</code></h1>
-<p>Use xLine to represent a single line (note/effect-columns + automation)
-.</p>
+<p>Represents a single line, including note/effect-columns and automation.</p>
 <p>
 
-<h1></h1>
 
-<p>The class uses xLinePattern for notes and effect-columns, and
-xLineAutomation to represent the automation within that line. </p>
+<h2></h2>
+
+<p>The class uses xLinePattern for notes and effect-columns, and xLineAutomation to represent the automation within that line. </p>
 
 <p>See also:
 <a href="../modules/xLinePattern.html#">xLinePattern</a>
@@ -145,6 +148,28 @@ xLineAutomation to represent the automation within that line. </p>
 	<tr>
 	<td class="name" nowrap><a href="#apply_descriptor">apply_descriptor (xline)</a></td>
 	<td class="summary">[Static] Convert descriptors into class instances (empty tables are left as-is)</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#EMPTY_NOTE_COLUMNS">EMPTY_NOTE_COLUMNS</a></td>
+	<td class="summary">table, containing 12 empty tables</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EMPTY_EFFECT_COLUMNS">EMPTY_EFFECT_COLUMNS</a></td>
+	<td class="summary">table, containing 8 empty tables</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EMPTY_XLINE">EMPTY_XLINE</a></td>
+	<td class="summary">
+<p>table, containing the following</p>
+<pre><code>{
+  note_columns = xLine.EMPTY_NOTE_COLUMNS,
+  effect_columns = xLine.EMPTY_EFFECT_COLUMNS,
+}
+</code></pre>
+</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -421,6 +446,87 @@ xLineAutomation to represent the automation within that line. </p>
 
         xLine
     </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "EMPTY_NOTE_COLUMNS"></a>
+    <strong>EMPTY_NOTE_COLUMNS</strong>
+    </dt>
+    <dd>
+    table, containing 12 empty tables
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">{</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EMPTY_EFFECT_COLUMNS"></a>
+    <strong>EMPTY_EFFECT_COLUMNS</strong>
+    </dt>
+    <dd>
+    table, containing 8 empty tables
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">{</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EMPTY_XLINE"></a>
+    <strong>EMPTY_XLINE</strong>
+    </dt>
+    <dd>
+
+<p>table, containing the following</p>
+<pre><code>{
+  note_columns = xLine.EMPTY_NOTE_COLUMNS,
+  effect_columns = xLine.EMPTY_EFFECT_COLUMNS,
+}
+</code></pre>
+
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">note_columns</span>
+
+
+
+        </li>
+        <li><span class="parameter">effect_columns</span>
+
+
+
+        </li>
+    </ul>
+
 
 
 

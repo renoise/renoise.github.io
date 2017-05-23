@@ -46,6 +46,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +65,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +79,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><strong>xStreamPos</strong></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,13 +95,13 @@
 <div id="content">
 
 <h1>Module <code>xStreamPos</code></h1>
-<p>This class can track playback progression in a song
-.</p>
+<p>This class can track playback progression in a song.</p>
 <p>
+
 
 <h1></h1>
 
-<h3>How to use</h3>
+<h2>How to use</h2>
 
 <p>Create an instance, and supply it with a steady flow of song-position changes (idle loop). </p>
 
@@ -117,32 +120,25 @@
 	<td class="summary">[Constructor] does not accept any arguments</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#start">start (playmode)</a></td>
+	<td class="summary">Start streaming - preferable to calling renoise transport.start()</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#reset">reset ()</a></td>
-	<td class="summary">[Class] Initialize read/write position</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#start">start ()</a></td>
-	<td class="summary">[Class] Start/continue playing</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#play">play ()</a></td>
-	<td class="summary">[Class] Start playing</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_writeahead_factor">get_writeahead_factor ()</a></td>
-	<td class="summary">Get/Set methods</td>
+	<td class="summary">[Class] Initialize position - called as a last resort, when current position is deemed
+ unreliable due to 'crazy navigation'</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#_set_pos">_set_pos (pos)</a></td>
-	<td class="summary">[Class] Update the write position as a result of a changed playback position.</td>
+	<td class="summary">[Class] Update the stream-position as a result of a changed playback position.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#create_xblock">create_xblock ()</a></td>
-	<td class="summary">[Class] Create an instance of xBlockLoop</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#track_pos">track_pos ()</a></td>
+	<td class="name" nowrap><a href="#update">update ()</a></td>
 	<td class="summary">[Class] This function is designed to be called in an idle loop</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_scheduled_pos">get_scheduled_pos (schedule)</a></td>
+	<td class="summary">return a buffer position which correspond to the desired schedule</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#attach_to_song">attach_to_song ()</a></td>
@@ -160,16 +156,12 @@
 	<td class="summary">(xPlayPos) precise playback position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#self.writepos">self.writepos</a></td>
-	<td class="summary">(xSongPos) overall progression of the stream</td>
+	<td class="name" nowrap><a href="#self.pos">self.pos</a></td>
+	<td class="summary">(SongPos) the current stream position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#self.readpos">self.readpos</a></td>
-	<td class="summary">(xSongPos) where we most recently read from the pattern</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.xblock">self.xblock</a></td>
-	<td class="summary">(xBlockLoop)</td>
+	<td class="name" nowrap><a href="#self.xinc">self.xinc</a></td>
+	<td class="summary">number, represents the total number of lines since streaming started</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.block_enabled">self.block_enabled</a></td>
@@ -177,19 +169,8 @@
  TODO refactor into xBlockloop</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#self.writeahead_factor">self.writeahead_factor</a></td>
-	<td class="summary">int, decrease this if you are experiencing dropouts during heavy UI
- operations in Renoise (such as opening a plugin GUI)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.writeahead">self.writeahead</a></td>
-	<td class="summary">(int) 0 if undefined
- implementation should supply this number - used for deciding when
- we are approaching the boundary of a pattern/block</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#self.just_started_playback">self.just_started_playback</a></td>
-	<td class="summary">number, or 0 if undefined
+	<td class="summary">number, 0 for 'false'
  this is a short-lived timestamp indicating that we should ignore
  changes to the playback position, right after playback has started
  (the fuzziness is due to API living in separate thread)</td>
@@ -226,53 +207,32 @@
 
 </dd>
     <dt>
+    <a name = "start"></a>
+    <strong>start (playmode)</strong>
+    </dt>
+    <dd>
+    Start streaming - preferable to calling renoise transport.start()
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">playmode</span>
+        , renoise.Transport.PLAYMODE
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "reset"></a>
     <strong>reset ()</strong>
     </dt>
     <dd>
-    [Class] Initialize read/write position
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "start"></a>
-    <strong>start ()</strong>
-    </dt>
-    <dd>
-    [Class] Start/continue playing
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "play"></a>
-    <strong>play ()</strong>
-    </dt>
-    <dd>
-    [Class] Start playing
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_writeahead_factor"></a>
-    <strong>get_writeahead_factor ()</strong>
-    </dt>
-    <dd>
-    Get/Set methods
+    [Class] Initialize position - called as a last resort, when current position is deemed
+ unreliable due to 'crazy navigation'
 
 
 
@@ -286,16 +246,15 @@
     <strong>_set_pos (pos)</strong>
     </dt>
     <dd>
-    [Class] Update the write position as a result of a changed playback position.
- Most of the time we want the stream to continue smoothly forward - this is
- true for any kind of pattern, sequence or block loop. However, when we
- detect 'user events', the position can also jump backwards
+    [Class] Update the stream-position as a result of a changed playback position.
+ Most of the time the stream progresses smoothly forward - however, we also look for
+ 'user events', changes which can cause the position to jump anywhere...
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pos</span>
-         (renoise.SongPos), the playback position
+         (renoise.SongPos), the current playback position
         </li>
     </ul>
 
@@ -305,11 +264,11 @@
 
 </dd>
     <dt>
-    <a name = "create_xblock"></a>
-    <strong>create_xblock ()</strong>
+    <a name = "update"></a>
+    <strong>update ()</strong>
     </dt>
     <dd>
-    [Class] Create an instance of xBlockLoop
+    [Class] This function is designed to be called in an idle loop
 
 
 
@@ -319,14 +278,26 @@
 
 </dd>
     <dt>
-    <a name = "track_pos"></a>
-    <strong>track_pos ()</strong>
+    <a name = "get_scheduled_pos"></a>
+    <strong>get_scheduled_pos (schedule)</strong>
     </dt>
     <dd>
-    [Class] This function is designed to be called in an idle loop
+    return a buffer position which correspond to the desired schedule
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">schedule</span>
+        , xStreamPos.SCHEDULE
+        </li>
+    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        SongPos,int (lines travelled) <br/>
+[[
+    </ol>
 
 
 
@@ -378,11 +349,11 @@
 
 </dd>
     <dt>
-    <a name = "self.writepos"></a>
-    <strong>self.writepos</strong>
+    <a name = "self.pos"></a>
+    <strong>self.pos</strong>
     </dt>
     <dd>
-    (xSongPos) overall progression of the stream
+    (SongPos) the current stream position
 
 
 
@@ -392,25 +363,11 @@
 
 </dd>
     <dt>
-    <a name = "self.readpos"></a>
-    <strong>self.readpos</strong>
+    <a name = "self.xinc"></a>
+    <strong>self.xinc</strong>
     </dt>
     <dd>
-    (xSongPos) where we most recently read from the pattern
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.xblock"></a>
-    <strong>self.xblock</strong>
-    </dt>
-    <dd>
-    (xBlockLoop)
+    number, represents the total number of lines since streaming started
 
 
 
@@ -435,42 +392,11 @@
 
 </dd>
     <dt>
-    <a name = "self.writeahead_factor"></a>
-    <strong>self.writeahead_factor</strong>
-    </dt>
-    <dd>
-    int, decrease this if you are experiencing dropouts during heavy UI
- operations in Renoise (such as opening a plugin GUI)
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.writeahead"></a>
-    <strong>self.writeahead</strong>
-    </dt>
-    <dd>
-    (int) 0 if undefined
- implementation should supply this number - used for deciding when
- we are approaching the boundary of a pattern/block
-
-
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "self.just_started_playback"></a>
     <strong>self.just_started_playback</strong>
     </dt>
     <dd>
-    number, or 0 if undefined
+    number, 0 for 'false'
  this is a short-lived timestamp indicating that we should ignore
  changes to the playback position, right after playback has started
  (the fuzziness is due to API living in separate thread)

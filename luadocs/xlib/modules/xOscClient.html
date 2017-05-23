@@ -46,6 +46,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +65,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +79,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,7 +95,7 @@
 <div id="content">
 
 <h1>Module <code>xOscClient</code></h1>
-<p>xOscClient is a simple OSC client
+<p>xOscClient wraps a renoise.Socket with some handy methods
 .</p>
 <p>
 
@@ -102,7 +105,6 @@
     <li>Connects to the built-in OSC server in Renoise, </li>
     <li>Produce realtime messages (notes or MIDI messages)</li>
 </ul>
-
 
 </p>
 
@@ -135,12 +137,15 @@
 	<td class="summary">[Class] Trigger 'raw MIDI' (makes notes MIDI-mappable)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#_show_instructions">_show_instructions ()</a></td>
-	<td class="summary">[Class] Display usage instructions the first time the class is used</td>
+	<td class="name" nowrap><a href="#_detect_server">_detect_server ()</a></td>
+	<td class="summary">Confirm that the internal OSC server is configured and running -
+ TODO: switch to API method for detection once available, this method is
+ only reliable for as long as there are no more than 3 concurrent attempts
+ (after that, the active<em>clipboard</em>index will point to the original value)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_first_run">get_first_run ()</a></td>
-	<td class="summary">Get/set methods</td>
+	<td class="name" nowrap><a href="#_test_idle_notifier">_test_idle_notifier ()</a></td>
+	<td class="summary">Server test - check if the property was "instantly" changed (0.2s)</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -177,8 +182,7 @@
     <ul>
         <li><span class="parameter">table</span>
         {</p>
-<pre><code>first_run (boolean),
-osc_host (string),
+<pre><code>osc_host (string),
 osc_port (number)
 </code></pre>
 <p>  }
@@ -336,11 +340,14 @@ osc_port (number)
 
 </dd>
     <dt>
-    <a name = "_show_instructions"></a>
-    <strong>_show_instructions ()</strong>
+    <a name = "_detect_server"></a>
+    <strong>_detect_server ()</strong>
     </dt>
     <dd>
-    [Class] Display usage instructions the first time the class is used
+    Confirm that the internal OSC server is configured and running -
+ TODO: switch to API method for detection once available, this method is
+ only reliable for as long as there are no more than 3 concurrent attempts
+ (after that, the active<em>clipboard</em>index will point to the original value)
 
 
 
@@ -350,11 +357,11 @@ osc_port (number)
 
 </dd>
     <dt>
-    <a name = "get_first_run"></a>
-    <strong>get_first_run ()</strong>
+    <a name = "_test_idle_notifier"></a>
+    <strong>_test_idle_notifier ()</strong>
     </dt>
     <dd>
-    Get/set methods
+    Server test - check if the property was "instantly" changed (0.2s)
 
 
 

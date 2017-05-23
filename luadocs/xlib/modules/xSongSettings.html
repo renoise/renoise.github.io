@@ -45,6 +45,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -63,7 +64,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><strong>xPattern</strong></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -77,6 +78,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><strong>xSongSettings</strong></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -90,49 +93,23 @@
 
 <div id="content">
 
-<h1>Module <code>xPattern</code></h1>
-<p>Static methods for dealing with a renoise.Pattern
-.</p>
+<h1>Module <code>xSongSettings</code></h1>
 <p>
 
-<h1></h1>
-
-<p>TODO rename to xPatternNavigation</p>
-
 </p>
+<p>Saves information in the song comments field</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#jump_to_first_quarter_row">jump_to_first_quarter_row ()</a></td>
-	<td class="summary">Move edit cursor to first quarter of the pattern
- (same as pressing F9 in the pattern editor)</td>
+	<td class="name" nowrap><a href="#store">store (arr, token_start, token_end)</a></td>
+	<td class="summary">Output the current settings as a lua string in the song comments</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#jump_to_second_quarter_row">jump_to_second_quarter_row ()</a></td>
-	<td class="summary">Move edit cursor to second quarter of the pattern
- (same as pressing F10 in the pattern editor)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#jump_to_third_quarter_row">jump_to_third_quarter_row ()</a></td>
-	<td class="summary">Move edit cursor to third quarter of the pattern
- (same as pressing F11 in the pattern editor)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#jump_to_fourth_quarter_row">jump_to_fourth_quarter_row ()</a></td>
-	<td class="summary">Move edit cursor to fourth quarter of the pattern
- (same as pressing F12 in the pattern editor)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#move_to_next_pattern_row">move_to_next_pattern_row ()</a></td>
-	<td class="summary">Move edit cursor to next line
- (respects wrapped pattern edit setting)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#move_to_previous_pattern_row">move_to_previous_pattern_row ()</a></td>
-	<td class="summary">Move edit cursor to previous line
- (respects wrapped pattern edit setting)</td>
+	<td class="name" nowrap><a href="#retrieve">retrieve (token_start, token_end)</a></td>
+	<td class="summary">Retrive and apply the locally stored settings
+ TODO deserialize using sandbox</td>
 	</tr>
 </table>
 
@@ -143,14 +120,31 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
-    <a name = "jump_to_first_quarter_row"></a>
-    <strong>jump_to_first_quarter_row ()</strong>
+    <a name = "store"></a>
+    <strong>store (arr, token_start, token_end)</strong>
     </dt>
     <dd>
-    Move edit cursor to first quarter of the pattern
- (same as pressing F9 in the pattern editor)
+    Output the current settings as a lua string in the song comments
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arr</span>
+
+
+
+        </li>
+        <li><span class="parameter">token_start</span>
+
+
+
+        </li>
+        <li><span class="parameter">token_end</span>
+
+
+
+        </li>
+    </ul>
 
 
 
@@ -158,75 +152,33 @@
 
 </dd>
     <dt>
-    <a name = "jump_to_second_quarter_row"></a>
-    <strong>jump_to_second_quarter_row ()</strong>
+    <a name = "retrieve"></a>
+    <strong>retrieve (token_start, token_end)</strong>
     </dt>
     <dd>
-    Move edit cursor to second quarter of the pattern
- (same as pressing F10 in the pattern editor)
+    Retrive and apply the locally stored settings
+ TODO deserialize using sandbox
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">token_start</span>
 
 
 
+        </li>
+        <li><span class="parameter">token_end</span>
 
 
 
+        </li>
+    </ul>
 
-</dd>
-    <dt>
-    <a name = "jump_to_third_quarter_row"></a>
-    <strong>jump_to_third_quarter_row ()</strong>
-    </dt>
-    <dd>
-    Move edit cursor to third quarter of the pattern
- (same as pressing F11 in the pattern editor)
+    <h3>Returns:</h3>
+    <ol>
 
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "jump_to_fourth_quarter_row"></a>
-    <strong>jump_to_fourth_quarter_row ()</strong>
-    </dt>
-    <dd>
-    Move edit cursor to fourth quarter of the pattern
- (same as pressing F12 in the pattern editor)
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "move_to_next_pattern_row"></a>
-    <strong>move_to_next_pattern_row ()</strong>
-    </dt>
-    <dd>
-    Move edit cursor to next line
- (respects wrapped pattern edit setting)
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "move_to_previous_pattern_row"></a>
-    <strong>move_to_previous_pattern_row ()</strong>
-    </dt>
-    <dd>
-    Move edit cursor to previous line
- (respects wrapped pattern edit setting)
-
-
-
+        table or nil, [string, error message]
+    </ol>
 
 
 

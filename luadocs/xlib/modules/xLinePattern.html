@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 <li><a href="#Fields">Fields</a></li>
 </ul>
 
@@ -46,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -152,8 +156,35 @@
 	<td class="summary">[Static] Set midi command (write to pattern)</td>
 	</tr>
 </table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#COLUMN_TYPES">COLUMN_TYPES</a></td>
+	<td class="summary">enum, defines the available column types</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EFFECT_CHARS">EFFECT_CHARS</a></td>
+	<td class="summary">table, supported effect characters</td>
+	</tr>
+</table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#MAX_NOTE_COLUMNS">MAX_NOTE_COLUMNS</a></td>
+	<td class="summary">number, maximum number of note columns</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MAX_EFFECT_COLUMNS">MAX_EFFECT_COLUMNS</a></td>
+	<td class="summary">number, maximum number of effect columns</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EMPTY_VALUE">EMPTY_VALUE</a></td>
+	<td class="summary">number, constant value used for representing empty values</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EMPTY_STRING">EMPTY_STRING</a></td>
+	<td class="summary">string, constant value used for representing empty values</td>
+	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.effect_columns">self.effect_columns</a></td>
 	<td class="summary">table<xEffectColumn></td>
@@ -519,8 +550,291 @@
 
 </dd>
 </dl>
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "COLUMN_TYPES"></a>
+    <strong>COLUMN_TYPES</strong>
+    </dt>
+    <dd>
+    enum, defines the available column types
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">NOTE_COLUMN</span>
+
+
+
+        </li>
+        <li><span class="parameter">EFFECT_COLUMN</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EFFECT_CHARS"></a>
+    <strong>EFFECT_CHARS</strong>
+    </dt>
+    <dd>
+    table, supported effect characters
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">0</span>
+
+
+
+        </li>
+        <li><span class="parameter">1</span>
+
+
+
+        </li>
+        <li><span class="parameter">2</span>
+
+
+
+        </li>
+        <li><span class="parameter">3</span>
+
+
+
+        </li>
+        <li><span class="parameter">4</span>
+
+
+
+        </li>
+        <li><span class="parameter">5</span>
+
+
+
+        </li>
+        <li><span class="parameter">6</span>
+
+
+
+        </li>
+        <li><span class="parameter">7</span>
+
+
+
+        </li>
+        <li><span class="parameter">8</span>
+
+
+
+        </li>
+        <li><span class="parameter">9</span>
+
+
+
+        </li>
+        <li><span class="parameter">A</span>
+
+
+
+        </li>
+        <li><span class="parameter">B</span>
+
+
+
+        </li>
+        <li><span class="parameter">C</span>
+
+
+
+        </li>
+        <li><span class="parameter">D</span>
+
+
+
+        </li>
+        <li><span class="parameter">E</span>
+
+
+
+        </li>
+        <li><span class="parameter">F</span>
+
+
+
+        </li>
+        <li><span class="parameter">G</span>
+
+
+
+        </li>
+        <li><span class="parameter">H</span>
+
+
+
+        </li>
+        <li><span class="parameter">I</span>
+
+
+
+        </li>
+        <li><span class="parameter">J</span>
+
+
+
+        </li>
+        <li><span class="parameter">K</span>
+
+
+
+        </li>
+        <li><span class="parameter">L</span>
+
+
+
+        </li>
+        <li><span class="parameter">M</span>
+
+
+
+        </li>
+        <li><span class="parameter">N</span>
+
+
+
+        </li>
+        <li><span class="parameter">O</span>
+
+
+
+        </li>
+        <li><span class="parameter">P</span>
+
+
+
+        </li>
+        <li><span class="parameter">Q</span>
+
+
+
+        </li>
+        <li><span class="parameter">R</span>
+
+
+
+        </li>
+        <li><span class="parameter">S</span>
+
+
+
+        </li>
+        <li><span class="parameter">T</span>
+
+
+
+        </li>
+        <li><span class="parameter">U</span>
+
+
+
+        </li>
+        <li><span class="parameter">V</span>
+
+
+
+        </li>
+        <li><span class="parameter">W</span>
+
+
+
+        </li>
+        <li><span class="parameter">X</span>
+
+
+
+        </li>
+        <li><span class="parameter">Y</span>
+
+
+
+        </li>
+        <li><span class="parameter">Z</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
     <h2><a name="Fields"></a>Fields</h2>
     <dl class="function">
+    <dt>
+    <a name = "MAX_NOTE_COLUMNS"></a>
+    <strong>MAX_NOTE_COLUMNS</strong>
+    </dt>
+    <dd>
+    number, maximum number of note columns
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MAX_EFFECT_COLUMNS"></a>
+    <strong>MAX_EFFECT_COLUMNS</strong>
+    </dt>
+    <dd>
+    number, maximum number of effect columns
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EMPTY_VALUE"></a>
+    <strong>EMPTY_VALUE</strong>
+    </dt>
+    <dd>
+    number, constant value used for representing empty values
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EMPTY_STRING"></a>
+    <strong>EMPTY_STRING</strong>
+    </dt>
+    <dd>
+    string, constant value used for representing empty values
+
+
+
+
+
+
+
+</dd>
     <dt>
     <a name = "self.effect_columns"></a>
     <strong>self.effect_columns</strong>

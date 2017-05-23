@@ -46,6 +46,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +65,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +79,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,30 +95,35 @@
 <div id="content">
 
 <h1>Module <code>xPlayPos</code></h1>
-<p>Extended play-position which support fractional time (between lines)
-.</p>
+<p>Extended play-position which support fractional time (between lines).</p>
 <p>
+
 
 <h1></h1>
 
-<h3>When to use</h3>
 
-<p>  When running some real-time process that can't rely on querying the normal
-  renoise playback_pos (as this can change during execution of script)</p>
 
-<h3>How to use</h3>
+<h2>How to use</h2>
 
 <pre><code>-- create an instance of the class
 local pos = xPlayPos()
 
+-- set to some position
+pos(rns.transport.playback_pos)
+
 -- call update() when idle to track playback
 pos:update()
 
--- ask for the position (normal SongPos object)
-pos:get()
+-- ask for the expanded position
+pos()
 
--- ask for the expanded position (table)
-pos:get_fractional()
+-- get any specific property:
+-- pos.fraction
+-- pos.sequence)
+-- pos.line
+
+-- to return it as a normal SongPos object
+xSongPos.create(pos)
 </code></pre>
 
 
@@ -139,12 +147,12 @@ pos:get_fractional()
 </td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get ()</a></td>
-	<td class="summary">return a valid object for SongPos comparison operators</td>
+	<td class="name" nowrap><a href="#__call">__call ()</a></td>
+	<td class="summary">note: a realtime version of this method exists below</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_fractional">get_fractional ()</a></td>
-	<td class="summary">note: a realtime version of this method exists in xCursorPos</td>
+	<td class="name" nowrap><a href="#get">get (pos, beats)</a></td>
+	<td class="summary">[Static] Obtain a fraction position (only revelant while playback is active)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#has_changed">has_changed (pos)</a></td>
@@ -159,10 +167,6 @@ pos:get_fractional()
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#self.last_beat_pos">self.last_beat_pos</a></td>
-	<td class="summary">int, SongPos, last position where a beat started</td>
-	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.line">self.line</a></td>
 	<td class="summary">int, read-only</td>
@@ -228,18 +232,18 @@ pos:get_fractional()
 
 </dd>
     <dt>
-    <a name = "get"></a>
-    <strong>get ()</strong>
+    <a name = "__call"></a>
+    <strong>__call ()</strong>
     </dt>
     <dd>
-    return a valid object for SongPos comparison operators
+    note: a realtime version of this method exists below
 
 
 
     <h3>Returns:</h3>
     <ol>
 
-        SongPos
+        table (like SongPos but with extra 'fraction' field)
     </ol>
 
 
@@ -247,18 +251,31 @@ pos:get_fractional()
 
 </dd>
     <dt>
-    <a name = "get_fractional"></a>
-    <strong>get_fractional ()</strong>
+    <a name = "get"></a>
+    <strong>get (pos, beats)</strong>
     </dt>
     <dd>
-    note: a realtime version of this method exists in xCursorPos
+    [Static] Obtain a fraction position (only revelant while playback is active)
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+
+
+
+        </li>
+        <li><span class="parameter">beats</span>
+
+
+
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
         <li>
-        table (like SongPos but with extra 'fraction' field)</li>
+        table (like songpos, but with 'fraction', a number between 0-1)</li>
         <li>
         boolean</li>
     </ol>
@@ -315,20 +332,6 @@ pos:get_fractional()
 </dl>
     <h2><a name="Fields"></a>Fields</h2>
     <dl class="function">
-    <dt>
-    <a name = "self.last_beat_pos"></a>
-    <strong>self.last_beat_pos</strong>
-    </dt>
-    <dd>
-    int, SongPos, last position where a beat started
-
-
-
-
-
-
-
-</dd>
     <dt>
     <a name = "self.line"></a>
     <strong>self.line</strong>

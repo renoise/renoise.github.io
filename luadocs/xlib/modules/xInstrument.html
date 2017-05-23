@@ -45,6 +45,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><strong>xInstrument</strong></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -63,7 +64,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -77,6 +78,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -103,6 +106,18 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#set_previous_scale">set_previous_scale (instr)</a></td>
+	<td class="summary">Set the instrument to use the previous scale</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_next_scale">set_next_scale (instr)</a></td>
+	<td class="summary">Set the instrument to use the next scale</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_scale_by_index">set_scale_by_index (instr, scale_idx)</a></td>
+	<td class="summary">Set the instrument to use the a specific scale</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#is_sliced">is_sliced (instr)</a></td>
 	<td class="summary">[Static] Test whether the instrument contain sample slices</td>
 	</tr>
@@ -114,6 +129,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#is_triggering_phrase">is_triggering_phrase (instr)</a></td>
 	<td class="summary">[Static] Test whether instrument seems to be triggering a phrase</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_phrase_playback_enabled">get_phrase_playback_enabled (instr)</a></td>
+	<td class="summary">[Static] Figure out the phrase playback mode</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_phrase_playback_enabled">set_phrase_playback_enabled (instr, bool)</a></td>
+	<td class="summary">[Static] Set the phrase playback mode</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_slice_marker_at_pos">get_slice_marker_at_pos (instr, pos, threshold)</a></td>
@@ -155,6 +178,69 @@
 
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
+    <dt>
+    <a name = "set_previous_scale"></a>
+    <strong>set_previous_scale (instr)</strong>
+    </dt>
+    <dd>
+    Set the instrument to use the previous scale
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+        , renoise.Instrument
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_next_scale"></a>
+    <strong>set_next_scale (instr)</strong>
+    </dt>
+    <dd>
+    Set the instrument to use the next scale
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+        , renoise.Instrument
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_scale_by_index"></a>
+    <strong>set_scale_by_index (instr, scale_idx)</strong>
+    </dt>
+    <dd>
+    Set the instrument to use the a specific scale
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+        , renoise.Instrument
+        </li>
+        <li><span class="parameter">scale_idx</span>
+        , number
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "is_sliced"></a>
     <strong>is_sliced (instr)</strong>
@@ -218,6 +304,65 @@
     <ul>
         <li><span class="parameter">instr</span>
          (renoise.Instrument)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_phrase_playback_enabled"></a>
+    <strong>get_phrase_playback_enabled (instr)</strong>
+    </dt>
+    <dd>
+    [Static] Figure out the phrase playback mode
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_phrase_playback_enabled"></a>
+    <strong>set_phrase_playback_enabled (instr, bool)</strong>
+    </dt>
+    <dd>
+    [Static] Set the phrase playback mode
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+
+
+
+        </li>
+        <li><span class="parameter">bool</span>
+
+
+
         </li>
     </ul>
 

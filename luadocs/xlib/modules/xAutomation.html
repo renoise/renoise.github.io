@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -93,13 +96,10 @@
 <div id="content">
 
 <h1>Module <code>xAutomation</code></h1>
-<p>Easy control of parameter automation
-.</p>
 <p>
 
-<h1></h1>
-
 </p>
+<p>Easy control of parameter automation.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -139,8 +139,7 @@
 	<td class="name" nowrap><a href="#WRITE_MODE">WRITE_MODE</a></td>
 	<td class="summary">How to write data into an envelope
    - INTERLEAVE: leave existing data as-is (renoise default)
-   - PUNCH_IN: remove existing data (using writeahead)
-   - (TODO) LATCH: keep erasing data ahead of play-position</td>
+   - PUNCH_IN: remove existing data (using writeahead)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PLAYMODE">PLAYMODE</a></td>
@@ -169,11 +168,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#self.highres_mode">self.highres_mode</a></td>
 	<td class="summary">boolean, whether to use fractional line-index or not</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.writeahead">self.writeahead</a></td>
-	<td class="summary">number, lines that we should clear
- (this is automatically computed as tempo changes)</td>
 	</tr>
 </table>
 
@@ -225,7 +219,7 @@
          (number) the input value
         </li>
         <li><span class="parameter">value_mode</span>
-         (xMidiMessage.MODE) - apply scaling to the input value
+        ] (xMidiMessage.MODE) - apply scaling to the input value
         </li>
     </ul>
 
@@ -364,7 +358,6 @@
     How to write data into an envelope
    - INTERLEAVE: leave existing data as-is (renoise default)
    - PUNCH_IN: remove existing data (using writeahead)
-   - (TODO) LATCH: keep erasing data ahead of play-position
 
 
     <h3>Fields:</h3>
@@ -479,21 +472,6 @@
     </dt>
     <dd>
     boolean, whether to use fractional line-index or not
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.writeahead"></a>
-    <strong>self.writeahead</strong>
-    </dt>
-    <dd>
-    number, lines that we should clear
- (this is automatically computed as tempo changes)
 
 
 

@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><strong>xSongPos</strong></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -93,19 +96,19 @@
 <div id="content">
 
 <h1>Module <code>xSongPos</code></h1>
-<p>Describes a position within the project timeline
-.</p>
+<p>Static methods for working with renoise.SongPos (or alike).</p>
 <p>
 
-<h1></h1>
 
-<p>Three options are designed to deal with song boundaries, pattern-loop and
-block-loop boundaries. By default, they are set to settings which mimic
-the behavior in Renoise when playing/manipulating the playback position:</p>
+<h2></h2>
 
-<p>self.bounds<em>mode = xSongPos.OUT</em>OF<em>BOUNDS.LOOP
-self.loop</em>boundary = xSongPos.LOOP<em>BOUNDARY.SOFT
-self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
+<p>Three options are designed to deal with song boundaries, pattern-loop and block-loop boundaries.
+By default, they are set to settings which mimic the behavior in Renoise when playing/manipulating
+the playback position. Please see xSongPos.OUT<em>OF</em>BOUNDS/LOOP<em>BOUNDARY/BLOCK</em>BOUNDARY for more
+information. </p>
+
+<p>Note: throughout, the class accepts not only an instance of <code>renoise.SongPos</code> as argument,
+but also "SongPos-alike" objects - tables that contain a line and sequence property. </p>
 
 </p>
 
@@ -113,70 +116,48 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#__init">__init (pos)</a></td>
-	<td class="summary">[Constructor] Create new position
- at the very least, you need to specify a table containing {sequence,line}</td>
+	<td class="name" nowrap><a href="#create">create (pos)</a></td>
+	<td class="summary">[Static] Create a native SongPos object</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#normalize">normalize ()</a></td>
-	<td class="summary">[Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
- that respect the actual pattern length/sequence plus loops
- TODO skip return value?</td>
+	<td class="name" nowrap><a href="#get_defaults">get_defaults ()</a></td>
+	<td class="summary">For convenience, return default settings</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#increase_by_lines">increase_by_lines (num_lines)</a></td>
+	<td class="name" nowrap><a href="#set_defaults">set_defaults (val)</a></td>
+	<td class="summary">For convenience, apply default settings</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#increase_by_lines">increase_by_lines (num_lines, pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Increase position by X number of lines</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#decrease_by_lines">decrease_by_lines (num_lines)</a></td>
+	<td class="name" nowrap><a href="#decrease_by_lines">decrease_by_lines (num_lines, pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Subtract a number of lines from position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#enforce_boundary">enforce_boundary (direction, seq_idx, line_idx)</a></td>
-	<td class="summary">[Class] Restrict the position to boundaries (sequence, loop)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#enforce_block_boundary">enforce_block_boundary (direction, line_idx, line_delta)</a></td>
-	<td class="summary">[Class] Restrict position to boundaries (block-loop)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#next_beat">next_beat ()</a></td>
+	<td class="name" nowrap><a href="#next_beat">next_beat (pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Set to the next beat position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#next_bar">next_bar ()</a></td>
+	<td class="name" nowrap><a href="#next_bar">next_bar (pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Set to the next bar position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#next_block">next_block ()</a></td>
+	<td class="name" nowrap><a href="#next_block">next_block (pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Set to the next block position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#next_pattern">next_pattern ()</a></td>
+	<td class="name" nowrap><a href="#next_pattern">next_pattern (pos, bounds_mode, loop_boundary, block_boundary)</a></td>
 	<td class="summary">[Class] Set to the beginning of next pattern</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_pattern_index">get_pattern_index (seq_idx)</a></td>
-	<td class="summary">[Static] Retrieve the pattern index</td>
+	<td class="name" nowrap><a href="#enforce_boundary">enforce_boundary (direction, pos, bounds_mode, loop_boundary, block_boundary)</a></td>
+	<td class="summary">[Static] Restrict the position to boundaries (sequence, loop)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_pattern_num_lines">get_pattern_num_lines (seq_idx)</a></td>
-	<td class="summary">[Static] Retrieve the pattern index
- OPTIMIZE how to implement a caching mechanism?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#end_of_sequence_loop">end_of_sequence_loop (seq_idx)</a></td>
-	<td class="summary">[Static] Return number if equal to end of sequence loop
- TODO refactor to xPatternSequence?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#start_of_sequence_loop">start_of_sequence_loop (seq_idx)</a></td>
-	<td class="summary">[Static] Return number if equal to start of sequence loop
- TODO refactor to xPatternSequence?</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#within_bounds">within_bounds (seq_idx, line_idx)</a></td>
-	<td class="summary">[Static] Check if position is within actual song boundaries</td>
+	<td class="name" nowrap><a href="#enforce_block_boundary">enforce_block_boundary (direction, pos, line_delta, boundary)</a></td>
+	<td class="summary">[Static] Restrict position to boundaries (block-loop)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_line_diff">get_line_diff (pos1, pos2)</a></td>
@@ -210,34 +191,13 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#self.pos">self.pos</a></td>
-	<td class="summary">renoise.SongPos, get/set interface</td>
+	<td class="name" nowrap><a href="#DEFAULT_BOUNDS_MODE">DEFAULT_BOUNDS_MODE</a></td>
+	<td class="summary">Provide fallback values</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#self.sequence">self.sequence</a></td>
-	<td class="summary">position in the pattern sequence.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.line">self.line</a></td>
-	<td class="summary">position in the pattern at the given pattern sequence.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.lines_travelled">self.lines_travelled</a></td>
-	<td class="summary">int, travelled distance (in lines)
- note: this is not reliable unless you are (exclusively) using
- the increase/decrease methods to control the position!</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.bounds_mode">self.bounds_mode</a></td>
-	<td class="summary">xSongPos.OUT<em>OF</em>BOUNDS, deal with sequence (song) boundaries</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.loop_boundary">self.loop_boundary</a></td>
-	<td class="summary">xSongPos.LOOP_BOUNDARY, deals with patt-loop boundaries</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.block_boundary">self.block_boundary</a></td>
-	<td class="summary">xSongPos.BLOCK_BOUNDARY, deals with block-loop boundaries</td>
+	<td class="name" nowrap><a href="#loop_boundary">loop_boundary</a></td>
+	<td class="summary">[Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
+ that respect the actual pattern length/sequence plus loops</td>
 	</tr>
 </table>
 
@@ -248,18 +208,58 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
-    <a name = "__init"></a>
-    <strong>__init (pos)</strong>
+    <a name = "create"></a>
+    <strong>create (pos)</strong>
     </dt>
     <dd>
-    [Constructor] Create new position
- at the very least, you need to specify a table containing {sequence,line}
+    [Static] Create a native SongPos object
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pos</span>
-        [opt] (renoise.SongPos, xSongPos or {sequence,line} )
+        , renoise.SongPos or alike
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table, renoise.SongPos
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_defaults"></a>
+    <strong>get_defaults ()</strong>
+    </dt>
+    <dd>
+    For convenience, return default settings
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_defaults"></a>
+    <strong>set_defaults (val)</strong>
+    </dt>
+    <dd>
+    For convenience, apply default settings
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+
+
+
         </li>
     </ul>
 
@@ -269,29 +269,8 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 
 </dd>
     <dt>
-    <a name = "normalize"></a>
-    <strong>normalize ()</strong>
-    </dt>
-    <dd>
-    [Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
- that respect the actual pattern length/sequence plus loops
- TODO skip return value?  Not a static method
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-        table (renoise.SongPos-alike)
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "increase_by_lines"></a>
-    <strong>increase_by_lines (num_lines)</strong>
+    <strong>increase_by_lines (num_lines, pos, bounds_mode, loop_boundary, block_boundary)</strong>
     </dt>
     <dd>
     [Class] Increase position by X number of lines
@@ -302,8 +281,27 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
         <li><span class="parameter">num_lines</span>
          (number)
         </li>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        pos (SongPos)</li>
+        <li>
+        number, lines travelled</li>
+    </ol>
 
 
 
@@ -311,7 +309,7 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 </dd>
     <dt>
     <a name = "decrease_by_lines"></a>
-    <strong>decrease_by_lines (num_lines)</strong>
+    <strong>decrease_by_lines (num_lines, pos, bounds_mode, loop_boundary, block_boundary)</strong>
     </dt>
     <dd>
     [Class] Subtract a number of lines from position
@@ -322,8 +320,163 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
         <li><span class="parameter">num_lines</span>
         , int
         </li>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        pos (SongPos)</li>
+        <li>
+        number, lines travelled</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_beat"></a>
+    <strong>next_beat (pos, bounds_mode, loop_boundary, block_boundary)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next beat position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_bar"></a>
+    <strong>next_bar (pos, bounds_mode, loop_boundary, block_boundary)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next bar position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_block"></a>
+    <strong>next_block (pos, bounds_mode, loop_boundary, block_boundary)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next block position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_pattern"></a>
+    <strong>next_pattern (pos, bounds_mode, loop_boundary, block_boundary)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the beginning of next pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
 
 
 
@@ -331,10 +484,10 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 </dd>
     <dt>
     <a name = "enforce_boundary"></a>
-    <strong>enforce_boundary (direction, seq_idx, line_idx)</strong>
+    <strong>enforce_boundary (direction, pos, bounds_mode, loop_boundary, block_boundary)</strong>
     </dt>
     <dd>
-    [Class] Restrict the position to boundaries (sequence, loop)
+    [Static] Restrict the position to boundaries (sequence, loop)
 
 
     <h3>Parameters:</h3>
@@ -342,11 +495,17 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
         <li><span class="parameter">direction</span>
         , string ("increase" or "decrease")
         </li>
-        <li><span class="parameter">seq_idx</span>
-        , int
+        <li><span class="parameter">pos</span>
+        , SongPos
         </li>
-        <li><span class="parameter">line_idx</span>
-        , int
+        <li><span class="parameter">bounds_mode</span>
+        ], xSongPos.OUT<em>OF</em>BOUNDS
+        </li>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+        <li><span class="parameter">block_boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
         </li>
     </ul>
 
@@ -365,216 +524,32 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 </dd>
     <dt>
     <a name = "enforce_block_boundary"></a>
-    <strong>enforce_block_boundary (direction, line_idx, line_delta)</strong>
+    <strong>enforce_block_boundary (direction, pos, line_delta, boundary)</strong>
     </dt>
     <dd>
-    [Class] Restrict position to boundaries (block-loop)
+    [Static] Restrict position to boundaries (block-loop)
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">direction</span>
-        , string ("increase" or "decrease")
+        , string - "increase" or "decrease"
         </li>
-        <li><span class="parameter">line_idx</span>
-         (int)
+        <li><span class="parameter">pos</span>
+        , SongPos
         </li>
         <li><span class="parameter">line_delta</span>
-         (int), #lines to add/subtract, negative when decreasing
+        , int - #lines to add/subtract, negative when decreasing
+        </li>
+        <li><span class="parameter">boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        line (int)
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "next_beat"></a>
-    <strong>next_beat ()</strong>
-    </dt>
-    <dd>
-    [Class] Set to the next beat position
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "next_bar"></a>
-    <strong>next_bar ()</strong>
-    </dt>
-    <dd>
-    [Class] Set to the next bar position
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "next_block"></a>
-    <strong>next_block ()</strong>
-    </dt>
-    <dd>
-    [Class] Set to the next block position
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "next_pattern"></a>
-    <strong>next_pattern ()</strong>
-    </dt>
-    <dd>
-    [Class] Set to the beginning of next pattern
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_pattern_index"></a>
-    <strong>get_pattern_index (seq_idx)</strong>
-    </dt>
-    <dd>
-    [Static] Retrieve the pattern index
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_pattern_num_lines"></a>
-    <strong>get_pattern_num_lines (seq_idx)</strong>
-    </dt>
-    <dd>
-    [Static] Retrieve the pattern index
- OPTIMIZE how to implement a caching mechanism?
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "end_of_sequence_loop"></a>
-    <strong>end_of_sequence_loop (seq_idx)</strong>
-    </dt>
-    <dd>
-    [Static] Return number if equal to end of sequence loop
- TODO refactor to xPatternSequence?
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int, sequence index or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "start_of_sequence_loop"></a>
-    <strong>start_of_sequence_loop (seq_idx)</strong>
-    </dt>
-    <dd>
-    [Static] Return number if equal to start of sequence loop
- TODO refactor to xPatternSequence?
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , sequence index
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        int, sequence index or nil
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "within_bounds"></a>
-    <strong>within_bounds (seq_idx, line_idx)</strong>
-    </dt>
-    <dd>
-    [Static] Check if position is within actual song boundaries
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">seq_idx</span>
-        , int
-        </li>
-        <li><span class="parameter">line_idx</span>
-        , int
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        bool
+        line, int
     </ol>
 
 
@@ -721,11 +696,11 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
     <h2><a name="Fields"></a>Fields</h2>
     <dl class="function">
     <dt>
-    <a name = "self.pos"></a>
-    <strong>self.pos</strong>
+    <a name = "DEFAULT_BOUNDS_MODE"></a>
+    <strong>DEFAULT_BOUNDS_MODE</strong>
     </dt>
     <dd>
-    renoise.SongPos, get/set interface
+    Provide fallback values
 
 
 
@@ -735,87 +710,19 @@ self.block</em>boundary = xSongPos.BLOCK_BOUNDARY.SOFT</p>
 
 </dd>
     <dt>
-    <a name = "self.sequence"></a>
-    <strong>self.sequence</strong>
+    <a name = "loop_boundary"></a>
+    <strong>loop_boundary</strong>
     </dt>
     <dd>
-    position in the pattern sequence.
- TODO make property
+    [Class] Normalize the position, takes us from an 'imaginary' position to one <br/>
+ that respect the actual pattern length/sequence plus loops
 
 
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.line"></a>
-    <strong>self.line</strong>
-    </dt>
-    <dd>
-    position in the pattern at the given pattern sequence.
- TODO make property
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.lines_travelled"></a>
-    <strong>self.lines_travelled</strong>
-    </dt>
-    <dd>
-    int, travelled distance (in lines)
- note: this is not reliable unless you are (exclusively) using
- the increase/decrease methods to control the position!
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.bounds_mode"></a>
-    <strong>self.bounds_mode</strong>
-    </dt>
-    <dd>
-    xSongPos.OUT<em>OF</em>BOUNDS, deal with sequence (song) boundaries
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.loop_boundary"></a>
-    <strong>self.loop_boundary</strong>
-    </dt>
-    <dd>
-    xSongPos.LOOP_BOUNDARY, deals with patt-loop boundaries
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.block_boundary"></a>
-    <strong>self.block_boundary</strong>
-    </dt>
-    <dd>
-    xSongPos.BLOCK_BOUNDARY, deals with block-loop boundaries
-
-
+    <ul>
+        <li><span class="parameter">loop_boundary</span>
+        ], xSongPos.LOOP_BOUNDARY
+        </li>
+    </ul>
 
 
 

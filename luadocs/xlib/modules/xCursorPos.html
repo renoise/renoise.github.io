@@ -46,6 +46,7 @@
   <li><strong>xCursorPos</strong></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +65,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +79,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,9 +95,9 @@
 <div id="content">
 
 <h1>Module <code>xCursorPos</code></h1>
-<p>Describes the position of the edit cursor within the project timeline
-.</p>
+<p>Describes the position of the edit cursor within the project timeline.</p>
 <p>
+
 
 <h1></h1>
 
@@ -119,10 +122,6 @@
 	<td class="name" nowrap><a href="#select">select ()</a></td>
 	<td class="summary">[Class] Attempt to move the pattern-cursor to the stored position</td>
 	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_highres_pos">get_highres_pos ()</a></td>
-	<td class="summary">[Static] Obtain a fraction position (only revelant while playback is active)</td>
-	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
@@ -137,10 +136,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#self.line">self.line</a></td>
 	<td class="summary">number, line index</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#self.fraction">self.fraction</a></td>
-	<td class="summary">number, precise position in line (between 0-1)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.column">self.column</a></td>
@@ -242,25 +237,6 @@
 
 
 </dd>
-    <dt>
-    <a name = "get_highres_pos"></a>
-    <strong>get_highres_pos ()</strong>
-    </dt>
-    <dd>
-    [Static] Obtain a fraction position (only revelant while playback is active)
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-        table (like songpos, but with 'fraction', a number between 0-1)
-    </ol>
-
-
-
-
-</dd>
 </dl>
     <h2><a name="Fields"></a>Fields</h2>
     <dl class="function">
@@ -298,20 +274,6 @@
     </dt>
     <dd>
     number, line index
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "self.fraction"></a>
-    <strong>self.fraction</strong>
-    </dt>
-    <dd>
-    number, precise position in line (between 0-1)
 
 
 

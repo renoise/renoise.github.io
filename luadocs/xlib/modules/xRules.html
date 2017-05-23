@@ -47,6 +47,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -65,7 +66,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -79,6 +80,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -93,14 +96,13 @@
 <div id="content">
 
 <h1>Module <code>xRules</code></h1>
-<p>Rewrite MIDI/OSC messages on-the-fly using generated code
-.</p>
-<p>
+<p>Rewrite MIDI/OSC messages on-the-fly using generated code</p>
 
-<h1></h1>
+<h2>About</h2>
 
 <p>xRules works by applying "rules" to the input, using specific conditions as
-triggers. Each rule can then change the input in a number of different ways. </p>
+triggers.</p>
+<p> Each rule can then change the input in a number of different ways. </p>
 
 <p>An implementation of this class (also called xRules) is available from the
 Renoise tools page (http://www.renoise.com/tools/xrules). The tool adds a
@@ -110,9 +112,6 @@ visual interface, device management and more. </p>
 <h2>See also</h2>
 <p><a href="../modules/xRuleset.html#">xRuleset</a>  - (supporting class)
 <a href="../modules/xRule.html#">xRule</a>     - (supporting class)</p>
-
-
-</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>

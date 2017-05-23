@@ -46,6 +46,7 @@
   <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
   <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
   <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
   <li><a href="../modules/xLib.html">xLib</a></li>
   <li><a href="../modules/xLine.html">xLine</a></li>
   <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
@@ -64,7 +65,7 @@
   <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
   <li><a href="../modules/xOscValue.html">xOscValue</a></li>
   <li><a href="../modules/xParameter.html">xParameter</a></li>
-  <li><a href="../modules/xPattern.html">xPattern</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
   <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
   <li><a href="../modules/xPhrase.html">xPhrase</a></li>
   <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
@@ -78,6 +79,8 @@
   <li><a href="../modules/xScale.html">xScale</a></li>
   <li><a href="../modules/xSelection.html">xSelection</a></li>
   <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xSongSettings.html">xSongSettings</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
   <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
   <li><a href="../modules/xTrack.html">xTrack</a></li>
   <li><a href="../modules/xTransport.html">xTransport</a></li>
@@ -92,15 +95,22 @@
 <div id="content">
 
 <h1>Module <code>xBlockLoop</code></h1>
-<p>Methods for working with the Renoise loop-block
-.</p>
+<p>Methods for working with the Renoise loop-block.</p>
 <p>
 
-<h1></h1>
+
+<h2>About</h2>
+
+<p>In the Renoise API, the loop-block can be controlled via transport.loop_range(). But the
+implementation is a both quite strict (as values are restricted to coefficients) and bit fuzzy,
+as you can apply that does not strictly adhere to those coefficients. As a result, the looped
+range can 'shift' after it has been set. </p>
+
+<p>This class tries to overcome those issues by providing a consistent interface and methods.  </p>
 
 <p>If you are planning to use this class for realtime manipulation of the block-loop, create an
 instance of the class and work with those properties. This is preferred over working directly
-on the values return from the Renoise API, as those can change during the evaluation of code. </p>
+on the values returned from the API, as those can change during the evaluation of code. </p>
 
 </p>
 
@@ -116,16 +126,13 @@ on the values return from the Renoise API, as those can change during the evalua
 	<td class="summary">[Class] get length of loop</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#pos_near_top">pos_near_top (line)</a></td>
-	<td class="summary">[Class] check if line is near top of loop</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#pos_near_end">pos_near_end (line)</a></td>
-	<td class="summary">[Class] check if line is near end of loop</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get_block_lines">get_block_lines (seq_idx)</a></td>
-	<td class="summary">[Static] Retrive number of lines in a block for a given pattern</td>
+	<td class="summary">[Static] Retrieve number of lines in a block using the current coefficient <br/>
+ (e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_block_index">get_block_index (seq_idx, line_idx)</a></td>
+	<td class="summary">[Static] Return the block index of a given line in a pattern</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_start">get_start ()</a></td>
@@ -143,13 +150,21 @@ on the values return from the Renoise API, as those can change during the evalua
 	<td class="name" nowrap><a href="#exiting">exiting (seq_idx, line_idx, line_delta, end_pos)</a></td>
 	<td class="summary">[Static] Check if we are heading out of a block-loop</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_previous_line_index">get_previous_line_index ()</a></td>
+	<td class="summary">Obtain the line number of the loop block previous to the current one</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_next_line_index">get_next_line_index ()</a></td>
+	<td class="summary">Obtain the line number of the loop block previous to the current one</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#normalize_line_range">normalize_line_range (start_line, end_line, num_lines, coeffs)</a></td>
+	<td class="summary">Enforce range of lines to nearest valid coefficient.</td>
+	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#self.writeahead">self.writeahead</a></td>
-	<td class="summary">(number) number of lines to look ahead</td>
-	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#self.start_line">self.start_line</a></td>
 	<td class="summary">(number) where the loop starts</td>
@@ -207,55 +222,12 @@ on the values return from the Renoise API, as those can change during the evalua
 
 </dd>
     <dt>
-    <a name = "pos_near_top"></a>
-    <strong>pos_near_top (line)</strong>
-    </dt>
-    <dd>
-    [Class] check if line is near top of loop
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">line</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "pos_near_end"></a>
-    <strong>pos_near_end (line)</strong>
-    </dt>
-    <dd>
-    [Class] check if line is near end of loop
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">line</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "get_block_lines"></a>
     <strong>get_block_lines (seq_idx)</strong>
     </dt>
     <dd>
-    [Static] Retrive number of lines in a block for a given pattern
+    [Static] Retrieve number of lines in a block using the current coefficient <br/>
+ (e.g.  a pattern with 64 lines and 4 as coeff would return 16)
 
 
     <h3>Parameters:</h3>
@@ -267,6 +239,47 @@ on the values return from the Renoise API, as those can change during the evalua
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        number (number of lines in block) or nil</li>
+        <li>
+        number (number of lines in pattern) or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_block_index"></a>
+    <strong>get_block_index (seq_idx, line_idx)</strong>
+    </dt>
+    <dd>
+    [Static] Return the block index of a given line in a pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_idx</span>
+
+
+
+        </li>
+        <li><span class="parameter">line_idx</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        number (the block index) or nil</li>
+        <li>
+        number (number of lines in pattern) or nil</li>
+    </ol>
 
 
 
@@ -302,8 +315,10 @@ on the values return from the Renoise API, as those can change during the evalua
 
     <h3>Returns:</h3>
     <ol>
-
-        int, line index or nil
+        <li>
+        number (line index) or nil</li>
+        <li>
+        number (number of lines in pattern) or nil</li>
     </ol>
 
 
@@ -375,23 +390,87 @@ on the values return from the Renoise API, as those can change during the evalua
 
 
 </dd>
-</dl>
-    <h2><a name="Fields"></a>Fields</h2>
-    <dl class="function">
     <dt>
-    <a name = "self.writeahead"></a>
-    <strong>self.writeahead</strong>
+    <a name = "get_previous_line_index"></a>
+    <strong>get_previous_line_index ()</strong>
     </dt>
     <dd>
-    (number) number of lines to look ahead
+    Obtain the line number of the loop block previous to the current one
 
 
 
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil
+    </ol>
 
 
 
 
 </dd>
+    <dt>
+    <a name = "get_next_line_index"></a>
+    <strong>get_next_line_index ()</strong>
+    </dt>
+    <dd>
+    Obtain the line number of the loop block previous to the current one
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "normalize_line_range"></a>
+    <strong>normalize_line_range (start_line, end_line, num_lines, coeffs)</strong>
+    </dt>
+    <dd>
+    Enforce range of lines to nearest valid coefficient.  Supports 'shifted' ranges.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">start_line</span>
+        , number
+        </li>
+        <li><span class="parameter">end_line</span>
+        , number
+        </li>
+        <li><span class="parameter">num_lines</span>
+        , number - number of lines in pattern
+        </li>
+        <li><span class="parameter">coeffs</span>
+        ], table<number>, valid coefficients (defaults to COEFFS_ALL)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        number, start line</li>
+        <li>
+        number, end line</li>
+        <li>
+        number, coefficient</li>
+        <li>
+        boolean, when whole pattern should be looped</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
     <dt>
     <a name = "self.start_line"></a>
     <strong>self.start_line</strong>
