@@ -52,6 +52,7 @@
   <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
   <li><a href="../modules/cReflection.html">cReflection</a></li>
   <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cScheduler.html">cScheduler</a></li>
   <li><a href="../modules/cString.html">cString</a></li>
   <li><a href="../modules/cValue.html">cValue</a></li>
 </ul>
@@ -68,11 +69,15 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#get_average">get_average (color)</a></td>
+	<td class="summary">get average from color</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#color_table_to_value">color_table_to_value (t)</a></td>
 	<td class="summary">convert r,g,b into numeric representation valid for hex display (#RRGGBB)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#color_table_to_hex_string">color_table_to_hex_string (t)</a></td>
+	<td class="name" nowrap><a href="#color_table_to_hex_string">color_table_to_hex_string (t, prefix)</a></td>
 	<td class="summary">convert r,g,b table to string representation (e.g.</td>
 	</tr>
 	<tr>
@@ -80,7 +85,7 @@
 	<td class="summary">convert numeric representation into r,g,b table</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#value_to_hex_string">value_to_hex_string (val)</a></td>
+	<td class="name" nowrap><a href="#value_to_hex_string">value_to_hex_string (val, prefix)</a></td>
 	<td class="summary">convert value to hexadecimal string (e.g.</td>
 	</tr>
 	<tr>
@@ -103,6 +108,31 @@
 
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
+    <dt>
+    <a name = "get_average"></a>
+    <strong>get_average (color)</strong>
+    </dt>
+    <dd>
+    get average from color
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+         (table<int,int,int>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
     <dt>
     <a name = "color_table_to_value"></a>
     <strong>color_table_to_value (t)</strong>
@@ -130,7 +160,7 @@
 </dd>
     <dt>
     <a name = "color_table_to_hex_string"></a>
-    <strong>color_table_to_hex_string (t)</strong>
+    <strong>color_table_to_hex_string (t, prefix)</strong>
     </dt>
     <dd>
     convert r,g,b table to string representation (e.g.  "0xFFCC66")
@@ -140,6 +170,9 @@
     <ul>
         <li><span class="parameter">t</span>
          (table)
+        </li>
+        <li><span class="parameter">prefix</span>
+        ], string - e.g. "#" to return CSS-style color
         </li>
     </ul>
 
@@ -180,7 +213,7 @@
 </dd>
     <dt>
     <a name = "value_to_hex_string"></a>
-    <strong>value_to_hex_string (val)</strong>
+    <strong>value_to_hex_string (val, prefix)</strong>
     </dt>
     <dd>
     convert value to hexadecimal string (e.g.  0xFFCC66)
@@ -190,6 +223,9 @@
     <ul>
         <li><span class="parameter">val</span>
          (int)
+        </li>
+        <li><span class="parameter">prefix</span>
+        ], string - e.g. "#" to return CSS-style color
         </li>
     </ul>
 

@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/cBitmap.html">cBitmap</a></li>
+  <li><a href="../modules/cColor.html">cColor</a></li>
+  <li><a href="../modules/cConfig.html">cConfig</a></li>
+  <li><a href="../modules/cDebug.html">cDebug</a></li>
+  <li><a href="../modules/cDocument.html">cDocument</a></li>
+  <li><a href="../modules/cFilesystem.html">cFilesystem</a></li>
+  <li><a href="../modules/cLib.html">cLib</a></li>
+  <li><a href="../modules/cNumber.html">cNumber</a></li>
+  <li><a href="../modules/cObservable.html">cObservable</a></li>
+  <li><a href="../modules/cParseXML.html">cParseXML</a></li>
+  <li><a href="../modules/cPreferences.html">cPreferences</a></li>
+  <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
+  <li><a href="../modules/cReflection.html">cReflection</a></li>
+  <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><strong>cScheduler</strong></li>
+  <li><a href="../modules/cString.html">cString</a></li>
+  <li><a href="../modules/cValue.html">cValue</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>cScheduler</code></h1>
+<p>Schedule tasks to execute after a defined amount of time
+.</p>
+<p>
+#
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__init">__init ()</a></td>
+	<td class="summary">Initialize the cScheduler class</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_idle">on_idle ()</a></td>
+	<td class="summary">Perform idle task (check when it's time to execute a task)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add_task">add_task (ref, func, delay, ...)</a></td>
+	<td class="summary">Add a new task to the scheduler</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove_task">remove_task (ref)</a></td>
+	<td class="summary">Remove a previously scheduled task</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_execute_task">_execute_task (task)</a></td>
+	<td class="summary">Execute a given task (using the provided context or anonymously)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cScheduledTask:__init">cScheduledTask:__init (ref, func, delay, args)</a></td>
+	<td class="summary">A class representing a scheduled task</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "__init"></a>
+    <strong>__init ()</strong>
+    </dt>
+    <dd>
+    Initialize the cScheduler class
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_idle"></a>
+    <strong>on_idle ()</strong>
+    </dt>
+    <dd>
+    Perform idle task (check when it's time to execute a task)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add_task"></a>
+    <strong>add_task (ref, func, delay, ...)</strong>
+    </dt>
+    <dd>
+    Add a new task to the scheduler
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ref</span>
+          (Object) the object to use as context (optional)
+        </li>
+        <li><span class="parameter">func</span>
+         (func) the function to call
+        </li>
+        <li><span class="parameter">delay</span>
+         (number) the delay before executing task
+        </li>
+        <li><span class="parameter">...</span>
+         (Vararg) variable number of extra arguments
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove_task"></a>
+    <strong>remove_task (ref)</strong>
+    </dt>
+    <dd>
+    Remove a previously scheduled task
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ref</span>
+         (cScheduledTask) reference to the task
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_execute_task"></a>
+    <strong>_execute_task (task)</strong>
+    </dt>
+    <dd>
+    Execute a given task (using the provided context or anonymously)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">task</span>
+         (cScheduledTask) reference to the task
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cScheduledTask:__init"></a>
+    <strong>cScheduledTask:__init (ref, func, delay, args)</strong>
+    </dt>
+    <dd>
+    A class representing a scheduled task
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ref</span>
+          (Object) the object to use as context (optional)
+        </li>
+        <li><span class="parameter">func</span>
+         (func) the function to call
+        </li>
+        <li><span class="parameter">delay</span>
+         (number) the delay before executing task
+        </li>
+        <li><span class="parameter">args</span>
+         (table) variable number of extra arguments
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -52,6 +52,7 @@
   <li><a href="../modules/cProcessSlicer.html">cProcessSlicer</a></li>
   <li><a href="../modules/cReflection.html">cReflection</a></li>
   <li><a href="../modules/cSandbox.html">cSandbox</a></li>
+  <li><a href="../modules/cScheduler.html">cScheduler</a></li>
   <li><a href="../modules/cString.html">cString</a></li>
   <li><a href="../modules/cValue.html">cValue</a></li>
 </ul>
@@ -129,11 +130,37 @@ therefore, it is recommended that any cLib-powered tool includes this file
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#string_to_percentage">string_to_percentage (str)</a></td>
-	<td class="summary">[Static] Strip percentage sign from string, if present</td>
+	<td class="summary">[Static] Attempt to convert string to a number (strip percent sign)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#average">average (...)</a></td>
+	<td class="summary">[Static] Get average of supplied numbers</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#clamp_value">clamp_value (value, min_value, max_value)</a></td>
 	<td class="summary">[Static] Clamp value - ensure value is within min/max</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wrap_value">wrap_value (value, min_value, max_value)</a></td>
+	<td class="summary">[Static] 'Wrap/rotate' value within specified range
+ (with a range of 64-127, a value of 128 should output 65)
+ TODO use % modulo to obtain offset</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sign">sign (x)</a></td>
+	<td class="summary">[Static] Determine the sign of a number</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#inv_log_scale">inv_log_scale (ceiling, val)</a></td>
+	<td class="summary">[Static] Inverse logarithmic scaling (exponential)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#log_scale">log_scale (ceiling, val)</a></td>
+	<td class="summary">logarithmic scaling within a fixed space</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_whole_number">is_whole_number (n)</a></td>
+	<td class="summary">[Static] Check for whole number, using format()</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#note_to_hz">note_to_hz (note)</a></td>
@@ -174,6 +201,19 @@ therefore, it is recommended that any cLib-powered tool includes this file
 	<tr>
 	<td class="name" nowrap><a href="#parse_str">parse_str (str)</a></td>
 	<td class="summary">[Static] Receives a string argument and turn it into a proper object or value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_has_equal_values">table_has_equal_values (t)</a></td>
+	<td class="summary">Check if table values are all identical
+ (useful e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_compare">table_compare (t1, t2)</a></td>
+	<td class="summary">Quick'n'dirty table compare, compares values (not keys)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_count">table_count (t)</a></td>
+	<td class="summary">Count table entries, including mixed types</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#serialize_object">serialize_object (obj)</a></td>
@@ -534,7 +574,7 @@ therefore, it is recommended that any cLib-powered tool includes this file
     <strong>string_to_percentage (str)</strong>
     </dt>
     <dd>
-    [Static] Strip percentage sign from string, if present
+    [Static] Attempt to convert string to a number (strip percent sign)
 
 
     <h3>Parameters:</h3>
@@ -544,6 +584,36 @@ therefore, it is recommended that any cLib-powered tool includes this file
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        number or (TODO) nil if not able to convert
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "average"></a>
+    <strong>average (...)</strong>
+    </dt>
+    <dd>
+    [Static] Get average of supplied numbers
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
 
 
 
@@ -575,6 +645,125 @@ therefore, it is recommended that any cLib-powered tool includes this file
 
         number
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "wrap_value"></a>
+    <strong>wrap_value (value, min_value, max_value)</strong>
+    </dt>
+    <dd>
+    [Static] 'Wrap/rotate' value within specified range
+ (with a range of 64-127, a value of 128 should output 65)
+ TODO use % modulo to obtain offset
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+        </li>
+        <li><span class="parameter">min_value</span>
+
+        </li>
+        <li><span class="parameter">max_value</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sign"></a>
+    <strong>sign (x)</strong>
+    </dt>
+    <dd>
+    [Static] Determine the sign of a number
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        -1 if negative or 1 if positive
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "inv_log_scale"></a>
+    <strong>inv_log_scale (ceiling, val)</strong>
+    </dt>
+    <dd>
+    [Static] Inverse logarithmic scaling (exponential)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ceiling</span>
+
+        </li>
+        <li><span class="parameter">val</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "log_scale"></a>
+    <strong>log_scale (ceiling, val)</strong>
+    </dt>
+    <dd>
+    logarithmic scaling within a fixed space
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ceiling</span>
+         (number) the upper boundary
+        </li>
+        <li><span class="parameter">val</span>
+         (number) the value to scale
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_whole_number"></a>
+    <strong>is_whole_number (n)</strong>
+    </dt>
+    <dd>
+    [Static] Check for whole number, using format()
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">n</span>
+
+        </li>
+    </ul>
+
 
 
 
@@ -820,6 +1009,85 @@ therefore, it is recommended that any cLib-powered tool includes this file
         value (can be nil)</li>
         <li>
         string, error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_has_equal_values"></a>
+    <strong>table_has_equal_values (t)</strong>
+    </dt>
+    <dd>
+    Check if table values are all identical
+ (useful e.g.  for detecting if a color is tinted)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_compare"></a>
+    <strong>table_compare (t1, t2)</strong>
+    </dt>
+    <dd>
+    Quick'n'dirty table compare, compares values (not keys)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t1</span>
+
+        </li>
+        <li><span class="parameter">t2</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, true if identical
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_count"></a>
+    <strong>table_count (t)</strong>
+    </dt>
+    <dd>
+    Count table entries, including mixed types
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int or nil
     </ol>
 
 
