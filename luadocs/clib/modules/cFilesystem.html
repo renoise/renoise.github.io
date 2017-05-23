@@ -96,8 +96,8 @@
  note: this is a virtual function which doesn't require I/O access</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#copy_file">copy_file (file_in, file_out)</a></td>
-	<td class="summary">this will work for small files, but is not recommended on larger ones</td>
+	<td class="name" nowrap><a href="#copy_folder">copy_folder (src_path, dest_path, file_ext, level)</a></td>
+	<td class="summary">Recursively copy folder</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#ensure_unique_filename">ensure_unique_filename (file_path)</a></td>
@@ -161,8 +161,12 @@
 	<td class="summary">save string to disk</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#copy_file">copy_file (file_in, file_out)</a></td>
+	<td class="summary">this will work for small files, but is not recommended on larger ones</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#recurse">recurse (str_path, callback_fn, file_ext, level)</a></td>
-	<td class="summary">iterate through folders, starting from the provided path</td>
+	<td class="summary">Iterate through files and folders and invoke a callback function for each entry</td>
 	</tr>
 </table>
 
@@ -282,28 +286,29 @@
 
 </dd>
     <dt>
-    <a name = "copy_file"></a>
-    <strong>copy_file (file_in, file_out)</strong>
+    <a name = "copy_folder"></a>
+    <strong>copy_folder (src_path, dest_path, file_ext, level)</strong>
     </dt>
     <dd>
-    this will work for small files, but is not recommended on larger ones
+    Recursively copy folder
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">file_in</span>
+        <li><span class="parameter">src_path</span>
          (string)
         </li>
-        <li><span class="parameter">file_out</span>
+        <li><span class="parameter">dest_path</span>
          (string)
+        </li>
+        <li><span class="parameter">file_ext</span>
+        ] (table), whitelisted file extensions, e.g. {"*.bmp"}
+        </li>
+        <li><span class="parameter">level</span>
+         (int), how many levels to recurse (undefined or 0 is unlimited)
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-        boolean,string
-    </ol>
 
 
 
@@ -627,7 +632,7 @@
          (string)
         </li>
         <li><span class="parameter">file_ext</span>
-         (table), valid file extensions
+         (table), valid file extensions , e.g. {"*.bmp"}
         </li>
         <li><span class="parameter">include_path</span>
          (bool), when true we append path to string
@@ -675,29 +680,64 @@
 
 </dd>
     <dt>
+    <a name = "copy_file"></a>
+    <strong>copy_file (file_in, file_out)</strong>
+    </dt>
+    <dd>
+    this will work for small files, but is not recommended on larger ones
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file_in</span>
+         (string)
+        </li>
+        <li><span class="parameter">file_out</span>
+         (string)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean,string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "recurse"></a>
     <strong>recurse (str_path, callback_fn, file_ext, level)</strong>
     </dt>
     <dd>
-    iterate through folders, starting from the provided path
+    Iterate through files and folders and invoke a callback function for each entry
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">str_path</span>
-         (string)
+         (string), path to start recursion
         </li>
         <li><span class="parameter">callback_fn</span>
          (function) return false to stop recursion
         </li>
         <li><span class="parameter">file_ext</span>
-         (table)
+        ] (table), valid file extensions , e.g. {"*.bmp"}
         </li>
         <li><span class="parameter">level</span>
-         (int)
+         (int), how many levels to recurse (undefined or 0 is unlimited)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, true when finished recursing (including when aborted in callback)</li>
+        <li>
+        string, error message when failed (e.g. invalid path)</li>
+    </ol>
 
 
 
