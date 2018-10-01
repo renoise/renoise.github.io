@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Lua.Standard.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_20">Lua Standard Library and Extensions</a><br />
+
+<ul>
+<li><a href="#h2_21">globals</a>  </li>
+<li><a href="#h2_22">debug</a>  </li>
+<li><a href="#h2_23">table</a>  </li>
+<li><a href="#h2_24">os</a>  </li>
+<li><a href="#h2_25">io</a>  </li>
+<li><a href="#h2_26">math</a>  </li>
+<li><a href="#h2_27">bit </a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_20">Lua Standard Library and Extensions</h1>
+
+<p>This is a reference for standard global Lua functions and tools that were
+added/changed by Renoise.</p>
+
+<p>All standard Lua libraries are included in Renoise as well. You can find the
+full reference here: <a href="http://www.lua.org/manual/5.1/manual.html#5">http://www.lua.org/manual/5.1/manual.html#5</a></p>
+
+<h2 id="h2_21">globals</h2>
+
+<h3>Added</h3>
+
+<p>An iterator like ipairs, but in reverse order</p>
+
+<blockquote>
+  <p>examples: t = {"a", "b", "c"}<br />
+  for k,v in ripairs(t) do print(k, v) end -> "3 c, 2 b, 1 a"</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;">ripairs<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>iterator <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Return a string which lists properties and methods of class objects</p>
+
+<pre class="lua" style="font-family:monospace;">objinfo<span style="color: #66cc66;">&#40;</span>class_object<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Recursively dumps a table and all its members to the std out (console)</p>
+
+<pre class="lua" style="font-family:monospace;">rprint<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Dumps properties and methods of class objects (like renoise.app())</p>
+
+<pre class="lua" style="font-family:monospace;">oprint<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Changed</h3>
+
+<p>Also returns a class object's type name. For all other types the standard
+Lua type function is used</p>
+
+<blockquote>
+  <p>examples: class "MyClass"; function MyClass:__init() end<br />
+           print(type(MyClass)) -> "MyClass class"<br />
+           print(type(MyClass())) -> "MyClass"</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">type</span><span style="color: #66cc66;">&#40;</span>class_object <span style="color: #b1b100;">or</span> class <span style="color: #b1b100;">or</span> anything <span style="color: #b1b100;">else</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Also compares object identities of Renoise API class objects:</p>
+
+<blockquote>
+  <p>examples: 
+           print(rawequal(renoise.app(), renoise.app())) --> true<br />
+           print(rawequal(renoise.song().track[1],
+             renoise.song().track[1]) --> true<br />
+           print(rawequal(renoise.song().track[1],
+             renoise.song().track[2]) --> false</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;">rawequal<span style="color: #66cc66;">&#40;</span>obj1, obj2<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_22">debug</h2>
+
+<h3>Added</h3>
+
+<p>Shortcut to remdebug.session.start(), which starts a debug session:
+launches the debugger controller and breaks script execution. See
+"Debugging.txt" in the documentation root folder for more info.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">debug</span>.start<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Shortcut to remdebug.session.stop: stops a running debug session</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">debug</span>.stop<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_23">table</h2>
+
+<h3>Added</h3>
+
+<p>Create a new, or convert an exiting table to an object that uses the global
+'table.XXX' functions as methods, just like strings in Lua do.</p>
+
+<blockquote>
+  <p>examples: t = table.create(); t:insert("a"); rprint(t) -> [1] = a;<br />
+            t = table.create{1,2,3}; print(t:concat("|")); -> "1|2|3";</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.create<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>t<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns true when the table is empty, else false and will also work
+for non indexed tables</p>
+
+<blockquote>
+  <p>examples: t = {};          print(table.is_empty(t)); -> true;<br />
+            t = {66};        print(table.is_empty(t)); -> false;<br />
+            t = {["a"] = 1}; print(table.is_empty(t)); -> false;</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.is_empty<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Count the number of items of a table, also works for non index
+based tables (using pairs).</p>
+
+<blockquote>
+  <p>examples:  t = {["a"]=1, ["b"]=1}; print(table.count(t))  -> 2</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.count<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Find first match of 'value' in the given table, starting from element
+number 'start_index'. Returns the first !key! that matches the value or nil</p>
+
+<blockquote>
+  <p>examples: t = {"a", "b"}; table.find(t, "a") -> 1;<br />
+           t = {a=1, b=2}; table.find(t, 2) -> "b"<br />
+           t = {"a", "b", "a"}; table.find(t, "a", 2) -> "3"<br />
+           t = {"a", "b"}; table.find(t, "c") -> nil</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.find<span style="color: #66cc66;">&#40;</span>t, value <span style="color: #66cc66;">&#91;</span>,start_index<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>key <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Return an indexed table of all keys that are used in the table</p>
+
+<blockquote>
+  <p>examples: t = {a="aa", b="bb"}; rprint(table.keys(t)); -> "a", "b"<br />
+            t = {"a", "b"};       rprint(table.keys(t)); -> 1, 2</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.keys<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Return an indexed table of all values that are used in the table</p>
+
+<blockquote>
+  <p>examples: t = {a="aa", b="bb"}; rprint(table.values(t)); -> "aa", "bb"<br />
+            t = {"a", "b"};       rprint(table.values(t)); -> "a", "b"</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.values<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Copy the metatable and all first level elements of the given table into a
+new table. Use table.rcopy to do a recursive copy of all elements</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.copy<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Deeply copy the metatable and all elements of the given table recursively
+into a new table - create a clone with unique references.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.rcopy<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Recursively clears and removes all table elements</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">table</span>.clear<span style="color: #66cc66;">&#40;</span>t<span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_24">os</h2>
+
+<h3>Added</h3>
+
+<p>Returns the platform the script is running on:
+"WINDOWS", "MACINTOSH" or "LINUX"</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.platform<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns the current working dir. Will always be the scripts directory
+when executing a script from a file</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.currentdir<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns a list of directory names (names, not full paths) for the given
+parent directory. Passed directory must be valid, or an error will be thrown.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.dirnames<span style="color: #66cc66;">&#40;</span>path<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span> of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns a list file names (names, not full paths) for the given
+parent directory. Second optional argument is a list of file extensions that
+should be searched for, like {"<em>.wav", "</em>.txt"}. By default all files are
+matched. The passed directory must be valid, or an error will be thrown.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.filenames<span style="color: #66cc66;">&#40;</span>path <span style="color: #66cc66;">&#91;</span>, <span style="color: #66cc66;">&#123;</span>file_extensions<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span> of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Creates a new directory. mkdir can only create one new sub directory at the
+same time. If you need to create more than one sub dir, call mkdir multiple
+times. Returns true if the operation was successful; in case of error, it
+returns nil plus an error string.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.mkdir<span style="color: #66cc66;">&#40;</span>path<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean, error_string <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Moves a file or a directory from path 'src' to 'dest'. Unlike 'os.rename'
+this also supports moving a file from one file system to another one. Returns
+true if the operation was successful; in case of error, it returns nil plus 
+an error string.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os</span>.move<span style="color: #66cc66;">&#40;</span>src, dest<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean, error_string <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Changed</h3>
+
+<p>Replaced with a temp directory and name which renoise will clean up on exit
+extension will be ".tmp" when not specified</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os.tmpname</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>extension<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Replaced with a high precision timer (still expressed in milliseconds)</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os.clock</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Will not exit, but fire an error that os.exit() can not be called</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">os.exit</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_25">io</h2>
+
+<h3>Added</h3>
+
+<p>Returns true when a file, folder or link at the given path and name exists</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">io</span>.exists<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns a table with status info about the file, folder or link at the given
+path and name, else nil the error and the error code is returned.</p>
+
+<p>The returned valid stat table contains the following fields:</p>
+
+<ul>
+<li>dev,    (number): device number of filesystem</li>
+<li>ino,    (number): inode number</li>
+<li>mode,   (number): unix styled file permissions</li>
+<li>type,   (string): type ("file", "directory", "link", "socket",
+              "named pipe", "char device" or "block device")</li>
+<li>nlink,  (number): number of (hard) links to the file</li>
+<li>uid,    (number): numeric user ID of file's owner</li>
+<li>gid,    (number): numeric group ID of file's owner</li>
+<li>rdev,   (number): the device identifier (special files only)</li>
+<li>size,   (number): total size of file, in bytes</li>
+<li>atime,  (number): last access time in seconds since the epoch</li>
+<li>mtime,  (number): last modify time in seconds since the epoch</li>
+<li>ctime,  (number): inode change time (NOT creation time!) in seconds</li>
+</ul>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">io</span>.stat<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">nil</span>, <span style="color: #b1b100;">error</span>, <span style="color: #b1b100;">error</span> no<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Change permissions of a file, folder or link. mode is a unix permission
+styled octal number (like 755 - WITHOUT a leading octal 0). Executable,
+group and others flags are ignored on windows and won't fire errors</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">io</span>.chmod<span style="color: #66cc66;">&#40;</span>filename, mode<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">true</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">nil</span>, <span style="color: #b1b100;">error</span>, <span style="color: #b1b100;">error</span> no<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Changed</h3>
+
+<p>All io functions use UTF8 as encoding for the file names and paths. UTF8
+is used for LUA in the whole API as default string encoding...</p>
+
+<h2 id="h2_26">math</h2>
+
+<h3>Added</h3>
+
+<p>Converts a linear value to a db value. db values will be clipped to
+math.infdb</p>
+
+<blockquote>
+  <p>example: print(math.lin2db(1.0)) -> 0<br />
+           print(math.lin2db(0.0)) -> -200 (math.infdb)</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">math</span>.lin2db<span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Converts a dB value to a linear value</p>
+
+<blockquote>
+  <p>example: print(math.db2lin(math.infdb)) -> 0<br />
+           print(math.db2lin(6.0)) -> 1.9952623149689</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">math</span>.db2lin<span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Converts a dB value to a normalized linear fader value between 0-1 within 
+the given dB range.</p>
+
+<blockquote>
+  <p>example: print(math.db2fader(-96, 0, 1)) -> 0<br />
+           print(math.db2fader(-48, 6, 0)) -> 0.73879611492157</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">math</span>.db2fader<span style="color: #66cc66;">&#40;</span>min_dB, max_dB, dB_to_convert<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Converts a normalized linear mixer fader value to a db value within 
+the given dB range.</p>
+
+<blockquote>
+  <p>example: print(math.fader2db(-96, 0, 1)) -> 0<br />
+           print(math.fader2db(-96, 0, 0)) -> -96</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">math</span>.fader2db<span style="color: #66cc66;">&#40;</span>min_dB, max_dB, fader_value<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>db values at and below this value will be treated as silent (linearly 0)</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">math</span>.infdb <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>-<span style="color: #cc66cc;">200</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_27">bit (added)</h2>
+
+<p>Integer, Bit Operations, provided by <a href="http://bitop.luajit.org/">http://bitop.luajit.org/</a>
+Take a look at <a href="http://bitop.luajit.org/api.html">http://bitop.luajit.org/api.html</a> for the complete reference
+and examples please...</p>
+
+<p>Normalizes a number to the numeric range for bit operations and returns it.
+This function is usually not needed since all bit operations already
+normalize all of their input arguments.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.tobit<span style="color: #66cc66;">&#40;</span>x<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Converts its first argument to a hex string. The number of hex digits is
+given by the absolute value of the optional second argument. Positive
+numbers between 1 and 8 generate lowercase hex digits. Negative numbers
+generate uppercase hex digits. Only the least-significant 4*|n| bits are
+used. The default is to generate 8 lowercase hex digits.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.tohex<span style="color: #66cc66;">&#40;</span>x <span style="color: #66cc66;">&#91;</span>,n<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns the bitwise not of its argument.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.bnot<span style="color: #66cc66;">&#40;</span>x<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns either the bitwise or, bitwise and, or bitwise xor of all of its
+arguments. Note that more than two arguments are allowed.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.bor<span style="color: #66cc66;">&#40;</span>x1 <span style="color: #66cc66;">&#91;</span>,x2...<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+bit.band<span style="color: #66cc66;">&#40;</span>x1 <span style="color: #66cc66;">&#91;</span>,x2...<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+bit.bxor<span style="color: #66cc66;">&#40;</span>x1 <span style="color: #66cc66;">&#91;</span>,x2...<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns either the bitwise logical left-shift, bitwise logical right-shift,
+or bitwise arithmetic right-shift of its first argument by the number of
+bits given by the second argument.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.lshift<span style="color: #66cc66;">&#40;</span>x, n<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+bit.rshift<span style="color: #66cc66;">&#40;</span>x, n<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+bit.arshift<span style="color: #66cc66;">&#40;</span>x, n<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns either the bitwise left rotation, or bitwise right rotation of its
+first argument by the number of bits given by the second argument. Bits
+shifted out on one side are shifted back in on the other side.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.rol<span style="color: #66cc66;">&#40;</span>x, n<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+bit.ror<span style="color: #66cc66;">&#40;</span>x, n<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Swaps the bytes of its argument and returns it. This can be used to convert
+little-endian 32 bit numbers to big-endian 32 bit numbers or vice versa.</p>
+
+<pre class="lua" style="font-family:monospace;">bit.bswap<span style="color: #66cc66;">&#40;</span>x<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+</body></html>

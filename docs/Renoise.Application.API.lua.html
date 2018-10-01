@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise.Application.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_30">Renoise Application API Reference</a><br />
+
+<ul>
+<li><a href="#h2_31">renoise</a>  </li>
+<li><a href="#h2_32">renoise.Application</a>  </li>
+<li><a href="#h2_33">renoise.ApplicationWindow</a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_30">Renoise Application API Reference</h1>
+
+<p>This reference lists all available Lua functions and classes that control
+the Renoise application. The Application is the Lua interface to Renoise's main
+GUI and window (Application and ApplicationWindow).</p>
+
+<p>Please read the INTRODUCTION first to get an overview about the complete
+API, and scripting for Renoise in general...</p>
+
+<h2 id="h2_31">renoise</h2>
+
+<h3>Functions</h3>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Application object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_32">renoise.Application</h2>
+
+<h3>Functions</h3>
+
+<p>Shows an info message dialog to the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_message<span style="color: #66cc66;">&#40;</span>message<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Shows an error dialog to the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_error<span style="color: #66cc66;">&#40;</span>message<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Shows a warning dialog to the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_warning<span style="color: #66cc66;">&#40;</span>message<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Shows a message in Renoise's status bar to the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_status<span style="color: #66cc66;">&#40;</span>message<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Opens a modal dialog with a title, text and custom button labels.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_prompt<span style="color: #66cc66;">&#40;</span>title, message, <span style="color: #66cc66;">&#123;</span>button_labels<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>pressed_button_label<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Opens a modal dialog with a title, custom content and custom button labels.
+See Renoise.ViewBuilder.API for more info. key_handler is an optional
+notifier function for keyboard events in the dialog.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_custom_prompt<span style="color: #66cc66;">&#40;</span>title, content_view, <span style="color: #66cc66;">&#123;</span>button_labels<span style="color: #66cc66;">&#125;</span> <span style="color: #66cc66;">&#91;</span>, key_handler<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>pressed_button_label<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Shows a non modal dialog (a floating tool window) with custom content.
+Again see Renoise.ViewBuilder.API for more info about custom views.
+key_handler is an optional notifier function for keyboard events that are 
+received by the dialog.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_custom_dialog<span style="color: #66cc66;">&#40;</span>title, content_view <span style="color: #66cc66;">&#91;</span>, key_handler<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Dialog object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Opens a modal dialog to query an existing directory from the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:prompt_for_path<span style="color: #66cc66;">&#40;</span>dialog_title<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>valid path <span style="color: #b1b100;">or</span> empty <span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Opens a modal dialog to query a filename and path to read from a file.
+The given extension(s) should be something  like {"wav", "aiff"
+or "*" (any file) }</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:prompt_for_filename_to_read<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#123;</span>file_extensions<span style="color: #66cc66;">&#125;</span>, dialog_title<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>filename <span style="color: #b1b100;">or</span> empty <span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Same as 'prompt_for_filename_to_read' but allows the user to select
+more than one file.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:prompt_for_multiple_filenames_to_read<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#123;</span>file_extensions<span style="color: #66cc66;">&#125;</span>, dialog_title<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of filenames <span style="color: #b1b100;">or</span> empty list<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Open a modal dialog to get a filename and path for writing.
+When an existing file is selected, the dialog will ask whether or not to 
+overwrite it, so you don't have to take care of this on your own.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:prompt_for_filename_to_write<span style="color: #66cc66;">&#40;</span>file_extension, dialog_title<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>filename <span style="color: #b1b100;">or</span> empty <span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Opens the default internet browser with the given URL. The URL can also be
+a file that browsers can open (like xml, html files...).</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:open_url<span style="color: #66cc66;">&#40;</span>url<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Opens the default file browser (explorer, finder...) with the given path.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:open_path<span style="color: #66cc66;">&#40;</span>file_path<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Install, update or uninstall a tool. Any errors are shown to the user 
+during (un)installation. Installing an already existing tool will upgrade 
+the tool without confirmation. Upgraded tools will automatically be
+re-enabled, if necessary.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.install_tool<span style="color: #66cc66;">&#40;</span>file_path_to_xrnx<span style="color: #66cc66;">&#41;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.uninstall_tool<span style="color: #66cc66;">&#40;</span>file_path_to_xrnx<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Create a new song document (will ask the user to save changes if needed).
+The song is not created immediately, but soon after the call was made and 
+the user did not aborted the operation. In order to continue execution 
+with the new song, attach a notifier to 'app_new_document_observable'
+See renoise.ScriptingTool.API.lua for more info.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:new_song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:new_song_no_template<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Load a new song document from the given filename (will ask to save
+changes if needed, any errors are shown to the user).
+Just like new_song(), the song is not loaded immediately, but soon after 
+the call was made. See 'renoise.app():new_song()' for details.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_song<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Load a file into the currently selected components (selected instrument,
+track, sampl, ...) of the song. If no component is selected it will be 
+created when possible. Any errors during the export are shown to the user. 
+returns success.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_track_device_chain<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span> 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_track_device_preset<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span> 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_multi_sample<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_device_chain<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_device_preset<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_modulation_set<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_phrase<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_instrument_sample<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:load_theme<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Quicksave or save the current song under a new name. Any errors
+during the export are shown to the user.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_song_as<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Save a currently selected components of the song. Any errors
+during the export are shown to the user. returns success</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_track_device_chain<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span> 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument_multi_sample<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument_device_chain<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument_modulation_set<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument_phrase<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_instrument_sample<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:save_theme<span style="color: #66cc66;">&#40;</span>filename<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Access to the application's full log filename and path. Will already be opened 
+for writing, but you nevertheless should be able to read from it.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.log_filename
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, <span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get the apps main document, the song. The global "renoise.song()" function 
+is, in fact, a shortcut to this property.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.current_song
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, renoise.Song object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>List of recently loaded/saved song files.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.recently_loaded_song_files 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, array of strings, filenames<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.recently_saved_song_files 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, array of strings, filenames<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Returns information about all currently installed tools.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.installed_tools 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, array of tables with tool info<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Globally used clipboard "slots" in the application.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.active_clipboard_index 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number, <span style="color: #cc66cc;">1</span>-<span style="color: #cc66cc;">4</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Access to the application's window.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window 
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, renoise.ApplicationWindow object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_33">renoise.ApplicationWindow</h2>
+
+<h3>Constants</h3>
+
+<pre class="lua" style="font-family:monospace;">renoise.ApplicationWindow.UPPER_FRAME_TRACK_SCOPES
+renoise.ApplicationWindow.UPPER_FRAME_MASTER_SPECTRUM
+&nbsp;
+renoise.ApplicationWindow.MIDDLE_FRAME_PATTERN_EDITOR
+renoise.ApplicationWindow.MIDDLE_FRAME_MIXER
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_PHRASE_EDITOR
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_SAMPLE_KEYZONES
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_SAMPLE_EDITOR
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_SAMPLE_MODULATION
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_SAMPLE_EFFECTS
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_PLUGIN_EDITOR
+renoise.ApplicationWindow.MIDDLE_FRAME_INSTRUMENT_MIDI_EDITOR
+&nbsp;
+renoise.ApplicationWindow.LOWER_FRAME_TRACK_DSPS
+renoise.ApplicationWindow.LOWER_FRAME_TRACK_AUTOMATION
+&nbsp;
+renoise.ApplicationWindow.MIXER_FADER_TYPE_24DB 
+renoise.ApplicationWindow.MIXER_FADER_TYPE_48DB
+renoise.ApplicationWindow.MIXER_FADER_TYPE_96DB
+renoise.ApplicationWindow.MIXER_FADER_TYPE_LINEAR</pre>
+
+<h3>Functions</h3>
+
+<p>Expand the window over the entire screen, without hiding menu bars, 
+docks and so on.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window:maximize<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Minimize the window to the dock or taskbar, depending on the OS.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window:minimize<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>"un-maximize" or "un-minimize" the window, or just bring it to front.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window:restore<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Select/enable one of the global view presets, to memorize/restore
+the user interface 'layout'.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window:select_preset<span style="color: #66cc66;">&#40;</span>preset_index<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set if the application is running fullscreen.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.fullscreen
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Window status flags.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.is_maximized
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.is_minimized
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>When true, the middle frame views (like the pattern editor) will
+stay focused unless alt or middle mouse is clicked.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.lock_keyboard_focus
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Dialog for recording new samples, floating above the main window.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.sample_record_dialog_is_visible
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Diskbrowser Panel.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.disk_browser_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>InstrumentBox.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.instrument_box_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Instrument Editor detaching.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.instrument_editor_is_detached, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Frame with the scopes/master spectrum...</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.upper_frame_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.active_upper_frame, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>enum <span style="color: #66cc66;">=</span> UPPER_FRAME<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Frame with the pattern editor, mixer...</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.active_middle_frame, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>enum <span style="color: #66cc66;">=</span> MIDDLE_FRAME<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Frame with the DSP chain view, automation, etc.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.lower_frame_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.active_lower_frame, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>enum <span style="color: #66cc66;">=</span> LOWER_FRAME<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Pattern matrix, visible in pattern editor and mixer only...</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.pattern_matrix_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Pattern advanced edit, visible in pattern editor only...</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.pattern_advanced_edit_is_visible, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Mixer views Pre/Post volume setting.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.mixer_view_post_fx, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Mixer fader type setting.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.window.mixer_fader_type, _observable
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>enum<span style="color: #66cc66;">=</span>MIXER_FADER_TYPE_XXX<span style="color: #66cc66;">&#93;</span></pre>
+</body></html>

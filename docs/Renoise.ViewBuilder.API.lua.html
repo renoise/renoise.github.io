@@ -1,0 +1,1557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise.ViewBuilder.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<p>============================================================================</p>
+
+<h1>Renoise ViewBuilder API Reference</h1>
+
+<p>This reference lists all "View" related functions in the API. View means
+classes and functions that are used to build custom GUIs; GUIs for your
+scripts in Renoise.</p>
+
+<p>Please read the INTRODUCTION first to get an overview about the complete
+API, and scripting for Renoise in general...</p>
+
+<p>For a small tutorial and more details about how to create and use views, have
+a look at the "com.renoise.ExampleToolGUI.xrnx" tool. This tool is included in
+the scripting dev started pack at <a href="http://scripting.renoise.com">http://scripting.renoise.com</a></p>
+
+<h3>Introduction</h3>
+
+<p>Currently there are two ways to to create custom views:</p>
+
+<p>Shows a modal dialog with a title, custom content and custom button labels:</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_custom_prompt<span style="color: #66cc66;">&#40;</span>title, content_view, <span style="color: #66cc66;">&#123;</span>button_labels<span style="color: #66cc66;">&#125;</span> <span style="color: #66cc66;">&#91;</span>,key_handler_func<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>pressed button<span style="color: #66cc66;">&#93;</span></pre>
+
+<p><em>(and)</em> Shows a non modal dialog, a floating tool window, with custom
+content:</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.app<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>:show_custom_dialog<span style="color: #66cc66;">&#40;</span>title, content_view <span style="color: #66cc66;">&#91;</span>, key_handler_func<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>dialog object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>key_handler_func is optional. When defined, it should point to a function
+with the signature noted below. "key" is a table with the fields:</p>
+
+<blockquote>
+  <p>key = {<br />
+    name,      -- name of the key, like 'esc' or 'a' - always valid<br />
+    modifiers, -- modifier states. 'shift + control' - always valid<br />
+    character, -- character representation of the key or nil<br />
+    note,      -- virtual keyboard piano key value (starting from 0) or nil<br />
+    repeated,  -- true when the key is soft repeated (hold down)<br />
+  }</p>
+</blockquote>
+
+<p>"dialog" is a reference to the dialog the keyhandler is running on.</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">function</span> my_keyhandler_func<span style="color: #66cc66;">&#40;</span>dialog, key<span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">end</span></pre>
+
+<p>When no key handler is specified, the Escape key is used to close the dialog.
+For prompts, the first character of the button labels is used to invoke
+the corresponding button.
+When returning the passed key from the key-handler function, the
+key will be passed back to Renoise's key event chain, in order to allow
+processing global Renoise key-bindings from your dialog. This will not work
+for modal dialogs. This also only applies to global shortcuts in Renoise,
+because your dialog will steal the focus from all other Renoise views such as
+the Pattern Editor, etc.</p>
+
+<p>==============================================================================</p>
+
+<h1>Views</h1>
+
+<h3> </h3>
+
+<p>renoise.Views.View</p>
+
+<h3> </h3>
+
+<p>View is the base class for all child views. All View properties can be
+applied to any of the following specialized views.</p>
+
+<h3>Functions</h3>
+
+<p>Dynamically create view hierarchies.</p>
+
+<pre class="lua" style="font-family:monospace;">view:add_child<span style="color: #66cc66;">&#40;</span>View child_view<span style="color: #66cc66;">&#41;</span>
+view:remove_child<span style="color: #66cc66;">&#40;</span>View child_view<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Set visible to false to hide a view (make it invisible without removing
+it). Please note that view.visible will also return false when any of its
+parents are invisible (when its implicitly invisible).
+By default a view is visible.</p>
+
+<pre class="lua" style="font-family:monospace;">view.visible
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set a view's size. All views must have a size > 0.
+By default > 0: How much exactly depends on the specialized view type.</p>
+
+<p>Note: in nested view_builder notations you can also specify relative
+sizes, like for example <code>vb:text { width = "80%"}</code>. The percentage values are
+relative to the view's parent size and will automatically update on size
+changes.</p>
+
+<pre class="lua" style="font-family:monospace;">view.width
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+view.height
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set a tooltip text that should be shown for this view.
+By default empty (no tip will be shown).</p>
+
+<pre class="lua" style="font-family:monospace;">view.tooltip
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Control (inherits from View)</p>
+
+<h3> </h3>
+
+<p>Control is the base class for all views which let the user change a value or
+some "state" from the UI.</p>
+
+<h3>Properties</h3>
+
+<p>Instead of making a control invisible, you can also make it inactive.
+Deactivated controls will still be shown, and will still show their
+currently assigned values, but will not allow changes. Most controls will
+display as "grayed out" to visualize the deactivated state.</p>
+
+<pre class="lua" style="font-family:monospace;">control.active
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>When set, the control will be highlighted when Renoise's MIDI mapping dialog
+is open. When clicked, it selects the specified string as a MIDI mapping
+target action. This target acton can either be one of the globally available
+mappings in Renoise, or those that were created by the tool itself.
+Target strings are not verified. When they point to nothing, the mapped MIDI
+message will do nothing and no error is fired.</p>
+
+<pre class="lua" style="font-family:monospace;">control.midi_mapping
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Rack (inherits from View, 'column' or 'row' in ViewBuilder)</p>
+
+<h3> </h3>
+
+<p>A Rack has no content on its own. It only stacks child views. Either
+vertically (ViewBuilder.column) or horizontally (ViewBuilder.row). It allows
+you to create view layouts.</p>
+
+<h3>Functions</h3>
+
+<p>DEPRECATED: Adding new child views to a rack automatically enlarges and 
+shrinks the rack since API_VERSION 2.0. calling this function will have no 
+effect.</p>
+
+<pre class="lua" style="font-family:monospace;">rack:resize<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Set the "borders" of the rack (left, right, top and bottom inclusively)
+By default 0 (no borders).</p>
+
+<pre class="lua" style="font-family:monospace;">rack.margin
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the amount stacked child views are separated by (horizontally in
+rows, vertically in columns).
+By default 0 (no spacing).</p>
+
+<pre class="lua" style="font-family:monospace;">rack.spacing
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup a background style for the rack. Available styles are:</p>
+
+<ul>
+<li>"invisible" -> no background</li>
+<li>"plain"     -> undecorated, single coloured background</li>
+<li>"border"    -> same as plain, but with a bold nested border</li>
+<li>"body"      -> main "background" style, as used in dialog backgrounds</li>
+<li>"panel"     -> alternative "background" style, beveled</li>
+<li>"group"     -> background for "nested" groups within body</li>
+</ul>
+
+<p>By default "invisible".</p>
+
+<pre class="lua" style="font-family:monospace;">rack.style
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>When set to true, all child views in the rack are automatically resized to
+the max size of all child views (width in ViewBuilder.column, height in
+ViewBuilder.row). This can be useful to automatically align all sub
+columns/panels to the same size. Resizing is done automatically, as soon
+as a child view size changes or new children are added.
+By default disabled, false.</p>
+
+<pre class="lua" style="font-family:monospace;">rack.uniform
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Aligner (inherits from View, 'horizontal_aligner' or
+  'vertical_aligner' in ViewBuilder)</p>
+
+<h3> </h3>
+
+<p>Just like a Rack, the Aligner shows no content on its own. It just aligns
+child views vertically or horizontally. As soon as children are added, the
+Aligner will expand itself to make sure that all children are visible
+(including spacing &amp; margins).
+To make use of modes like "center", you manually have to setup a size that
+is bigger than the sum of the child sizes.</p>
+
+<h3>Properties</h3>
+
+<p>Setup "borders" for the aligner (left, right, top and bottom inclusively)
+By default 0 (no borders).</p>
+
+<pre class="lua" style="font-family:monospace;">aligner.margin
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the amount child views are separated by (horizontally in rows,
+vertically in columns).
+By default 0 (no spacing).</p>
+
+<pre class="lua" style="font-family:monospace;">aligner.spacing
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the alignment mode. Available mode are:</p>
+
+<ul>
+<li>"left"       -> align from left to right (for horizontal_aligner only)</li>
+<li>"right"      -> align from right to left (for horizontal_aligner only)</li>
+<li>"top"        -> align from top to bottom (for vertical_aligner only)</li>
+<li>"bottom"     -> align from bottom to top (for vertical_aligner only)</li>
+<li>"center"     -> center all views</li>
+<li>"justify"    -> keep outer views at the borders, distribute the rest</li>
+<li>"distribute" -> equally distributes views over the aligners width/height</li>
+</ul>
+
+<p>By default "left" for a horizontal_aligner, "top" for a vertical_aligner.</p>
+
+<pre class="lua" style="font-family:monospace;">aligner.mode
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Text (inherits from View, 'text' in ViewBuilder)</p>
+
+<h3> </h3>
+
+<p>Shows a "static" text string. Static just means that its not linked, bound
+to some value and has no notifiers. The text can not be edited by the user. 
+Nevertheless you can of course change the text at run-time with the "text" 
+property.</p>
+
+<p>See renoise.Views.TextField for texts that can be edited by the user.</p>
+
+<p><img src="images/Text.png" alt="Text" /></p>
+
+<h3>Properties</h3>
+
+<p>Get/set the text that should be displayed. Setting a new text will resize
+the view in order to make the text fully visible (expanding only).
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">text.text
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the style that the text should be displayed with.
+Available font styles are:</p>
+
+<blockquote>
+  <p>"normal"<br />
+   "big"<br />
+   "bold<br />
+   "italic"<br />
+   "mono"</p>
+</blockquote>
+
+<p>By default "normal".</p>
+
+<pre class="lua" style="font-family:monospace;">text.font
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the text's alignment. Applies only when the view's size is larger than
+the needed size to draw the text.
+Available mode are:</p>
+
+<blockquote>
+  <p>"left"<br />
+   "right"<br />
+   "center"</p>
+</blockquote>
+
+<p>By default "left".</p>
+
+<pre class="lua" style="font-family:monospace;">text.align
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.MultiLineText (inherits from View, 'multiline_text' in the builder)</p>
+
+<h3> </h3>
+
+<p>Shows multiple lines of text, auto-formatting and auto-wrapping paragraphs
+into lines. Size is not automatically set. As soon as the text no longer fits
+into the view, a vertical scroll bar will be shown.</p>
+
+<p>See renoise.Views.MultilineTextField for multiline texts that can be edited
+by the user.</p>
+
+<p><img src="images/MultiLineText.png" alt="MultiLineText" /></p>
+
+<h3>Functions</h3>
+
+<p>When a scroll bar is visible (needed), scroll the text to show the last line.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text:scroll_to_last_line<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>When a scroll bar is visible, scroll the text to show the first line.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text:scroll_to_first_line<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Append text to the existing text. Newlines in the text will create new
+paragraphs, just like in the "text" property.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text:add_line<span style="color: #66cc66;">&#40;</span>text<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Clear the whole text, same as multiline_text.text="".</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text:clear<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the text that should be displayed on a single line. Newlines
+(Windows, Mac or Unix styled newlines) in the text can be used to create
+paragraphs.
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text.text
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set an array (table) of text lines, instead of specifying a single text
+line with newline characters like "text" does.
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text.paragraphs
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the style that the text should be displayed with.
+Available font styles are:</p>
+
+<blockquote>
+  <p>"normal"<br />
+   "big"<br />
+   "bold<br />
+   "italic"<br />
+   "mono"</p>
+</blockquote>
+
+<p>By default "normal".</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text.font
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the text view's background:</p>
+
+<blockquote>
+  <p>"body"    -> simple text color with no background<br />
+   "strong"  -> stronger text color with no background<br />
+   "border"  -> text on a bordered background</p>
+</blockquote>
+
+<p>By default "body".</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_text.style
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.TextField (inherits from View, 'textfield' in the builder)</p>
+
+<h3> </h3>
+
+<p>Shows a text string that can be clicked and edited by the user.</p>
+
+<p><img src="images/TextField.png" alt="TextField" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change (text change) notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+textfield:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>When false, text is displayed but can not be entered/modified by the user.
+By default true.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.active
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>The currently shown value / text. The text will not be updated when editing,
+rather only after editing is complete (return is pressed, or focus is lost).
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Exactly the same as "value"; provided for consistency.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.text
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the text field's text alignment, when not editing.
+Valid values are:</p>
+
+<blockquote>
+  <p>"left"<br />
+   "right"<br />
+   "center"</p>
+</blockquote>
+
+<p>By default "left".</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.align</pre>
+
+<p>True when the text field is focused. setting the edit_mode programatically
+will focus the text field or remove the focus (focus the dialog) accordingly.
+By default false.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.edit_mode
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a notifier for text changes.
+See add_notifier/remove_notifier below.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableString object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">textfield.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableString Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.MultilineTextField (inherits from View,
+  'multiline_textfield' in the builder)</p>
+
+<h3> </h3>
+
+<p>Shows multiple text lines of text, auto-wrapping paragraphs into lines. The
+text can be edited by the user.</p>
+
+<p><img src="images/MultilineTextField.png" alt="MultilineTextField" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change (text change) notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+multiline_textfield:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>When a scroll bar is visible, scroll the text to show the last line.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield:scroll_to_last_line<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>When a scroll bar is visible, scroll the text to show the first line.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield:scroll_to_first_line<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Append a new text to the existing text. Newline characters in the string will
+create new paragraphs, othwerise a single paragraph is appended.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield:add_line<span style="color: #66cc66;">&#40;</span>text<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Clear the whole text.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield:clear<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>When false, text is displayed but can not be entered/modified by the user.
+By default true.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.active
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>The current text as a single line, uses newline characters to specify
+paragraphs.
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Exactly the same as "value"; provided for consistency.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.text
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set a list/table of text lines instead of specifying the newlines as
+characters.
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.paragraphs
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the style that the text should be displayed with.
+Available font styles are:</p>
+
+<blockquote>
+  <p>"normal"<br />
+   "big"<br />
+   "bold"<br />
+   "italic"<br />
+   "mono"</p>
+</blockquote>
+
+<p>By default "normal".</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.font
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the text view's background style.</p>
+
+<blockquote>
+  <p>"body"    -> simple body text color with no background<br />
+   "strong"  -> stronger body text color with no background<br />
+   "border"  -> text on a bordered background</p>
+</blockquote>
+
+<p>By default "border".</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.style
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a notifier for text changes.
+See add_notifier/remove_notifier above.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableStringList object. Will change the Observable
+value as soon as the view's value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the View or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableStringList Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>True when the text field is focused. setting the edit_mode programatically
+will focus the text field or remove the focus (focus the dialog) accordingly.
+By default false.</p>
+
+<pre class="lua" style="font-family:monospace;">multiline_textfield.edit_mode
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Bitmap (inherits from Control, 'bitmap' in the builder)</p>
+
+<h3> </h3>
+
+<p><img src="images/Bitmap.png" alt="Bitmap" /></p>
+
+<p>Draws a bitmap, or a draws a bitmap which acts like a button (as soon as a
+notifier is specified). The notifier is called when clicking the mouse
+somewhere on the bitmap. When using a re-colorable style (see 'mode'), the
+bitmap is automatically recolored to match the current theme's colors. Mouse
+hover is also enabled when notifies are present, to show that the bitmap can
+be clicked.</p>
+
+<h3>Functions</h3>
+
+<p>Add/remove mouse click notifiers</p>
+
+<pre class="lua" style="font-family:monospace;">bitmapview:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+bitmapview:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Setup how the bitmap should be drawn, recolored. Available modes are:</p>
+
+<blockquote>
+  <p>"plain"        -> bitmap is drawn as is, no recoloring is done<br />
+   "transparent"  -> same as plain, but black pixels will be fully transparent<br />
+   "button_color" -> recolor the bitmap, using the theme's button color<br />
+   "body_color"   -> same as 'button_back' but with body text/back color<br />
+   "main_color"   -> same as 'button_back' but with main text/back colors</p>
+</blockquote>
+
+<p>By default "plain".</p>
+
+<pre class="lua" style="font-family:monospace;">bitmapview.mode
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Bitmap name and path. You should use a relative path that uses  Renoise's
+default resource folder as base (like "Icons/ArrowRight.bmp"). Or specify a
+file relative from your XRNX tool bundle:
+Lets say your tool is called "com.foo.MyTool.xrnx" and you pass
+"MyBitmap.bmp" as the name. Then the bitmap is loaded from
+"PATH_TO/com.foo.MyTool.xrnx/MyBitmap.bmp".
+Supported bitmap file formats are *.bmp, *.png or *.tif (no transparency).</p>
+
+<pre class="lua" style="font-family:monospace;">bitmapview.bitmap
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a click notifier. See
+add_notifier/remove_notifier above.</p>
+
+<pre class="lua" style="font-family:monospace;">bitmapview.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Button (inherits from Control, 'button' in the builder)</p>
+
+<h3> </h3>
+
+<p>A simple button that calls a custom notifier function when clicked.
+Supports text or bitmap labels.</p>
+
+<p><img src="images/Button.png" alt="Button" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove button hit/release notifier functions.
+When a "pressed" notifier is set, the release notifier is guaranteed to be
+called as soon as the mouse is released, either over your button or anywhere
+else. When a "release" notifier is set, it is only called when the mouse
+button is pressed !and! released over your button.</p>
+
+<pre class="lua" style="font-family:monospace;">button:add_pressed_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+button:add_released_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+button:remove_pressed_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+button:remove_released_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>The text label of the button
+By default empty.</p>
+
+<pre class="lua" style="font-family:monospace;">button.text
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>When set, existing text is cleared. You should use a relative path
+that either assumes Renoises default resource folder as base (like
+"Icons/ArrowRight.bmp"). Or specify a file relative from your XRNX tool
+bundle:
+Lets say your tool is called "com.foo.MyTool.xrnx" and you pass
+"MyBitmap.bmp" as name. Then the bitmap is loaded from
+"PATH_TO/com.foo.MyTool.xrnx/MyBitmap.bmp".
+The only supported bitmap format is ".bmp" (Windows bitmap) right now.
+Colors will be overridden by the theme colors, using black as transparent
+color, white is the full theme color. All colors in between are mapped
+according to their gray value.</p>
+
+<pre class="lua" style="font-family:monospace;">button.bitmap
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Table of RGB values like {0xff,0xff,0xff} -> white. When set, the
+unpressed button's background will be drawn in the specified color.
+A text color is automatically selected to make sure its always visible.
+Set color {0,0,0} to enable the theme colors for the button again.</p>
+
+<pre class="lua" style="font-family:monospace;">button.color
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span> with <span style="color: #cc66cc;">3</span> numbers <span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">0</span>-<span style="color: #cc66cc;">255</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: set up a click notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">button.pressed
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: set up a click release notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">button.released
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>synonymous for 'button.released'.</p>
+
+<pre class="lua" style="font-family:monospace;">button.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.CheckBox (inherits from Control, 'checkbox' in the builder)</p>
+
+<h3> </h3>
+
+<p>A single button with a checkbox bitmap, which can be used to toggle
+something on/off.</p>
+
+<p><img src="images/CheckBox.png" alt="CheckBox" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value notifiers</p>
+
+<pre class="lua" style="font-family:monospace;">checkbox:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+checkbox:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>The current state of the checkbox, expressed as boolean.
+By default "false".</p>
+
+<pre class="lua" style="font-family:monospace;">checkbox.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">checkbox.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>boolean_value<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableBoolean object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">checkbox.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableBoolean Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Switch (inherits from Control, 'switch' in the builder)</p>
+
+<h3> </h3>
+
+<p>A set of horizontally aligned buttons, where only one button can be enabled
+at the same time. Select one of multiple choices, indices.</p>
+
+<p><img src="images/Switch.png" alt="Switch" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove index change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">switch:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+switch:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the currently shown button labels. Item list size must be >= 2.</p>
+
+<pre class="lua" style="font-family:monospace;">switch.items
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the currently pressed button index.</p>
+
+<pre class="lua" style="font-family:monospace;">switch.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">switch.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">switch.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Popup (inherits from Control, 'popup' in the builder)</p>
+
+<h3> </h3>
+
+<p>A drop-down menu which shows the currently selected value when closed.
+When clicked, it pops up a list of all available items.</p>
+
+<p><img src="images/Popup.png" alt="Popup" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove index change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">popup:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+popup:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the currently shown items. Item list can be empty, then "None" is
+displayed and the value won't change.</p>
+
+<pre class="lua" style="font-family:monospace;">popup.items
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the currently selected item index.</p>
+
+<pre class="lua" style="font-family:monospace;">popup.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">popup.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">popup.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Chooser (inherits from Control, 'chooser' in the builder)</p>
+
+<h3> </h3>
+
+<p>A radio button like set of vertically stacked items. Only one value can be
+selected at a time.</p>
+
+<p><img src="images/Chooser.png" alt="Chooser" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove index change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">chooser:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+chooser:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the currently shown items. Item list size must be >= 2.</p>
+
+<pre class="lua" style="font-family:monospace;">chooser.items
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the currently selected items index.</p>
+
+<pre class="lua" style="font-family:monospace;">chooser.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">chooser.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">chooser.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.ValueBox (inherits from Control, 'valuebox' in the builder)</p>
+
+<h3> </h3>
+
+<p>A box with arrow buttons and a text field that can be edited by the user.
+Allows showing and editing natural numbers in a custom range.</p>
+
+<p><img src="images/ValueBox.png" alt="ValueBox" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+valuebox:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the min/max values that are expected, allowed.
+By default 0 and 100.</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+valuebox.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the current value</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Setup custom rules on how the number
+should be displayed. Both 'tostring' and  'tonumber' must be set, or neither.
+If none are set, a default string/number conversion is done, which
+simply reads/writes the number as integer value.</p>
+
+<p>When defined, 'tostring' must be a function with one parameter, the
+conversion procedure, and must return a string or nil.
+'tonumber' must be a function with one parameter, also the conversion
+procedure, and return a a number or nil. When returning nil, no conversion is
+done and the value is not changed.</p>
+
+<p>Note: when any of the callbacks fail with an error, both will be disabled
+to avoid a flood of error messages.</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox.<span style="color: #b1b100;">tostring</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+valuebox.<span style="color: #b1b100;">tonumber</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">valuebox.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Value (inherits from View, 'value' in the builder)</p>
+
+<h3> </h3>
+
+<p>A static text view. Shows a string representation of a number and
+allows custom "number to string" conversion.
+See 'Views.ValueField' for a value text field that can be edited by the user.</p>
+
+<p><img src="images/Value.png" alt="Value" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">value:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+value:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the current value.</p>
+
+<pre class="lua" style="font-family:monospace;">value.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the style that the text should be displayed with.
+Available font styles are:</p>
+
+<blockquote>
+  <p>"normal"<br />
+   "big"<br />
+   "bold"<br />
+   "italic"<br />
+   "mono"</p>
+</blockquote>
+
+<p>By default "normal".</p>
+
+<pre class="lua" style="font-family:monospace;">value.font
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the value's text alignment. Valid values are:</p>
+
+<blockquote>
+  <p>"left"<br />
+   "right"<br />
+   "center"</p>
+</blockquote>
+
+<p>By default "left".</p>
+
+<pre class="lua" style="font-family:monospace;">value.align
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Setup a custom rule on how the
+number should be displayed. When defined, 'tostring' must be a function
+with one parameter, the conversion procedure, and must return a string
+or nil.</p>
+
+<p>Note: When the callback fails with an error, it will be disabled to avoid
+a flood of error messages.</p>
+
+<pre class="lua" style="font-family:monospace;">value.<span style="color: #b1b100;">tostring</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">value.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the views value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">value.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.ValueField (inherits from Control, 'valuefield' in the builder)</p>
+
+<h3> </h3>
+
+<p>A text view, which shows a string representation of a number and allows
+custom "number to string" conversion. The value's text can be edited by the
+user.</p>
+
+<p><img src="images/ValueField.png" alt="ValueField" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+valuefield:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the min/max values that are expected, allowed.
+By default 0.0 and 1.0.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+valuefield.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the current value.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Setup the text alignment. Valid values are:</p>
+
+<blockquote>
+  <p>"left"<br />
+   "right"<br />
+   "center"</p>
+</blockquote>
+
+<p>By default "left".</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.align
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: setup custom rules on how the number
+should be displayed. Both, 'tostring' and  'tonumber' must be set, or none
+of them. If none are set, a default string/number conversion is done, which
+simply shows the number with 3 digits after the decimal point.</p>
+
+<p>When defined, 'tostring' must be a function with one parameter, the to be
+converted number, and must return a string or nil.
+'tonumber' must be a function with one parameter and gets the to be
+converted string passed, returning a a number or nil. When returning nil,
+no conversion will be done and the value is not changed.</p>
+
+<p>Note: when any of the callbacks fail with an error, both will be disabled
+to avoid a flood of error messages.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.<span style="color: #b1b100;">tostring</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+valuefield.<span style="color: #b1b100;">tonumber</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier function.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">valuefield.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.Slider (inherits from Control, 'slider' in the builder)</p>
+
+<h3> </h3>
+
+<p>A slider with arrow buttons, which shows and allows editing of values in a
+custom range. A slider can be horizontal or vertical; will flip its
+orientation according to the set width and height. By default horizontal.</p>
+
+<p><img src="images/Slider.png" alt="Slider" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">slider:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+slider:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the min/max values that are expected, allowed.
+By default 0.0 and 1.0.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+slider.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the current value.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier function.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.MiniSlider (inherits from Control, 'minislider' in the builder)</p>
+
+<h3> </h3>
+
+<p>Same as a slider, but without arrow buttons and a really tiny height. Just
+like the slider, a mini slider can be horizontal or vertical. It will flip
+its orientation according to the set width and height. By default horizontal.</p>
+
+<p><img src="images/MiniSlider.png" alt="MiniSlider" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">slider:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+slider:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the min/max values that are expected, allowed.
+By default 0.0 and 1.0.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+slider.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the current value.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the views value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">slider.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.RotaryEncoder (inherits from Control, 'rotary' in the builder)</p>
+
+<h3> </h3>
+
+<p>A slider which looks like a potentiometer.
+Note: when changing the size, the minimum of either width or height will be
+used to draw and control the rotary, therefor you should always set both
+equally when possible.</p>
+
+<p><img src="images/RotaryEncoder.png" alt="RotaryEncoder" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">rotary:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+rotary:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set the min/max values that are expected, allowed.
+By default 0.0 and 1.0.</p>
+
+<pre class="lua" style="font-family:monospace;">rotary.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+rotary.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the current value.</p>
+
+<pre class="lua" style="font-family:monospace;">rotary.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier function.</p>
+
+<pre class="lua" style="font-family:monospace;">rotary.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>number<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a
+renoise.Document.ObservableNumber object. Will change the Observable
+value as soon as the view's value changes, and change the view's value as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.</p>
+
+<pre class="lua" style="font-family:monospace;">rotary.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ObservableNumber Object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3> </h3>
+
+<p>renoise.Views.XYPad (inherits from Control, 'xypad' in the builder)</p>
+
+<h3> </h3>
+
+<p>A slider like pad which allows for controlling two values at once. By default
+it freely moves the XY values, but it can also be configured to snap back to
+a predefined value when releasing the mouse button.</p>
+
+<p>All values, notifiers, current value or min/max properties will act just
+like a slider or a rotary's properties, but nstead of a single number, a
+table with the fields <code>{x = xvalue, y = yvalue}</code> is expected, returned.</p>
+
+<p><img src="images/XYPad.png" alt="XYPad" /></p>
+
+<h3>Functions</h3>
+
+<p>Add/remove value change notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>
+xypad:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#123;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Get/set a table of allowed min/max values.
+By default 0.0 and 1.0 for both, x and y.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad.<span style="color: #b1b100;">min</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>Number,y<span style="color: #66cc66;">=</span>Number<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span>
+xypad.<span style="color: #b1b100;">max</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>Number,y<span style="color: #66cc66;">=</span>Number<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Get/set the pad's current value in a table.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>Number,y<span style="color: #66cc66;">=</span>Number<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>When snapback is enabled an XY table is returned, else nil. To enable
+snapback, pass an XY table with desired values. Pass nil or an empty table
+to disable snapback.
+When snapback is enabled, the pad will revert its values to the specified
+snapback values as soon as the mouse button is released in the pad. When
+disabled, releasing the mouse button will not change the value.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad.snapback
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>Number,y<span style="color: #66cc66;">=</span>Number<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Set up a value notifier function.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad.notifier
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>value<span style="color: #66cc66;">=</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>Number,y<span style="color: #66cc66;">=</span>Number<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Valid in the construction table only: Bind the view's value to a pair of
+renoise.Document.ObservableNumber objects. Will change the Observable
+values as soon as the views value changes, and change the view's values as
+soon as the Observable's value changes - automatically keeps both values
+in sync.
+Notifiers can be added to either the view or the Observable object.
+Just like in the other XYPad properties, a table with the fields X and Y
+is expected here and not a single value. So you have to bind two
+ObservableNumber object to the pad.</p>
+
+<pre class="lua" style="font-family:monospace;">xypad.bind
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#123;</span>x<span style="color: #66cc66;">=</span>ObservableNumber Object, y<span style="color: #66cc66;">=</span>ObservableNumber Object<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>==============================================================================</p>
+
+<h1>renoise.Dialog</h1>
+
+<p>Dialogs can not created with the viewbuilder, but only by the application.
+See "create custom views" on top of this file how to do so.</p>
+
+<h3>Functions</h3>
+
+<p>Bring an already visible dialog to front and make it the key window.</p>
+
+<pre class="lua" style="font-family:monospace;">dialog:show<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Close a visible dialog.</p>
+
+<pre class="lua" style="font-family:monospace;">dialog:close<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Properties</h3>
+
+<p>Check if a dialog is alive and visible.</p>
+
+<pre class="lua" style="font-family:monospace;">dialog.visible
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>read-only, boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>==============================================================================</p>
+
+<h1>renoise.ViewBuilder</h1>
+
+<p>Class which is used to construct new views. All view properties, as listed
+above, can optionally be in-lined in a passed construction table:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">local</span> vb <span style="color: #66cc66;">=</span> renoise.ViewBuilder<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #808080; font-style: italic;">-- create a new ViewBuilder</span>
+vb:button <span style="color: #66cc66;">&#123;</span> text <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;ButtonText&quot;</span> <span style="color: #66cc66;">&#125;</span> <span style="color: #808080; font-style: italic;">-- is the same as</span>
+my_button <span style="color: #66cc66;">=</span> vb:button<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">;</span> my_button.text <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;ButtonText&quot;</span></pre>
+
+<p>Besides the listed class properties, you can also specify the following
+"extra" properties in the passed table:</p>
+
+<ul>
+<li><p>id = "SomeString": Can be use to resolve the view later on, e.g.
+<code>vb.views.SomeString</code> or <code>vb.views["SomeString"]</code></p></li>
+<li><p>notifier = some_function or notifier = {some_obj, some_function} to
+register value change notifiers in controls (views which represent values)</p></li>
+<li><p>bind = a_document_value (Observable) to bind a view's value directly
+to an Observable object. Notifiers can be added to the Observable or
+the view. After binding a value to a view, the view will automatically
+update its value as soon as the Observable's value changes, and the
+Observable's value will automatically be updated as soon as the view's
+value changes.
+See "Renoise.Document.API.lua" for more general info about Documents &amp;
+Observables.</p></li>
+<li><p>Nested child views: Add a child view to the currently specified view.
+For example:</p>
+
+<pre class="lua" style="font-family:monospace;">vb:column <span style="color: #66cc66;">&#123;</span>
+   margin <span style="color: #66cc66;">=</span> <span style="color: #cc66cc;">1</span>,
+   vb:text <span style="color: #66cc66;">&#123;</span>
+     text <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;Text1&quot;</span>
+   <span style="color: #66cc66;">&#125;</span>,
+   vb:text <span style="color: #66cc66;">&#123;</span>
+     text <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;Text1&quot;</span>
+   <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span></pre>
+
+<p>Creates a column view with <code>margin = 1</code> and adds two text views to the column.</p></li>
+</ul>
+
+<h3>Constants</h3>
+
+<p>Default sizes for views and view layouts. Should be used instead of magic
+numbers, also useful to inherit global changes from the main app.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.ViewBuilder.DEFAULT_CONTROL_MARGIN
+renoise.ViewBuilder.DEFAULT_CONTROL_SPACING
+renoise.ViewBuilder.DEFAULT_CONTROL_HEIGHT
+renoise.ViewBuilder.DEFAULT_MINI_CONTROL_HEIGHT
+renoise.ViewBuilder.DEFAULT_DIALOG_MARGIN
+renoise.ViewBuilder.DEFAULT_DIALOG_SPACING
+renoise.ViewBuilder.DEFAULT_DIALOG_BUTTON_HEIGHT</pre>
+
+<h3>Functions</h3>
+
+<p>Column, row.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:column <span style="color: #66cc66;">&#123;</span> Rack Properties <span style="color: #b1b100;">and</span><span style="color: #66cc66;">/</span><span style="color: #b1b100;">or</span> child views <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Rack object<span style="color: #66cc66;">&#93;</span>
+vb:row <span style="color: #66cc66;">&#123;</span> Rack Properties <span style="color: #b1b100;">and</span><span style="color: #66cc66;">/</span><span style="color: #b1b100;">or</span> child views <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Rack object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Aligners.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:horizontal_aligner <span style="color: #66cc66;">&#123;</span> Aligner Properties <span style="color: #b1b100;">and</span><span style="color: #66cc66;">/</span><span style="color: #b1b100;">or</span> child views <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Aligner object<span style="color: #66cc66;">&#93;</span>
+vb:vertical_aligner <span style="color: #66cc66;">&#123;</span> Aligner Properties <span style="color: #b1b100;">and</span><span style="color: #66cc66;">/</span><span style="color: #b1b100;">or</span> child views <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Aligner object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Space.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:space <span style="color: #66cc66;">&#123;</span> View Properties <span style="color: #b1b100;">and</span><span style="color: #66cc66;">/</span><span style="color: #b1b100;">or</span> child views <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>View object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Text.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:text <span style="color: #66cc66;">&#123;</span> Text Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Text object<span style="color: #66cc66;">&#93;</span>
+vb:multiline_text <span style="color: #66cc66;">&#123;</span> MultiLineText Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>MultilineText object<span style="color: #66cc66;">&#93;</span>
+vb:textfield <span style="color: #66cc66;">&#123;</span> TextField Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>TextField object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Bitmap.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:bitmap <span style="color: #66cc66;">&#123;</span> Bitmap Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Bitmap object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Button.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:button <span style="color: #66cc66;">&#123;</span> Button Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Button object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Checkbox, switch, popup, chooser.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:checkbox  <span style="color: #66cc66;">&#123;</span> Rack Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>CheckBox object<span style="color: #66cc66;">&#93;</span>
+vb:switch <span style="color: #66cc66;">&#123;</span> Switch Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Switch object<span style="color: #66cc66;">&#93;</span>
+vb:popup <span style="color: #66cc66;">&#123;</span> Popup Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Popup object<span style="color: #66cc66;">&#93;</span>
+vb:chooser <span style="color: #66cc66;">&#123;</span> Chooser Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Chooser object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Values.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:valuebox <span style="color: #66cc66;">&#123;</span> ValueBox Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ValueBox object<span style="color: #66cc66;">&#93;</span>
+&nbsp;
+vb:value <span style="color: #66cc66;">&#123;</span> Value Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Value object<span style="color: #66cc66;">&#93;</span>
+vb:valuefield <span style="color: #66cc66;">&#123;</span> ValueField Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>ValueField object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Sliders, rotary, XYPad.</p>
+
+<pre class="lua" style="font-family:monospace;">vb:slider <span style="color: #66cc66;">&#123;</span> Slider Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Slider object<span style="color: #66cc66;">&#93;</span>
+vb:minislider <span style="color: #66cc66;">&#123;</span> MiniSlider Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>MiniSlider object<span style="color: #66cc66;">&#93;</span>
+&nbsp;
+vb:rotary <span style="color: #66cc66;">&#123;</span> RotaryEncoder Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>RotaryEncoder object<span style="color: #66cc66;">&#93;</span>
+&nbsp;
+vb:xypad <span style="color: #66cc66;">&#123;</span> XYPad Properties <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>XYPad object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Properties</h3>
+
+<p>View id is the table key, the table's value is the view's object.</p>
+
+<blockquote>
+  <p>e.g.: vb:text{ id="my_view", text="some_text"}<br />
+  vb.views.my_view.visible = false <em>(or)</em><br />
+  vb.views["my_view"].visible = false</p>
+</blockquote>
+
+<pre class="lua" style="font-family:monospace;">vb.views
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span> of views, which got registered via the <span style="color: #ff0000;">&quot;id&quot;</span> property<span style="color: #66cc66;">&#93;</span></pre>
+</body></html>

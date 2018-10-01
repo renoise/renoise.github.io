@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise.Socket.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_54">Renoise Socket API Reference</a>  </li>
+<li><a href="#h1_55">Socket</a><br />
+
+<ul>
+<li><a href="#h2_56">renoise.Socket</a>  </li>
+<li><a href="#h2_57">renoise.Socket.SocketBase</a>  </li>
+<li><a href="#h2_58">renoise.Socket.SocketClient </a>  </li>
+<li><a href="#h2_59">renoise.Socket.SocketServer </a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_54">Renoise Socket API Reference</h1>
+
+<p>This reference describes the built-in socket support for Lua scripts in Renoise.
+Sockets can be used to send/receive data over process boundaries, or exchange
+data across computers in a network (Internet). The socket API in Renoise has
+server support (which can respond to multiple connected clients) and client
+support (send/receive data to/from a server).</p>
+
+<p>Right now UDP and TCP protocols are supported. The class interfaces for UDP
+and TCP sockets behave exactly the same. That is, they don't depend on the
+protocol, so both are easily interchangeable when needed.</p>
+
+<p>Please read the INTRODUCTION first to get an overview about the complete
+API, and scripting for Renoise in general...</p>
+
+<h3>Overview</h3>
+
+<p>The socket server interface in Renoise is asynchronous (callback based), which
+means server calls never block or wait, but are served in the background.
+As soon a connection is established or messages arrive, a set of specified
+callbacks are invoked to respond to messages.</p>
+
+<p>Socket clients in Renoise do block with timeouts to receive messages, and
+assume that you only expect a response from a server after having sent
+something to it (i.e.: GET HTTP).
+To constantly poll a connection to a server, for example in idle timers,
+specify a timeout of 0 in "receive(message, 0)". This will only check if there
+are any pending messages from the server and read them. If there are no pending
+messages it will not block or timeout.</p>
+
+<h3>Error Handling</h3>
+
+<p>All socket functions which can fail, will return an error string as an optional
+second return value. They do not call Lua's error() handler, so you can decide
+yourself how to deal with expected errors like connection timeouts,
+connection failures, and so on. This also means you don't have to "pcall"
+socket functions to handle such "expected" errors.</p>
+
+<p>Logic errors (setting invalid addresses, using disconnected sockets, passing
+invalid timeouts, and so on) will fire Lua's runtime error (abort your scripts
+and spit out an error). If you get such an error, then this usually means you
+did something wrong: fed or used the sockets in a way that does not make sense. 
+Never "pcall" such errors, fix the problem instead.</p>
+
+<h3>Examples</h3>
+
+<p>For examples on how to use sockets, have a look at the corresponding
+"CodeSnippets" file.</p>
+
+<h1 id="h1_55">Socket</h1>
+
+<h2 id="h2_56">renoise.Socket</h2>
+
+<h3>Constants</h3>
+
+<pre class="lua" style="font-family:monospace;">renoise.Socket.PROTOCOL_TCP
+renoise.Socket.PROTOCOL_UDP</pre>
+
+<h3>Creating Socket Servers</h3>
+
+<p>Creates a connected UPD or TCP server object. Use "localhost" to use your
+system's default network address. Protocol can be renoise.Socket.PROTOCOL_TCP
+or renoise.Socket.PROTOCOL_UDP (by default TCP).
+When instantiation and connection succeed, a valid server object is
+returned, otherwise "socket_error" is set and the server object is nil.
+Using the create function with no server_address allows you to create a
+server which allows connections to any address (for example localhost
+and some IP)</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Socket.create_server<span style="color: #66cc66;">&#40;</span> <span style="color: #66cc66;">&#91;</span>server_address, <span style="color: #66cc66;">&#93;</span> server_port <span style="color: #66cc66;">&#91;</span>, protocol<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span>
+  <span style="color: #66cc66;">&#91;</span>server <span style="color: #66cc66;">&#40;</span>SocketServer <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span>, socket_error <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span> <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Creating Socket Clients</h3>
+
+<p>Create a connected UPD or TCP client. Protocol can be
+renoise.Socket.PROTOCOL_TCP or renoise.Socket.PROTOCOL_UDP (by default TCP)
+Timeout is the time to wait until the connection is established (1000 ms
+by default). When instantiation and connection succeed, a valid client
+object is returned, otherwise "socket_error" is set and the client object
+is nil</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Socket.create_client<span style="color: #66cc66;">&#40;</span>server_address, server_port <span style="color: #66cc66;">&#91;</span>, protocol<span style="color: #66cc66;">&#93;</span> <span style="color: #66cc66;">&#91;</span>, timeout<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span>
+  <span style="color: #66cc66;">&#91;</span>client <span style="color: #66cc66;">&#40;</span>SocketClient <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span>, socket_error <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span> <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_57">renoise.Socket.SocketBase</h2>
+
+<p>SocketBase is the base class for socket clients and servers. All
+SocketBase properties and functions are available for servers and clients.</p>
+
+<h3>Properties</h3>
+
+<p>Returns true when the socket object is valid and connected. Sockets can
+manually be closed (see socket:close()). Client sockets can also actively be
+closed/refused by the server. In this case the client:receive() calls will
+fail and return an error.</p>
+
+<pre class="lua" style="font-family:monospace;">socket.is_open <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>The socket's resolved local address (for example "127.0.0.1" when a socket
+is bound to "localhost")</p>
+
+<pre class="lua" style="font-family:monospace;">socket.local_address <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>The socket's local port number, as specified when instantiated.</p>
+
+<pre class="lua" style="font-family:monospace;">socket.local_port <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Closes the socket connection and releases all resources. This will make
+the socket useless, so any properties, calls to the socket will result in
+errors. Can be useful to explicitly release a connection without waiting for
+the dead object to be garbage collected, or if you want to actively refuse a
+connection.</p>
+
+<pre class="lua" style="font-family:monospace;">socket:close<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_58">renoise.Socket.SocketClient (inherits from SocketBase)</h2>
+
+<p>A SocketClient can connect to other socket servers and send and receive data
+from them on request. Connections to a server can not change, they are
+specified when constructing a client. You can not reconnect a client; create
+a new client instance instead.</p>
+
+<h3>Properties</h3>
+
+<p>Address of the socket's peer, the socket address this client is connected to.</p>
+
+<pre class="lua" style="font-family:monospace;">socket_client.peer_address <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Port of the socket's peer, the socket this client is connected to.</p>
+
+<pre class="lua" style="font-family:monospace;">socket_client.peer_port <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Send a message string (or OSC messages or bundles) to the connected server. 
+When sending fails, "success" return value will be false and "error_message"
+is set, describing the error in a human readable format.
+NB: when using TCP instead of UDP as protocol for OSC messages, !no! SLIP 
+encoding and no size prefixing of the passed OSC data will be done here. 
+So, when necessary, do this manually by your own please.</p>
+
+<pre class="lua" style="font-family:monospace;">socket_client:send<span style="color: #66cc66;">&#40;</span>message<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span>
+  <span style="color: #66cc66;">&#91;</span>success <span style="color: #66cc66;">&#40;</span>boolean<span style="color: #66cc66;">&#41;</span>, error_message <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span> <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Receive a message string from the the connected server with the given
+timeout in milliseconds. Mode can be one of "<em>line", "</em>all" or a number > 0,
+like Lua's io.read. \param timeout can be 0, which is useful for
+receive("*all"). This will only check and read pending data from the
+sockets queue.</p>
+
+<ul>
+<li><p>mode "*line": Will receive new data from the server or flush pending data
+that makes up a "line": a string that ends with a newline. remaining data
+is kept buffered for upcoming receive calls and any kind of newlines
+are supported. The returned line will not contain the newline characters.</p></li>
+<li><p>mode "<em>all": Reads all pending data from the peer socket and also flushes
+internal buffers from previous receive line/byte calls (when present).
+This will NOT read the entire requested content, but only the current
+buffer that is queued for the local socket from the peer. To read an
+entire HTTP page or file you may have to call receive("</em>all") multiple
+times until you got all you expect to get.</p></li>
+<li><p>mode "number > 0": Tries reading \param NumberOfBytes of data from the
+peer. Note that the timeout may be applied more than once, if more than
+one socket read is needed to receive the requested block.</p></li>
+</ul>
+
+<p>When receiving fails or times-out, the returned message will be nil and
+error_message is set. The error message is "timeout" on timeouts,
+"disconnected" when the server actively refused/disconnected your client.
+Any other errors are system dependent, and should only be used for display
+purposes.</p>
+
+<p>Once you get an error from receive, and this error is not a "timeout", the
+socket will already be closed and thus must be recreated in order to retry
+communication with the server. Any attempt to use a closed socket will
+fire a runtime error.</p>
+
+<pre class="lua" style="font-family:monospace;">socket_client:receive<span style="color: #66cc66;">&#40;</span>mode, timeout_ms<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span>
+  <span style="color: #66cc66;">&#91;</span>message <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span> <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span>, error_message <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span> <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_59">renoise.Socket.SocketServer (inherits from SocketBase)</h2>
+
+<p>A SocketServer handles one or more clients in the background, interacts
+only with callbacks from connected clients. This background polling can be
+start and stop on request.</p>
+
+<h3>Properties</h3>
+
+<p>Returns true while the server is running (the server is up and running)</p>
+
+<pre class="lua" style="font-family:monospace;">server_socket.is_running <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Start running the server by specifying a class or table which defines the
+callback functions for the server (see "callbacks" below for more info).</p>
+
+<pre class="lua" style="font-family:monospace;">server_socket:run<span style="color: #66cc66;">&#40;</span>notifier_table_or_call<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Stop a running server.</p>
+
+<pre class="lua" style="font-family:monospace;">server_socket:stop<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Suspends the calling thread by the given timeout, and calls the server's
+callback methods as soon as something has happened in the server while
+waiting. Should be avoided whenever possible.</p>
+
+<pre class="lua" style="font-family:monospace;">server_socket:wait<span style="color: #66cc66;">&#40;</span>timeout_ms<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Callbacks</h3>
+
+<p>All callback properties are optional. So you can, for example, skip specifying
+"socket_accepted" if you have no use for this.</p>
+
+<p>Notifier table example:</p>
+
+<pre class="lua" style="font-family:monospace;">notifier_table <span style="color: #66cc66;">=</span> <span style="color: #66cc66;">&#123;</span>
+  socket_error <span style="color: #66cc66;">=</span> <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>error_message<span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- An error happened in the servers background thread.</span>
+  <span style="color: #b1b100;">end</span>,
+&nbsp;
+  socket_accepted <span style="color: #66cc66;">=</span> <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>socket<span style="color: #66cc66;">&#41;</span>
+     <span style="color: #808080; font-style: italic;">-- FOR TCP CONNECTIONS ONLY: called as soon as a new client</span>
+     <span style="color: #808080; font-style: italic;">-- connected to your server. The passed socket is a ready to use socket</span>
+     <span style="color: #808080; font-style: italic;">-- object, representing a connection to the new socket.</span>
+  <span style="color: #b1b100;">end</span>,
+&nbsp;
+  socket_message <span style="color: #66cc66;">=</span> <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span>socket, message<span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- A message was received from a client: The passed socket is a ready</span>
+    <span style="color: #808080; font-style: italic;">-- to use connection for TCP connections. For UDP, a &quot;dummy&quot; socket is</span>
+    <span style="color: #808080; font-style: italic;">-- passed, which can only be used to query the peer address and port</span>
+    <span style="color: #808080; font-style: italic;">-- -&gt; socket.port and socket.address</span>
+  <span style="color: #b1b100;">end</span>
+<span style="color: #66cc66;">&#125;</span></pre>
+
+<p>Notifier class example:<br />
+Note: You must pass an instance of a class, like server_socket:run(MyNotifier())</p>
+
+<pre class="lua" style="font-family:monospace;">class <span style="color: #ff0000;">&quot;MyNotifier&quot;</span>
+&nbsp;
+  MyNotifier::__init<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- could pass a server ref or something else here, or simply do nothing</span>
+  <span style="color: #b1b100;">end</span>
+&nbsp;
+  <span style="color: #b1b100;">function</span> MyNotifier:socket_error<span style="color: #66cc66;">&#40;</span>error_message<span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- An error happened in the servers background thread.</span>
+  <span style="color: #b1b100;">end</span>
+&nbsp;
+  <span style="color: #b1b100;">function</span> MyNotifier:socket_accepted<span style="color: #66cc66;">&#40;</span>socket<span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- FOR TCP CONNECTIONS ONLY: called as soon as a new client</span>
+    <span style="color: #808080; font-style: italic;">-- connected to your server. The passed socket is a ready to use socket</span>
+    <span style="color: #808080; font-style: italic;">-- object, representing a connection to the new socket.</span>
+  <span style="color: #b1b100;">end</span>
+&nbsp;
+  <span style="color: #b1b100;">function</span> MyNotifier:socket_message<span style="color: #66cc66;">&#40;</span>socket, message<span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- A message was received from a client: The passed socket is a ready</span>
+    <span style="color: #808080; font-style: italic;">-- to use connection for TCP connections. For UDP, a &quot;dummy&quot; socket is</span>
+    <span style="color: #808080; font-style: italic;">-- passed, which can only be used to query the peer address and port</span>
+    <span style="color: #808080; font-style: italic;">-- -&gt; socket.port and socket.address</span>
+  <span style="color: #b1b100;">end</span></pre>
+</body></html>

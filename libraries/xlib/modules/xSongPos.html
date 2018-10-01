@@ -1,0 +1,1064 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>xLib</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/xAudioDevice.html">xAudioDevice</a></li>
+  <li><a href="../modules/xAudioDeviceAutomation.html">xAudioDeviceAutomation</a></li>
+  <li><a href="../modules/xAutomation.html">xAutomation</a></li>
+  <li><a href="../modules/xBlockLoop.html">xBlockLoop</a></li>
+  <li><a href="../modules/xColumns.html">xColumns</a></li>
+  <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
+  <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
+  <li><a href="../modules/xEnvelope.html">xEnvelope</a></li>
+  <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xKeyZone.html">xKeyZone</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
+  <li><a href="../modules/xLib.html">xLib</a></li>
+  <li><a href="../modules/xLine.html">xLine</a></li>
+  <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
+  <li><a href="../modules/xLinePattern.html">xLinePattern</a></li>
+  <li><a href="../modules/xMatrixSelection.html">xMatrixSelection</a></li>
+  <li><a href="../modules/xMessage.html">xMessage</a></li>
+  <li><a href="../modules/xMidiCommand.html">xMidiCommand</a></li>
+  <li><a href="../modules/xMidiInput.html">xMidiInput</a></li>
+  <li><a href="../modules/xMidiIO.html">xMidiIO</a></li>
+  <li><a href="../modules/xMidiMessage.html">xMidiMessage</a></li>
+  <li><a href="../modules/xNoteCapture.html">xNoteCapture</a></li>
+  <li><a href="../modules/xNoteColumn.html">xNoteColumn</a></li>
+  <li><a href="../modules/xOscClient.html">xOscClient</a></li>
+  <li><a href="../modules/xOscDevice.html">xOscDevice</a></li>
+  <li><a href="../modules/xOscMessage.html">xOscMessage</a></li>
+  <li><a href="../modules/xOscPattern.html">xOscPattern</a></li>
+  <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
+  <li><a href="../modules/xOscValue.html">xOscValue</a></li>
+  <li><a href="../modules/xParameter.html">xParameter</a></li>
+  <li><a href="../modules/xParameterAutomation.html">xParameterAutomation</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
+  <li><a href="../modules/xPatternSelection.html">xPatternSelection</a></li>
+  <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
+  <li><a href="../modules/xPersistentSettings.html">xPersistentSettings</a></li>
+  <li><a href="../modules/xPhrase.html">xPhrase</a></li>
+  <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
+  <li><a href="../modules/xPhraseSelection.html">xPhraseSelection</a></li>
+  <li><a href="../modules/xPlayPos.html">xPlayPos</a></li>
+  <li><a href="../modules/xRule.html">xRule</a></li>
+  <li><a href="../modules/xRules.html">xRules</a></li>
+  <li><a href="../modules/xRuleset.html">xRuleset</a></li>
+  <li><a href="../modules/xSample.html">xSample</a></li>
+  <li><a href="../modules/xSampleBuffer.html">xSampleBuffer</a></li>
+  <li><a href="../modules/xSampleBufferOperation.html">xSampleBufferOperation</a></li>
+  <li><a href="../modules/xSampleDeviceChain.html">xSampleDeviceChain</a></li>
+  <li><a href="../modules/xSampleMapping.html">xSampleMapping</a></li>
+  <li><a href="../modules/xScale.html">xScale</a></li>
+  <li><a href="../modules/xSequencerSelection.html">xSequencerSelection</a></li>
+  <li><strong>xSongPos</strong></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
+  <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
+  <li><a href="../modules/xTrack.html">xTrack</a></li>
+  <li><a href="../modules/xTransport.html">xTransport</a></li>
+  <li><a href="../modules/xValue.html">xValue</a></li>
+  <li><a href="../modules/xVoiceManager.html">xVoiceManager</a></li>
+  <li><a href="../modules/xVoiceRunner.html">xVoiceRunner</a></li>
+  <li><a href="../modules/xVoiceSorter.html">xVoiceSorter</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>xSongPos</code></h1>
+<p>Static methods for working with renoise.SongPos (or alike).</p>
+<p>
+
+
+<h2></h2>
+
+<p>Three options are designed to deal with song boundaries, pattern-loop and block-loop boundaries.
+By default, they are set to settings which mimic the behavior in Renoise when playing/manipulating
+the playback position. You can specify alternative settings either by supplying them as a
+secondary argument (the 'args' table), or by defining alternative values for xSongPos.DEFAULT_XX </p>
+
+<p>Note also that anything relating to beats and bars depend on the currently set transport options.
+If you want to override these values with your own ones, they can be supplied via the secondary
+argument (<code>beats<em>per</em>bar</code> and <code>lines<em>per</em>beat</code>, respectively). </p>
+
+<p>Note: throughout, the class accepts not only an instance of <code>renoise.SongPos</code> as argument,
+but also "SongPos-alike" objects - tables that contain a line and sequence property. </p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#create">create (pos)</a></td>
+	<td class="summary">[Static] Create a native SongPos object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create_from_beats">create_from_beats (beats, args)</a></td>
+	<td class="summary">Convert a number (number of beats) into a SongPos</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_number_of_beats">get_number_of_beats (pos, args)</a></td>
+	<td class="summary">Figure out the position in beats (identical to e.g.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_defaults">get_defaults ()</a></td>
+	<td class="summary">For convenience, return default settings</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_defaults">set_defaults (val)</a></td>
+	<td class="summary">For convenience, apply default settings</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#apply_to_edit_pos">apply_to_edit_pos (pos)</a></td>
+	<td class="summary">Apply a position to the "transport.edit_pos"
+ NB: take care - the property might not be updated immediately</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#normalize">normalize (pos, args)</a></td>
+	<td class="summary">[Class] Normalize the position, takes us from an 'imaginary' position to one
+ that respect the actual pattern length/sequence plus loops</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#increase_by_lines">increase_by_lines (num_lines, pos, args)</a></td>
+	<td class="summary">[Class] Increase position by X number of lines</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#decrease_by_lines">decrease_by_lines (num_lines, pos, args)</a></td>
+	<td class="summary">[Class] Subtract a number of lines from position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_beat">next_beat (pos, args)</a></td>
+	<td class="summary">[Class] Set to the next beat position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#previous_beat">previous_beat (pos, args)</a></td>
+	<td class="summary">[Class] Set to the previous beat position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_bar">next_bar (pos, args)</a></td>
+	<td class="summary">[Class] Set to the next bar position
+ NB: bars are based on position in beats and use metronome<em>beats</em>per_bar as basis</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#previous_bar">previous_bar (pos, args)</a></td>
+	<td class="summary">[Class] Set to the previous bar position
+ NB: bars are based on position in beats and use metronome<em>beats</em>per_bar as basis</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_block">next_block (pos, args)</a></td>
+	<td class="summary">[Class] Set to the next block position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#previous_block">previous_block (pos, args)</a></td>
+	<td class="summary">[Class] Set to the next block position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#next_pattern">next_pattern (pos, args)</a></td>
+	<td class="summary">[Class] Set to the beginning of next pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#previous_pattern">previous_pattern (pos, args)</a></td>
+	<td class="summary">[Class] Set to the beginning of pattern, or previous pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#enforce_boundary">enforce_boundary (direction, pos, args)</a></td>
+	<td class="summary">[Static] Restrict the position to boundaries (sequence, loop)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#enforce_block_boundary">enforce_block_boundary (pos, line_delta, boundary)</a></td>
+	<td class="summary">[Static] Restrict position to boundaries (block-loop)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#within_bounds">within_bounds (pos)</a></td>
+	<td class="summary">Check if position is within bounds of the song
+ Note: this method only verifies the line-index for the last pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_last_line_in_song">get_last_line_in_song ()</a></td>
+	<td class="summary">Get the last line in the last pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_line_diff">get_line_diff (pos1, pos2)</a></td>
+	<td class="summary">[Static] Get the difference in lines between two song-positions</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_init_args">_init_args (args)</a></td>
+	<td class="summary">Apply default boundary-values</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#OUT_OF_BOUNDS">OUT_OF_BOUNDS</a></td>
+	<td class="summary">How to deal with sequence (song) boundaries
+ CAP: do not exceed, cap at beginning/end
+ LOOP: going past the end will take us to the start, and vice versa
+ NULL: going past the end or start will return nil
+ ALLOW: allow out-of-bounds values (when outside bounds, will keep the sequence index
+  but line index will be higher than pattern length, or set to a negative value)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LOOP_BOUNDARY">LOOP_BOUNDARY</a></td>
+	<td class="summary">How to deal with loop boundaries
+ HARD: always stay within loop, no matter the position
+ SOFT: only stay within loop when playback takes us there
+ NONE: continue past loop boundary (ignore)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#BLOCK_BOUNDARY">BLOCK_BOUNDARY</a></td>
+	<td class="summary">How to deal with block-loop boundaries
+ HARD: always stay within loop, no matter the position
+ SOFT: only stay within loop when playback takes us there
+ NONE: continue past loop boundary (ignore)</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#DEFAULT_BOUNDS_MODE">DEFAULT_BOUNDS_MODE</a></td>
+	<td class="summary">Provide fallback values</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#BEATS_PER_BAR">BEATS_PER_BAR</a></td>
+	<td class="summary">If defined, these values are used when calculating beats and bars.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "create"></a>
+    <strong>create (pos)</strong>
+    </dt>
+    <dd>
+    [Static] Create a native SongPos object
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+        , renoise.SongPos or alike
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.SongPos
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "create_from_beats"></a>
+    <strong>create_from_beats (beats, args)</strong>
+    </dt>
+    <dd>
+    Convert a number (number of beats) into a SongPos
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">beats</span>
+         (number)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.SongPos or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_number_of_beats"></a>
+    <strong>get_number_of_beats (pos, args)</strong>
+    </dt>
+    <dd>
+    Figure out the position in beats (identical to e.g.  "edit<em>pos</em>beats")
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        renoise.SongPos or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_defaults"></a>
+    <strong>get_defaults ()</strong>
+    </dt>
+    <dd>
+    For convenience, return default settings
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_defaults"></a>
+    <strong>set_defaults (val)</strong>
+    </dt>
+    <dd>
+    For convenience, apply default settings
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "apply_to_edit_pos"></a>
+    <strong>apply_to_edit_pos (pos)</strong>
+    </dt>
+    <dd>
+    Apply a position to the "transport.edit_pos"
+ NB: take care - the property might not be updated immediately
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos, or SongPos-alike object)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "normalize"></a>
+    <strong>normalize (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Normalize the position, takes us from an 'imaginary' position to one
+ that respect the actual pattern length/sequence plus loops
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+
+
+
+        </li>
+        <li><span class="parameter">args</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        SongPos
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "increase_by_lines"></a>
+    <strong>increase_by_lines (num_lines, pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Increase position by X number of lines
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_lines</span>
+         (number)
+        </li>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "decrease_by_lines"></a>
+    <strong>decrease_by_lines (num_lines, pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Subtract a number of lines from position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_lines</span>
+        , int
+        </li>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_beat"></a>
+    <strong>next_beat (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next beat position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "previous_beat"></a>
+    <strong>previous_beat (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the previous beat position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_bar"></a>
+    <strong>next_bar (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next bar position
+ NB: bars are based on position in beats and use metronome<em>beats</em>per_bar as basis
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        xSongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "previous_bar"></a>
+    <strong>previous_bar (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the previous bar position
+ NB: bars are based on position in beats and use metronome<em>beats</em>per_bar as basis
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_block"></a>
+    <strong>next_block (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next block position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "previous_block"></a>
+    <strong>previous_block (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the next block position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "next_pattern"></a>
+    <strong>next_pattern (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the beginning of next pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        SongPos or nil</li>
+        <li>
+        number, lines travelled or nil</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "previous_pattern"></a>
+    <strong>previous_pattern (pos, args)</strong>
+    </dt>
+    <dd>
+    [Class] Set to the beginning of pattern, or previous pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number, lines travelled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "enforce_boundary"></a>
+    <strong>enforce_boundary (direction, pos, args)</strong>
+    </dt>
+    <dd>
+    [Static] Restrict the position to boundaries (sequence, loop)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">direction</span>
+        , string ("increase" or "decrease")
+        </li>
+        <li><span class="parameter">pos</span>
+        , SongPos
+        </li>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+         sequence,line,done
+  sequence, int or nil
+  line, int or nil
+  done (bool), true when boundary was "enforced" (capped/nullified/allowed)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "enforce_block_boundary"></a>
+    <strong>enforce_block_boundary (pos, line_delta, boundary)</strong>
+    </dt>
+    <dd>
+    [Static] Restrict position to boundaries (block-loop)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+        , SongPos
+        </li>
+        <li><span class="parameter">line_delta</span>
+        , int - #lines to add/subtract, negative when decreasing
+        </li>
+        <li><span class="parameter">boundary</span>
+        ], xSongPos.BLOCK_BOUNDARY
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        line, int
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "within_bounds"></a>
+    <strong>within_bounds (pos)</strong>
+    </dt>
+    <dd>
+    Check if position is within bounds of the song
+ Note: this method only verifies the line-index for the last pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos</span>
+        , SongPos
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_last_line_in_song"></a>
+    <strong>get_last_line_in_song ()</strong>
+    </dt>
+    <dd>
+    Get the last line in the last pattern
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        SongPos
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_line_diff"></a>
+    <strong>get_line_diff (pos1, pos2)</strong>
+    </dt>
+    <dd>
+    [Static] Get the difference in lines between two song-positions
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pos1</span>
+         (SongPos)
+        </li>
+        <li><span class="parameter">pos2</span>
+         (SongPos)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_init_args"></a>
+    <strong>_init_args (args)</strong>
+    </dt>
+    <dd>
+    Apply default boundary-values
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">args</span>
+        , table (xSongPos-options - see description of class)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "OUT_OF_BOUNDS"></a>
+    <strong>OUT_OF_BOUNDS</strong>
+    </dt>
+    <dd>
+    How to deal with sequence (song) boundaries
+ CAP: do not exceed, cap at beginning/end
+ LOOP: going past the end will take us to the start, and vice versa
+ NULL: going past the end or start will return nil
+ ALLOW: allow out-of-bounds values (when outside bounds, will keep the sequence index
+  but line index will be higher than pattern length, or set to a negative value)
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">CAP</span>
+
+
+
+        </li>
+        <li><span class="parameter">LOOP</span>
+
+
+
+        </li>
+        <li><span class="parameter">NULL</span>
+
+
+
+        </li>
+        <li><span class="parameter">ALLOW</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LOOP_BOUNDARY"></a>
+    <strong>LOOP_BOUNDARY</strong>
+    </dt>
+    <dd>
+    How to deal with loop boundaries
+ HARD: always stay within loop, no matter the position
+ SOFT: only stay within loop when playback takes us there
+ NONE: continue past loop boundary (ignore)
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">HARD</span>
+
+
+
+        </li>
+        <li><span class="parameter">SOFT</span>
+
+
+
+        </li>
+        <li><span class="parameter">NONE</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "BLOCK_BOUNDARY"></a>
+    <strong>BLOCK_BOUNDARY</strong>
+    </dt>
+    <dd>
+    How to deal with block-loop boundaries
+ HARD: always stay within loop, no matter the position
+ SOFT: only stay within loop when playback takes us there
+ NONE: continue past loop boundary (ignore)
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">HARD</span>
+
+
+
+        </li>
+        <li><span class="parameter">SOFT</span>
+
+
+
+        </li>
+        <li><span class="parameter">NONE</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "DEFAULT_BOUNDS_MODE"></a>
+    <strong>DEFAULT_BOUNDS_MODE</strong>
+    </dt>
+    <dd>
+    Provide fallback values
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "BEATS_PER_BAR"></a>
+    <strong>BEATS_PER_BAR</strong>
+    </dt>
+    <dd>
+    If defined, these values are used when calculating beats and bars. <br/>
+ When not, LINES<em>PER</em>BEAT will use <code>transport.lpb</code> while
+ BEATS<em>PER</em>BAR will use <code>transport.metronome<em>beats</em>per_bar</code>
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

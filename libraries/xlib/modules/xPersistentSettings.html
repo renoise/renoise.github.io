@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>xLib</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/xAudioDevice.html">xAudioDevice</a></li>
+  <li><a href="../modules/xAudioDeviceAutomation.html">xAudioDeviceAutomation</a></li>
+  <li><a href="../modules/xAutomation.html">xAutomation</a></li>
+  <li><a href="../modules/xBlockLoop.html">xBlockLoop</a></li>
+  <li><a href="../modules/xColumns.html">xColumns</a></li>
+  <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
+  <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
+  <li><a href="../modules/xEnvelope.html">xEnvelope</a></li>
+  <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xKeyZone.html">xKeyZone</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
+  <li><a href="../modules/xLib.html">xLib</a></li>
+  <li><a href="../modules/xLine.html">xLine</a></li>
+  <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
+  <li><a href="../modules/xLinePattern.html">xLinePattern</a></li>
+  <li><a href="../modules/xMatrixSelection.html">xMatrixSelection</a></li>
+  <li><a href="../modules/xMessage.html">xMessage</a></li>
+  <li><a href="../modules/xMidiCommand.html">xMidiCommand</a></li>
+  <li><a href="../modules/xMidiInput.html">xMidiInput</a></li>
+  <li><a href="../modules/xMidiIO.html">xMidiIO</a></li>
+  <li><a href="../modules/xMidiMessage.html">xMidiMessage</a></li>
+  <li><a href="../modules/xNoteCapture.html">xNoteCapture</a></li>
+  <li><a href="../modules/xNoteColumn.html">xNoteColumn</a></li>
+  <li><a href="../modules/xOscClient.html">xOscClient</a></li>
+  <li><a href="../modules/xOscDevice.html">xOscDevice</a></li>
+  <li><a href="../modules/xOscMessage.html">xOscMessage</a></li>
+  <li><a href="../modules/xOscPattern.html">xOscPattern</a></li>
+  <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
+  <li><a href="../modules/xOscValue.html">xOscValue</a></li>
+  <li><a href="../modules/xParameter.html">xParameter</a></li>
+  <li><a href="../modules/xParameterAutomation.html">xParameterAutomation</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
+  <li><a href="../modules/xPatternSelection.html">xPatternSelection</a></li>
+  <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
+  <li><strong>xPersistentSettings</strong></li>
+  <li><a href="../modules/xPhrase.html">xPhrase</a></li>
+  <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
+  <li><a href="../modules/xPhraseSelection.html">xPhraseSelection</a></li>
+  <li><a href="../modules/xPlayPos.html">xPlayPos</a></li>
+  <li><a href="../modules/xRule.html">xRule</a></li>
+  <li><a href="../modules/xRules.html">xRules</a></li>
+  <li><a href="../modules/xRuleset.html">xRuleset</a></li>
+  <li><a href="../modules/xSample.html">xSample</a></li>
+  <li><a href="../modules/xSampleBuffer.html">xSampleBuffer</a></li>
+  <li><a href="../modules/xSampleBufferOperation.html">xSampleBufferOperation</a></li>
+  <li><a href="../modules/xSampleDeviceChain.html">xSampleDeviceChain</a></li>
+  <li><a href="../modules/xSampleMapping.html">xSampleMapping</a></li>
+  <li><a href="../modules/xScale.html">xScale</a></li>
+  <li><a href="../modules/xSequencerSelection.html">xSequencerSelection</a></li>
+  <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
+  <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
+  <li><a href="../modules/xTrack.html">xTrack</a></li>
+  <li><a href="../modules/xTransport.html">xTransport</a></li>
+  <li><a href="../modules/xValue.html">xValue</a></li>
+  <li><a href="../modules/xVoiceManager.html">xVoiceManager</a></li>
+  <li><a href="../modules/xVoiceRunner.html">xVoiceRunner</a></li>
+  <li><a href="../modules/xVoiceSorter.html">xVoiceSorter</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>xPersistentSettings</code></h1>
+<p>
+
+</p>
+<p>Store and retrieve information in the song or instrument comments field</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#store">store (arr, token_start, token_end, instr)</a></td>
+	<td class="summary">Output the current settings as a lua string in the song comments</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#retrieve">retrieve (token_start, token_end, instr)</a></td>
+	<td class="summary">Retrive and apply the locally stored settings
+ TODO deserialize using sandbox</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#test">test (token_start, token_end, instr)</a></td>
+	<td class="summary">Check if the song contains locally stored settings</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear">clear (token_start, token_end, instr)</a></td>
+	<td class="summary">Clear locally stored settings if matched</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_obtain_source">_obtain_source (instr)</a></td>
+	<td class="summary">decide on the source for our persisted data</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_update_source">_update_source (t, instr)</a></td>
+	<td class="summary">update our persisted data source</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "store"></a>
+    <strong>store (arr, token_start, token_end, instr)</strong>
+    </dt>
+    <dd>
+    Output the current settings as a lua string in the song comments
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arr</span>
+         (table)
+        </li>
+        <li><span class="parameter">token_start</span>
+         (string)
+        </li>
+        <li><span class="parameter">token_end</span>
+         (string)
+        </li>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "retrieve"></a>
+    <strong>retrieve (token_start, token_end, instr)</strong>
+    </dt>
+    <dd>
+    Retrive and apply the locally stored settings
+ TODO deserialize using sandbox
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">token_start</span>
+         (string)
+        </li>
+        <li><span class="parameter">token_end</span>
+         (string)
+        </li>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        table when settings were found</li>
+        <li>
+        [string], error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "test"></a>
+    <strong>test (token_start, token_end, instr)</strong>
+    </dt>
+    <dd>
+    Check if the song contains locally stored settings
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">token_start</span>
+         (string)
+        </li>
+        <li><span class="parameter">token_end</span>
+         (string)
+        </li>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, true when settings were found</li>
+        <li>
+        [string], error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear (token_start, token_end, instr)</strong>
+    </dt>
+    <dd>
+    Clear locally stored settings if matched
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">token_start</span>
+         (string)
+        </li>
+        <li><span class="parameter">token_end</span>
+         (string)
+        </li>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        boolean, true when cleared/passed without problems</li>
+        <li>
+        [string], error message when failed</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_obtain_source"></a>
+    <strong>_obtain_source (instr)</strong>
+    </dt>
+    <dd>
+    decide on the source for our persisted data
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_update_source"></a>
+    <strong>_update_source (t, instr)</strong>
+    </dt>
+    <dd>
+    update our persisted data source
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+         (table<string>)
+        </li>
+        <li><span class="parameter">instr</span>
+         (renoise.Instrument), instrument - otherwise song
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

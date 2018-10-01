@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Editor&amp;Terminal.txt</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_15">Renoise Scripting Editor And Terminal</a><br />
+
+<ul>
+<li><a href="#h2_16">Browser Shortcuts</a>  </li>
+<li><a href="#h2_17">Editor Shortcuts</a>  </li>
+<li><a href="#h2_18">Terminal Shortcuts</a>  </li>
+<li><a href="#h2_19">Tips &amp; Tricks</a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_15">Renoise Scripting Editor And Terminal</h1>
+
+<p>The built-in Script Editor and Terminal can be opened by clicking "Scripting
+Terminal &amp; Editor..." in the "Tools" menu. It allows you to:</p>
+
+<ul>
+<li><p>Create, view and edit Lua, text, and XML files.</p></li>
+<li><p>Evaluate scripts or commands in realtime using the Terminal.</p></li>
+<li><p>Watch any scripts output in the Terminal. For example:
+all "print"s and errors from scripts will be redirected here</p></li>
+</ul>
+
+<h2 id="h2_16">Browser Shortcuts</h2>
+
+<p>Note: 'Command' below is the <em>Control</em> key on Windows &amp; Linux, <em>Command</em> on OSX.</p>
+
+<ul>
+<li>'Command + E' Switch to Editor</li>
+<li>'Command + N' Create a new File</li>
+<li>'Command + O' Open an existing File</li>
+<li>'Command + T' Switch to Terminal</li>
+</ul>
+
+<h2 id="h2_17">Editor Shortcuts</h2>
+
+<ul>
+<li>'Command + A' Select all</li>
+<li>'Command + B' Switch to Browser</li>
+<li>'Command + C' Copy</li>
+<li>'Command + D' Delete</li>
+<li>'Command + E'  Set Find string from current selection</li>
+<li>'Command + F'  Open Find Dialog</li>
+<li>'Command + F3' Find Next under Cursor or Selection</li>
+<li>'Command + F4' Close current tab</li>
+<li>'Command + G'  Find Next</li>
+<li>'Command + H'  Replace Next</li>
+<li>'Command + L' Jump to Line</li>
+<li>'Command + N' Create a new File</li>
+<li>'Command + O' Open an existing File</li>
+<li>'Command + P' Paste</li>
+<li>'Command + R' Save and Run the current Tabs File</li>
+<li>'Command + S' Save current File (Tool Scripts will automatically reload)</li>
+<li>'Command + Shift + F4' Close all except current Tab</li>
+<li>'Command + Shift + S' Save all open files</li>
+<li>'Command + Shift + Tab' Switch to Previous Tab</li>
+<li>'Command + Shift + W'  Close all except current Tab</li>
+<li>'Command + T' Switch to Terminal</li>
+<li>'Command + Tab' Switch to Next Tab</li>
+<li>'Command + W'  Close current tab</li>
+<li>'Command + X' Cut</li>
+<li>'Command + Y' Redo ('Command + Shift + Z' on OSX, LINUX)</li>
+<li>'Command + Z' Undo</li>
+<li>'F3' Find Next</li>
+<li>'Shift + Tab' Unindent Selection</li>
+<li>'Tab' Indent Selection</li>
+</ul>
+
+<h2 id="h2_18">Terminal Shortcuts</h2>
+
+<ul>
+<li>'Arrow Down' Next Command</li>
+<li>'Arrow Up' Previous Command</li>
+<li>'Command + B' Switch to Browser</li>
+<li>'Command + C' Copy Selection _in Output</li>
+<li>'Command + E' Switch to Editor</li>
+<li>'Command + K' Clear Output</li>
+<li>'Command + L' Clear Output</li>
+<li>'Command + N' Create a new File</li>
+<li>'Command + O' Open an existing File</li>
+</ul>
+
+<h2 id="h2_19">Tips &amp; Tricks</h2>
+
+<ul>
+<li><p>To enter multiple lines in the terminal, end a line with a \
+The terminal will then prompt for another line until you hit enter twice</p></li>
+<li><p><code>oprint(some_object)</code> prints out info about a Lua class object:
+try for example <code>oprint(renoise.song())</code> to see all properties
+and methods for song(). To list all available modules, try <code>rprint(renoise)</code>
+or <code>rprint(_G)</code></p></li>
+<li><p>Take a look at the example tools in the 'Resource Scripts' node on the
+left for a detailed description of a tool script's layout</p></li>
+<li><p>If you just want to test out some code without writing a 'tool', create a new
+script file in the 'Scripts' folder and not in the 'Scripts/Tools' folder.
+Such Scripts can then be launched by hitting the 'Run Script' button or
+via 'Command + R'. A default file called 'TestPad.lua' should already
+be present which you can use for testing.</p></li>
+<li><p>The full Renoise API reference is included in the left tree view
+as well, in case you want to lookup something without leaving Renoise</p></li>
+</ul>
+</body></html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise Lua API</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h1>Renoise Lua API</h1>
+<ul>
+<li><a href="%21%20Introduction.txt.html">! Introduction.txt.html</a>
+
+<ul>
+<li><a href="%21%20Introduction.txt.html#h1_1">Renoise Scripting Reference and HOWTOs - Introduction</a>
+
+<ul>
+<li><a href="%21%20Introduction.txt.html#h2_2">Scripting Development Tools in Renoise</a></li>
+<li><a href="%21%20Introduction.txt.html#h2_3">What can be scripted, what can't? What's this scripting all about?</a></li>
+<li><a href="%21%20Introduction.txt.html#h2_4">Renoise Lua API Overview</a></li>
+<li><a href="%21%20Introduction.txt.html#h2_5">Creating Renoise Tools</a></li>
+<li><a href="%21%20Introduction.txt.html#h2_6">MIDI Controller Scripting with Duplex</a></li>
+<li><a href="%21%20Introduction.txt.html#h2_7">Debugging Renoise Scripts</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Debugging.txt.html">Debugging.txt.html</a>
+
+<ul>
+<li><a href="Debugging.txt.html#h1_8">Renoise Script Debugging HowTo</a></li>
+<li><a href="Debugging.txt.html#h1_9">Remdebug</a>
+
+<ul>
+<li><a href="Debugging.txt.html#h2_10">Prerequisites</a></li>
+<li><a href="Debugging.txt.html#h2_11">Overview</a></li>
+<li><a href="Debugging.txt.html#h2_12">Step By Step Guide</a></li>
+<li><a href="Debugging.txt.html#h2_13">Remote and Lua Editor debugging</a></li>
+</ul></li>
+<li><a href="Debugging.txt.html#h1_14">Autoreloading Tool Scripts</a></li>
+</ul></li>
+<li><a href="Editor%26Terminal.txt.html">Editor&amp;Terminal.txt.html</a>
+
+<ul>
+<li><a href="Editor%26Terminal.txt.html#h1_15">Renoise Scripting Editor And Terminal</a>
+
+<ul>
+<li><a href="Editor%26Terminal.txt.html#h2_16">Browser Shortcuts</a></li>
+<li><a href="Editor%26Terminal.txt.html#h2_17">Editor Shortcuts</a></li>
+<li><a href="Editor%26Terminal.txt.html#h2_18">Terminal Shortcuts</a></li>
+<li><a href="Editor%26Terminal.txt.html#h2_19">Tips &amp; Tricks</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Lua.Standard.API.lua.html">Lua.Standard.API.lua.html</a>
+
+<ul>
+<li><a href="Lua.Standard.API.lua.html#h1_20">Lua Standard Library and Extensions</a>
+
+<ul>
+<li><a href="Lua.Standard.API.lua.html#h2_21">globals</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_22">debug</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_23">table</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_24">os</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_25">io</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_26">math</a></li>
+<li><a href="Lua.Standard.API.lua.html#h2_27">bit </a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.API.lua.html">Renoise.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.API.lua.html#h1_28">Renoise Application API Reference</a>
+
+<ul>
+<li><a href="Renoise.API.lua.html#h2_29">renoise</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.Application.API.lua.html">Renoise.Application.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.Application.API.lua.html#h1_30">Renoise Application API Reference</a>
+
+<ul>
+<li><a href="Renoise.Application.API.lua.html#h2_31">renoise</a></li>
+<li><a href="Renoise.Application.API.lua.html#h2_32">renoise.Application</a></li>
+<li><a href="Renoise.Application.API.lua.html#h2_33">renoise.ApplicationWindow</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.Document.API.lua.html">Renoise.Document.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.Document.API.lua.html#h1_34">Renoise Document API Reference</a></li>
+<li><a href="Renoise.Document.API.lua.html#h1_35">renoise.Document</a>
+
+<ul>
+<li><a href="Renoise.Document.API.lua.html#h2_36">renoise.Document.Serializable</a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_37">renoise.Document.Observable</a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_38">renoise.Document.ObservableBang </a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_39">renoise.Document.ObservableBoolean/Number/String </a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_40">renoise.Document.ObservableBoolean/String/NumberList </a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_41">renoise.Document.DocumentList</a></li>
+<li><a href="Renoise.Document.API.lua.html#h2_42">renoise.Document.DocumentNode</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.Midi.API.lua.html">Renoise.Midi.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.Midi.API.lua.html#h1_43">Renoise Midi API Reference</a></li>
+<li><a href="Renoise.Midi.API.lua.html#h1_44">Midi</a>
+
+<ul>
+<li><a href="Renoise.Midi.API.lua.html#h2_45">renoise.Midi</a></li>
+<li><a href="Renoise.Midi.API.lua.html#h2_46">renoise.Midi.MidiDevice</a></li>
+<li><a href="Renoise.Midi.API.lua.html#h2_47">renoise.Midi.MidiInputDevice</a></li>
+<li><a href="Renoise.Midi.API.lua.html#h2_48">renoise.Midi.MidiOutputDevice</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.Osc.API.lua.html">Renoise.Osc.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.Osc.API.lua.html#h1_49">Renoise OSC API Reference</a></li>
+<li><a href="Renoise.Osc.API.lua.html#h1_50">Osc</a>
+
+<ul>
+<li><a href="Renoise.Osc.API.lua.html#h2_51">renoise.Osc</a></li>
+<li><a href="Renoise.Osc.API.lua.html#h2_52">renoise.Osc.Message</a></li>
+<li><a href="Renoise.Osc.API.lua.html#h2_53">renoise.Osc.Bundle</a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.ScriptingTool.API.lua.html">Renoise.ScriptingTool.API.lua.html</a></li>
+<li><a href="Renoise.Socket.API.lua.html">Renoise.Socket.API.lua.html</a>
+
+<ul>
+<li><a href="Renoise.Socket.API.lua.html#h1_54">Renoise Socket API Reference</a></li>
+<li><a href="Renoise.Socket.API.lua.html#h1_55">Socket</a>
+
+<ul>
+<li><a href="Renoise.Socket.API.lua.html#h2_56">renoise.Socket</a></li>
+<li><a href="Renoise.Socket.API.lua.html#h2_57">renoise.Socket.SocketBase</a></li>
+<li><a href="Renoise.Socket.API.lua.html#h2_58">renoise.Socket.SocketClient </a></li>
+<li><a href="Renoise.Socket.API.lua.html#h2_59">renoise.Socket.SocketServer </a></li>
+</ul></li>
+</ul></li>
+<li><a href="Renoise.Song.API.lua.html">Renoise.Song.API.lua.html</a></li>
+<li><a href="Renoise.ViewBuilder.API.lua.html">Renoise.ViewBuilder.API.lua.html</a></li>
+</ul>
+</body></html>

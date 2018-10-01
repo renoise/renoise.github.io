@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>xLib</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/xAudioDevice.html">xAudioDevice</a></li>
+  <li><a href="../modules/xAudioDeviceAutomation.html">xAudioDeviceAutomation</a></li>
+  <li><a href="../modules/xAutomation.html">xAutomation</a></li>
+  <li><a href="../modules/xBlockLoop.html">xBlockLoop</a></li>
+  <li><a href="../modules/xColumns.html">xColumns</a></li>
+  <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
+  <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
+  <li><a href="../modules/xEnvelope.html">xEnvelope</a></li>
+  <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xKeyZone.html">xKeyZone</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
+  <li><a href="../modules/xLib.html">xLib</a></li>
+  <li><a href="../modules/xLine.html">xLine</a></li>
+  <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
+  <li><a href="../modules/xLinePattern.html">xLinePattern</a></li>
+  <li><a href="../modules/xMatrixSelection.html">xMatrixSelection</a></li>
+  <li><a href="../modules/xMessage.html">xMessage</a></li>
+  <li><a href="../modules/xMidiCommand.html">xMidiCommand</a></li>
+  <li><a href="../modules/xMidiInput.html">xMidiInput</a></li>
+  <li><a href="../modules/xMidiIO.html">xMidiIO</a></li>
+  <li><a href="../modules/xMidiMessage.html">xMidiMessage</a></li>
+  <li><a href="../modules/xNoteCapture.html">xNoteCapture</a></li>
+  <li><a href="../modules/xNoteColumn.html">xNoteColumn</a></li>
+  <li><a href="../modules/xOscClient.html">xOscClient</a></li>
+  <li><a href="../modules/xOscDevice.html">xOscDevice</a></li>
+  <li><a href="../modules/xOscMessage.html">xOscMessage</a></li>
+  <li><a href="../modules/xOscPattern.html">xOscPattern</a></li>
+  <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
+  <li><a href="../modules/xOscValue.html">xOscValue</a></li>
+  <li><a href="../modules/xParameter.html">xParameter</a></li>
+  <li><a href="../modules/xParameterAutomation.html">xParameterAutomation</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
+  <li><a href="../modules/xPatternSelection.html">xPatternSelection</a></li>
+  <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
+  <li><a href="../modules/xPersistentSettings.html">xPersistentSettings</a></li>
+  <li><a href="../modules/xPhrase.html">xPhrase</a></li>
+  <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
+  <li><a href="../modules/xPhraseSelection.html">xPhraseSelection</a></li>
+  <li><a href="../modules/xPlayPos.html">xPlayPos</a></li>
+  <li><a href="../modules/xRule.html">xRule</a></li>
+  <li><a href="../modules/xRules.html">xRules</a></li>
+  <li><a href="../modules/xRuleset.html">xRuleset</a></li>
+  <li><a href="../modules/xSample.html">xSample</a></li>
+  <li><a href="../modules/xSampleBuffer.html">xSampleBuffer</a></li>
+  <li><a href="../modules/xSampleBufferOperation.html">xSampleBufferOperation</a></li>
+  <li><a href="../modules/xSampleDeviceChain.html">xSampleDeviceChain</a></li>
+  <li><a href="../modules/xSampleMapping.html">xSampleMapping</a></li>
+  <li><a href="../modules/xScale.html">xScale</a></li>
+  <li><strong>xSequencerSelection</strong></li>
+  <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
+  <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
+  <li><a href="../modules/xTrack.html">xTrack</a></li>
+  <li><a href="../modules/xTransport.html">xTransport</a></li>
+  <li><a href="../modules/xValue.html">xValue</a></li>
+  <li><a href="../modules/xVoiceManager.html">xVoiceManager</a></li>
+  <li><a href="../modules/xVoiceRunner.html">xVoiceRunner</a></li>
+  <li><a href="../modules/xVoiceSorter.html">xVoiceSorter</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>xSequencerSelection</code></h1>
+<p>Static methods for working with pattern-sequence selections
+.</p>
+<p>
+
+<h1></h1>
+
+<h3>Sequence-selection</h3>
+
+<p>  {</p>
+<pre><code>start_line,     -- Start pattern line index (default = 1)
+start_sequence, -- Start sequence index
+end_line,       -- End pattern line index (default = number_of_lines)
+end_pattern     -- End sequence index
+</code></pre>
+<p>  }</p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#get_selected_range">get_selected_range ()</a></td>
+	<td class="summary">[Static] Retrieve the sequence selection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_selected_range_length">get_selected_range_length ()</a></td>
+	<td class="summary">Retrieve the length (#indices) spanned by the selection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_entire_range">get_entire_range ()</a></td>
+	<td class="summary">[Static] Retrieve a sequence selection representing the entire song</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_selected_index">get_selected_index ()</a></td>
+	<td class="summary">[Static] Get a sequence selection representing the selected pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_pattern_selection">get_pattern_selection ()</a></td>
+	<td class="summary">[Static] Get a represention of the selected part of the current pattern</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#within_range">within_range (seq_range, songpos)</a></td>
+	<td class="summary">check if song-position is within a sequence range</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pluck_from_range">pluck_from_range (seq_range, seq_idx, patt_num_lines)</a></td>
+	<td class="summary">retrieve the pattern-lines contained in a specific sequence-index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_number_of_lines">get_number_of_lines (seq_range)</a></td>
+	<td class="summary">look up song to determine the total number of lines in the range</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shift_by_indices">shift_by_indices (seq_range, offset)</a></td>
+	<td class="summary">shift sequence indices by specified amount, confined to boundaries
+ (modifies the seq_range in-place)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shift_forward">shift_forward (seq_range)</a></td>
+	<td class="summary">shift range forward by it's own size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shift_backward">shift_backward (seq_range)</a></td>
+	<td class="summary">shift range backward by it's own size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#apply_to_pattern">apply_to_pattern (seq_range)</a></td>
+	<td class="summary">apply the range to the currently selected pattern</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "get_selected_range"></a>
+    <strong>get_selected_range ()</strong>
+    </dt>
+    <dd>
+    [Static] Retrieve the sequence selection
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil if no selection is defined
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_selected_range_length"></a>
+    <strong>get_selected_range_length ()</strong>
+    </dt>
+    <dd>
+    Retrieve the length (#indices) spanned by the selection
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number (0 if no selection)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_entire_range"></a>
+    <strong>get_entire_range ()</strong>
+    </dt>
+    <dd>
+    [Static] Retrieve a sequence selection representing the entire song
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_selected_index"></a>
+    <strong>get_selected_index ()</strong>
+    </dt>
+    <dd>
+    [Static] Get a sequence selection representing the selected pattern
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_pattern_selection"></a>
+    <strong>get_pattern_selection ()</strong>
+    </dt>
+    <dd>
+    [Static] Get a represention of the selected part of the current pattern
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table or nil if no selection exists
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "within_range"></a>
+    <strong>within_range (seq_range, songpos)</strong>
+    </dt>
+    <dd>
+    check if song-position is within a sequence range
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+         (xSequenceSelection)
+        </li>
+        <li><span class="parameter">songpos</span>
+         (renoise.SongPos, or songpos-alike table)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pluck_from_range"></a>
+    <strong>pluck_from_range (seq_range, seq_idx, patt_num_lines)</strong>
+    </dt>
+    <dd>
+    retrieve the pattern-lines contained in a specific sequence-index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+         (xSequenceSelection)
+        </li>
+        <li><span class="parameter">seq_idx</span>
+         (number)
+        </li>
+        <li><span class="parameter">patt_num_lines</span>
+         (number), optional (if undefined, derived from seq_idx)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        from<em>line (number), to</em>line (number) or nil if outside range
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_number_of_lines"></a>
+    <strong>get_number_of_lines (seq_range)</strong>
+    </dt>
+    <dd>
+    look up song to determine the total number of lines in the range
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shift_by_indices"></a>
+    <strong>shift_by_indices (seq_range, offset)</strong>
+    </dt>
+    <dd>
+    shift sequence indices by specified amount, confined to boundaries
+ (modifies the seq_range in-place)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+
+
+
+        </li>
+        <li><span class="parameter">offset</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shift_forward"></a>
+    <strong>shift_forward (seq_range)</strong>
+    </dt>
+    <dd>
+    shift range forward by it's own size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shift_backward"></a>
+    <strong>shift_backward (seq_range)</strong>
+    </dt>
+    <dd>
+    shift range backward by it's own size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "apply_to_pattern"></a>
+    <strong>apply_to_pattern (seq_range)</strong>
+    </dt>
+    <dd>
+    apply the range to the currently selected pattern
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">seq_range</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

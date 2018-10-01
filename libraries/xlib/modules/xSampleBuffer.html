@@ -1,0 +1,1355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>xLib</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/xAudioDevice.html">xAudioDevice</a></li>
+  <li><a href="../modules/xAudioDeviceAutomation.html">xAudioDeviceAutomation</a></li>
+  <li><a href="../modules/xAutomation.html">xAutomation</a></li>
+  <li><a href="../modules/xBlockLoop.html">xBlockLoop</a></li>
+  <li><a href="../modules/xColumns.html">xColumns</a></li>
+  <li><a href="../modules/xCursorPos.html">xCursorPos</a></li>
+  <li><a href="../modules/xEffectColumn.html">xEffectColumn</a></li>
+  <li><a href="../modules/xEnvelope.html">xEnvelope</a></li>
+  <li><a href="../modules/xInstrument.html">xInstrument</a></li>
+  <li><a href="../modules/xKeyZone.html">xKeyZone</a></li>
+  <li><a href="../modules/xLFO.html">xLFO</a></li>
+  <li><a href="../modules/xLib.html">xLib</a></li>
+  <li><a href="../modules/xLine.html">xLine</a></li>
+  <li><a href="../modules/xLineAutomation.html">xLineAutomation</a></li>
+  <li><a href="../modules/xLinePattern.html">xLinePattern</a></li>
+  <li><a href="../modules/xMatrixSelection.html">xMatrixSelection</a></li>
+  <li><a href="../modules/xMessage.html">xMessage</a></li>
+  <li><a href="../modules/xMidiCommand.html">xMidiCommand</a></li>
+  <li><a href="../modules/xMidiInput.html">xMidiInput</a></li>
+  <li><a href="../modules/xMidiIO.html">xMidiIO</a></li>
+  <li><a href="../modules/xMidiMessage.html">xMidiMessage</a></li>
+  <li><a href="../modules/xNoteCapture.html">xNoteCapture</a></li>
+  <li><a href="../modules/xNoteColumn.html">xNoteColumn</a></li>
+  <li><a href="../modules/xOscClient.html">xOscClient</a></li>
+  <li><a href="../modules/xOscDevice.html">xOscDevice</a></li>
+  <li><a href="../modules/xOscMessage.html">xOscMessage</a></li>
+  <li><a href="../modules/xOscPattern.html">xOscPattern</a></li>
+  <li><a href="../modules/xOscRouter.html">xOscRouter</a></li>
+  <li><a href="../modules/xOscValue.html">xOscValue</a></li>
+  <li><a href="../modules/xParameter.html">xParameter</a></li>
+  <li><a href="../modules/xParameterAutomation.html">xParameterAutomation</a></li>
+  <li><a href="../modules/xPatternPos.html">xPatternPos</a></li>
+  <li><a href="../modules/xPatternSelection.html">xPatternSelection</a></li>
+  <li><a href="../modules/xPatternSequencer.html">xPatternSequencer</a></li>
+  <li><a href="../modules/xPersistentSettings.html">xPersistentSettings</a></li>
+  <li><a href="../modules/xPhrase.html">xPhrase</a></li>
+  <li><a href="../modules/xPhraseManager.html">xPhraseManager</a></li>
+  <li><a href="../modules/xPhraseSelection.html">xPhraseSelection</a></li>
+  <li><a href="../modules/xPlayPos.html">xPlayPos</a></li>
+  <li><a href="../modules/xRule.html">xRule</a></li>
+  <li><a href="../modules/xRules.html">xRules</a></li>
+  <li><a href="../modules/xRuleset.html">xRuleset</a></li>
+  <li><a href="../modules/xSample.html">xSample</a></li>
+  <li><strong>xSampleBuffer</strong></li>
+  <li><a href="../modules/xSampleBufferOperation.html">xSampleBufferOperation</a></li>
+  <li><a href="../modules/xSampleDeviceChain.html">xSampleDeviceChain</a></li>
+  <li><a href="../modules/xSampleMapping.html">xSampleMapping</a></li>
+  <li><a href="../modules/xScale.html">xScale</a></li>
+  <li><a href="../modules/xSequencerSelection.html">xSequencerSelection</a></li>
+  <li><a href="../modules/xSongPos.html">xSongPos</a></li>
+  <li><a href="../modules/xStreamBuffer.html">xStreamBuffer</a></li>
+  <li><a href="../modules/xStreamPos.html">xStreamPos</a></li>
+  <li><a href="../modules/xTrack.html">xTrack</a></li>
+  <li><a href="../modules/xTransport.html">xTransport</a></li>
+  <li><a href="../modules/xValue.html">xValue</a></li>
+  <li><a href="../modules/xVoiceManager.html">xVoiceManager</a></li>
+  <li><a href="../modules/xVoiceRunner.html">xVoiceRunner</a></li>
+  <li><a href="../modules/xVoiceSorter.html">xVoiceSorter</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>xSampleBuffer</code></h1>
+<p>Static methods for working with renoise.SampleBuffer objects
+.</p>
+<p>
+
+
+<h2>About</h2>
+
+<p>This class contains a selection of processing functions that can be used for
+* getting statistics (number of actual bits, channels used, etc.)
+* inserting/resizing sample data (primitive stretching)
+* shifting/rotating sample data
+* adjusting amplitude </p>
+
+<p>The class is designed to work as standalone, or in combination with xSampleBufferOperation
+If used standalone, you need to create a temporary sample and apply changes to the buffer
+before replacing the original sample.</p>
+
+
+<h2>How to use</h2>
+
+<p>  TODO... </p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__init">__init (vararg)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#select_all">select_all (buffer)</a></td>
+	<td class="summary">Selections</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_selection_range">get_selection_range (buffer)</a></td>
+	<td class="summary">get the size of the selected range (1 - #number<em>of</em>frames)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#right_is_selected">right_is_selected (buffer)</a></td>
+	<td class="summary">check if right channel is selected</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#left_is_selected">left_is_selected (buffer)</a></td>
+	<td class="summary">check if left channel is selected</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#selection_toggle_right">selection_toggle_right (buffer)</a></td>
+	<td class="summary">toggle right channel, but never remove selection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#selection_toggle_left">selection_toggle_left (buffer)</a></td>
+	<td class="summary">toggle left channel, but never remove selection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#mod_fn_shaped">mod_fn_shaped (fn)</a></td>
+	<td class="summary">Processing</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#copy_fn_fn">copy_fn_fn (buffer, rough, sel_start, sel_end)</a></td>
+	<td class="summary">return the function that return the selected sample data
+ (source: modulation.lua)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#wave2tbl">wave2tbl (...)</a></td>
+	<td class="summary">== Copy to table == --
+ Use with 'cWaveform.table2fn'</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_bit_depth">get_bit_depth (buffer)</a></td>
+	<td class="summary">Analysis</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#bits_to_xbits">bits_to_xbits (num_bits)</a></td>
+	<td class="summary">convert any bit-depth to a valid xSample representation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_channel_info">get_channel_info (buffer)</a></td>
+	<td class="summary">check if sample buffer has duplicate channel data, is hard-panned or silent, etc.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#detect_leading_trailing_silence">detect_leading_trailing_silence (buffer, channels, threshold)</a></td>
+	<td class="summary">check if the sample buffer contains leading or trailing silence</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_silent">is_silent (buffer, channels)</a></td>
+	<td class="summary">check if the indicated sample buffer is silent</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_buffer_selection">set_buffer_selection (buffer, sel_start, sel_end)</a></td>
+	<td class="summary">select region in waveform editor (clamp to valid range)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_offset_indices">get_offset_indices (num_frames)</a></td>
+	<td class="summary">Sample Offsets (0x0S Effect) &amp; Position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_nearest_offset">get_nearest_offset (num_frames, offset, reverse)</a></td>
+	<td class="summary">check for gaps, return first viable offset</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_next_offset">get_next_offset (num_frames, offset)</a></td>
+	<td class="summary">return next viable offset</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_previous_offset">get_previous_offset (num_frames, offset)</a></td>
+	<td class="summary">return previous viable offset</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_offset_by_frame">get_offset_by_frame (buffer, frame)</a></td>
+	<td class="summary">get a "OS" offset by position in buffer
+ (NB: this method does not support/detect the Amiga/FT2 compatibility mode)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_frame_by_offset">get_frame_by_offset (buffer, offset)</a></td>
+	<td class="summary">get a "OS" offset by position in buffer
+ (NB: this method does not support/detect the Amiga/FT2 compatibility mode)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_frame_by_line">get_frame_by_line (buffer, line, lpb, bpm)</a></td>
+	<td class="summary">get a buffer position by "line"</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_frame_by_beat">get_frame_by_beat (buffer, beat, lpb, bpm)</a></td>
+	<td class="summary">get a buffer position by "beat"</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_beat_by_frame">get_beat_by_frame (buffer, frame, bpm)</a></td>
+	<td class="summary">get a line by position in buffer</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_line_by_frame">get_line_by_frame (buffer, frame, lpb, bpm)</a></td>
+	<td class="summary">get a beat by position in buffer</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#parse_processing_args">parse_processing_args (...)</a></td>
+	<td class="summary">parse processing arguments, provide buffer defaults if undefined
+ note: <code>range</code> is derived from current selection in buffer</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create_wave_fn">create_wave_fn (...)</a></td>
+	<td class="summary">Processing methods</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#extend">extend (...)</a></td>
+	<td class="summary">extend sample length (pad with silent frames)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sweep_ins">sweep_ins (...)</a></td>
+	<td class="summary">insert data in selected channel(s)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ins_in_all_ch">ins_in_all_ch (...)</a></td>
+	<td class="summary">insert data in all channels</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ins_in_one_ch">ins_in_one_ch (...)</a></td>
+	<td class="summary">insert data in a single channel</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_frame_generator_fn">get_frame_generator_fn (fn, ch, mod_fn, buffer, sel_start, range, sel_channel)</a></td>
+	<td class="summary">return function that can generate frames
+ note: only generate data for the selected channel(s)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#empty_smple">empty_smple (...)</a></td>
+	<td class="summary">silence entire sample</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#trim">trim (...)</a></td>
+	<td class="summary">trim: delete samples outside selection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sync_del">sync_del (...)</a></td>
+	<td class="summary">delete from selected channel(s) while preserving length</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#del_in_all_ch">del_in_all_ch (...)</a></td>
+	<td class="summary">delete from all channels (see sync_del)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#del_in_one_ch">del_in_one_ch (...)</a></td>
+	<td class="summary">delete from single channel (see sync_del)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#phase_shift">phase_shift (...)</a></td>
+	<td class="summary">shift/rotate the specified region</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_fade">set_fade (...)</a></td>
+	<td class="summary">
+
+</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "__init"></a>
+    <strong>__init (vararg)</strong>
+    </dt>
+    <dd>
+    Constructor  create a 'virtual' sample-buffer object, unbound from Renoise
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vararg</span>
+         or renoise.SampleBuffer)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "select_all"></a>
+    <strong>select_all (buffer)</strong>
+    </dt>
+    <dd>
+    Selections  select everything
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_selection_range"></a>
+    <strong>get_selection_range (buffer)</strong>
+    </dt>
+    <dd>
+    get the size of the selected range (1 - #number<em>of</em>frames)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "right_is_selected"></a>
+    <strong>right_is_selected (buffer)</strong>
+    </dt>
+    <dd>
+    check if right channel is selected
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "left_is_selected"></a>
+    <strong>left_is_selected (buffer)</strong>
+    </dt>
+    <dd>
+    check if left channel is selected
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "selection_toggle_right"></a>
+    <strong>selection_toggle_right (buffer)</strong>
+    </dt>
+    <dd>
+    toggle right channel, but never remove selection
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "selection_toggle_left"></a>
+    <strong>selection_toggle_left (buffer)</strong>
+    </dt>
+    <dd>
+    toggle left channel, but never remove selection
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "mod_fn_shaped"></a>
+    <strong>mod_fn_shaped (fn)</strong>
+    </dt>
+    <dd>
+    Processing  making up the function for modulating
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fn</span>
+         (function)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        function
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "copy_fn_fn"></a>
+    <strong>copy_fn_fn (buffer, rough, sel_start, sel_end)</strong>
+    </dt>
+    <dd>
+    return the function that return the selected sample data
+ (source: modulation.lua)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">rough</span>
+         (boolean)
+        </li>
+        <li><span class="parameter">sel_start</span>
+         (number)
+        </li>
+        <li><span class="parameter">sel_end</span>
+         (number)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "wave2tbl"></a>
+    <strong>wave2tbl (...)</strong>
+    </dt>
+    <dd>
+    == Copy to table == --
+ Use with 'cWaveform.table2fn'
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_bit_depth"></a>
+    <strong>get_bit_depth (buffer)</strong>
+    </dt>
+    <dd>
+    Analysis  credit goes to dblue
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int (0 when no sample data)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "bits_to_xbits"></a>
+    <strong>bits_to_xbits (num_bits)</strong>
+    </dt>
+    <dd>
+    convert any bit-depth to a valid xSample representation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_bits</span>
+         (int)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        int (xSampleBuffer.BIT_DEPTH)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_channel_info"></a>
+    <strong>get_channel_info (buffer)</strong>
+    </dt>
+    <dd>
+    check if sample buffer has duplicate channel data, is hard-panned or silent, etc.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+          (renoise.SampleBuffer)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        enum (xSampleBuffer.SAMPLE_[...])
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "detect_leading_trailing_silence"></a>
+    <strong>detect_leading_trailing_silence (buffer, channels, threshold)</strong>
+    </dt>
+    <dd>
+    check if the sample buffer contains leading or trailing silence
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">channels</span>
+         (xSampleBuffer.SAMPLE_CHANNELS)
+        </li>
+        <li><span class="parameter">threshold</span>
+        ] (number), values below this level is considered silence (default is 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+         table
+  start<em>frame
+  end</em>frame
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_silent"></a>
+    <strong>is_silent (buffer, channels)</strong>
+    </dt>
+    <dd>
+    check if the indicated sample buffer is silent
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">channels</span>
+         (xSampleBuffer.SAMPLE_CHANNELS)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool (or nil if no data)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_buffer_selection"></a>
+    <strong>set_buffer_selection (buffer, sel_start, sel_end)</strong>
+    </dt>
+    <dd>
+    select region in waveform editor (clamp to valid range)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">sel_start</span>
+         (int)
+        </li>
+        <li><span class="parameter">sel_end</span>
+         (int)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, string (when failed to select)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_offset_indices"></a>
+    <strong>get_offset_indices (num_frames)</strong>
+    </dt>
+    <dd>
+    Sample Offsets (0x0S Effect) &amp; Position  with small buffer sizes, not all offsets are valid
+ this method returns the "missing" and "filled" ones as separate tables
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_frames</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table<number>, values between 0x00 - 0xFF
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_nearest_offset"></a>
+    <strong>get_nearest_offset (num_frames, offset, reverse)</strong>
+    </dt>
+    <dd>
+    check for gaps, return first viable offset
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_frames</span>
+         (number)
+        </li>
+        <li><span class="parameter">offset</span>
+         (number), between 0x00 and 0xFF
+        </li>
+        <li><span class="parameter">reverse</span>
+         (boolean), match in reverse
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_next_offset"></a>
+    <strong>get_next_offset (num_frames, offset)</strong>
+    </dt>
+    <dd>
+    return next viable offset
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_frames</span>
+         (number)
+        </li>
+        <li><span class="parameter">offset</span>
+         (number), between 0x00 and 0xFF
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_previous_offset"></a>
+    <strong>get_previous_offset (num_frames, offset)</strong>
+    </dt>
+    <dd>
+    return previous viable offset
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">num_frames</span>
+         (number)
+        </li>
+        <li><span class="parameter">offset</span>
+         (number), between 0x00 and 0xFF
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_offset_by_frame"></a>
+    <strong>get_offset_by_frame (buffer, frame)</strong>
+    </dt>
+    <dd>
+    get a "OS" offset by position in buffer
+ (NB: this method does not support/detect the Amiga/FT2 compatibility mode)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">frame</span>
+         (number)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_frame_by_offset"></a>
+    <strong>get_frame_by_offset (buffer, offset)</strong>
+    </dt>
+    <dd>
+    get a "OS" offset by position in buffer
+ (NB: this method does not support/detect the Amiga/FT2 compatibility mode)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">offset</span>
+         (number), between 0x00 and 0xFF
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_frame_by_line"></a>
+    <strong>get_frame_by_line (buffer, line, lpb, bpm)</strong>
+    </dt>
+    <dd>
+    get a buffer position by "line"
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">line</span>
+         (number) supports fractional values
+        </li>
+        <li><span class="parameter">lpb</span>
+         (number) will use song LPB if not defined
+        </li>
+        <li><span class="parameter">bpm</span>
+         (number) will use song BPM if not defined
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds/no buffer
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_frame_by_beat"></a>
+    <strong>get_frame_by_beat (buffer, beat, lpb, bpm)</strong>
+    </dt>
+    <dd>
+    get a buffer position by "beat"
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">beat</span>
+         (number) supports fractional values
+        </li>
+        <li><span class="parameter">lpb</span>
+         (number) will use song LPB if not defined
+        </li>
+        <li><span class="parameter">bpm</span>
+         (number) will use song BPM if not defined
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_beat_by_frame"></a>
+    <strong>get_beat_by_frame (buffer, frame, bpm)</strong>
+    </dt>
+    <dd>
+    get a line by position in buffer
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">frame</span>
+         (number)
+        </li>
+        <li><span class="parameter">bpm</span>
+         (number) will use song BPM if not defined
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_line_by_frame"></a>
+    <strong>get_line_by_frame (buffer, frame, lpb, bpm)</strong>
+    </dt>
+    <dd>
+    get a beat by position in buffer
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">frame</span>
+         (number)
+        </li>
+        <li><span class="parameter">lpb</span>
+         (number) will use song LPB if not defined
+        </li>
+        <li><span class="parameter">bpm</span>
+         (number) will use song BPM if not defined
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        number or nil if out of bounds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "parse_processing_args"></a>
+    <strong>parse_processing_args (...)</strong>
+    </dt>
+    <dd>
+    parse processing arguments, provide buffer defaults if undefined
+ note: <code>range</code> is derived from current selection in buffer
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+  number<em>of</em>frames (number)
+  number<em>of</em>channels (number)
+  selected<em>channel (number)
+  selection</em>start (number)
+  selection_end (number)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "create_wave_fn"></a>
+    <strong>create_wave_fn (...)</strong>
+    </dt>
+    <dd>
+    Processing methods  create waveform from waveform/modulator function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "extend"></a>
+    <strong>extend (...)</strong>
+    </dt>
+    <dd>
+    extend sample length (pad with silent frames)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sweep_ins"></a>
+    <strong>sweep_ins (...)</strong>
+    </dt>
+    <dd>
+    insert data in selected channel(s)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ins_in_all_ch"></a>
+    <strong>ins_in_all_ch (...)</strong>
+    </dt>
+    <dd>
+    insert data in all channels
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ins_in_one_ch"></a>
+    <strong>ins_in_one_ch (...)</strong>
+    </dt>
+    <dd>
+    insert data in a single channel
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_frame_generator_fn"></a>
+    <strong>get_frame_generator_fn (fn, ch, mod_fn, buffer, sel_start, range, sel_channel)</strong>
+    </dt>
+    <dd>
+    return function that can generate frames
+ note: only generate data for the selected channel(s)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">fn</span>
+         (function)
+        </li>
+        <li><span class="parameter">ch</span>
+         (number)
+        </li>
+        <li><span class="parameter">mod_fn</span>
+         (function), modulating frequency
+        </li>
+        <li><span class="parameter">buffer</span>
+         (renoise.SampleBuffer)
+        </li>
+        <li><span class="parameter">sel_start</span>
+         (number)
+        </li>
+        <li><span class="parameter">range</span>
+         (number)
+        </li>
+        <li><span class="parameter">sel_channel</span>
+         (number)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        function
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "empty_smple"></a>
+    <strong>empty_smple (...)</strong>
+    </dt>
+    <dd>
+    silence entire sample
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "trim"></a>
+    <strong>trim (...)</strong>
+    </dt>
+    <dd>
+    trim: delete samples outside selection
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sync_del"></a>
+    <strong>sync_del (...)</strong>
+    </dt>
+    <dd>
+    delete from selected channel(s) while preserving length
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "del_in_all_ch"></a>
+    <strong>del_in_all_ch (...)</strong>
+    </dt>
+    <dd>
+    delete from all channels (see sync_del)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "del_in_one_ch"></a>
+    <strong>del_in_one_ch (...)</strong>
+    </dt>
+    <dd>
+    delete from single channel (see sync_del)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "phase_shift"></a>
+    <strong>phase_shift (...)</strong>
+    </dt>
+    <dd>
+    shift/rotate the specified region
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        function
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_fade"></a>
+    <strong>set_fade (...)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         (see parse<em>processing</em>args)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

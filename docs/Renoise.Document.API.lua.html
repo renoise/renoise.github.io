@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise.Document.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_34">Renoise Document API Reference</a>  </li>
+<li><a href="#h1_35">renoise.Document</a><br />
+
+<ul>
+<li><a href="#h2_36">renoise.Document.Serializable</a>  </li>
+<li><a href="#h2_37">renoise.Document.Observable</a>  </li>
+<li><a href="#h2_38">renoise.Document.ObservableBang </a>  </li>
+<li><a href="#h2_39">renoise.Document.ObservableBoolean/Number/String </a>  </li>
+<li><a href="#h2_40">renoise.Document.ObservableBoolean/String/NumberList </a>  </li>
+<li><a href="#h2_41">renoise.Document.DocumentList</a>  </li>
+<li><a href="#h2_42">renoise.Document.DocumentNode</a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_34">Renoise Document API Reference</h1>
+
+<p>The renoise.Document namespace covers all document related Renoise API
+functions. This includes:</p>
+
+<ul>
+<li><p>Accessing existing Renoise document objects. The Renoise API uses these types
+of document structs, e.g. all "_observables" found in the Renoise Lua API are
+renoise.Document.Observable objects</p></li>
+<li><p>Create new documents (e.g persistent options, presets for your tools)
+which can be loaded and saved as XML files by your scripts. These can also be
+bound to custom views, or "your own" document listeners
+-> see renoise.Document.create()</p></li>
+</ul>
+
+<p>Please read the INTRODUCTION first to get an overview about the complete
+API, and scripting for Renoise in general...</p>
+
+<h3>Observables</h3>
+
+<p>Documents and Views in the Renoise API are modelled after the observer pattern
+(have a look at <a href="http://en.wikipedia.org/wiki/Observer_pattern">http://en.wikipedia.org/wiki/Observer_pattern</a> if this is new
+to you). This means, in order to track changes, a document is basically just a
+set of raw data (booleans, numbers, lists, nested nodes) which anything can
+attach notifier function (listeners) to. For example, a view in the Renoise
+API is an Observer, which listens to observable values in Documents.</p>
+
+<p>Attaching and removing notifiers can be done with the functions 'add_notifier',
+'remove_notifier' from the Observable base class. These support multiple kinds
+of callbacks, plain functions and methods (functions with a context). Please
+see renoise.Document.Observable for more details. Here is a simple example:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">function</span> bpm_changed<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;something changed the BPM to %s&quot;</span><span style="color: #66cc66;">&#41;</span>:<span style="color: #b1b100;">format</span><span style="color: #66cc66;">&#40;</span>
+    renoise.song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.transport.bpm<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+<span style="color: #b1b100;">end</span>
+&nbsp;
+renoise.song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.transport.bpm_observable:add_notifier<span style="color: #66cc66;">&#40;</span>bpm_changed<span style="color: #66cc66;">&#41;</span>
+<span style="color: #808080; font-style: italic;">-- later on, maybe:</span>
+renoise.song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.transport.bpm_observable:remove_notifier<span style="color: #66cc66;">&#40;</span>bpm_changed<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>When adding notifiers to lists (like the track list in a song) an additional
+context parameter is passed to your notifier function. This way you know what
+happened to the list:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #b1b100;">function</span> tracks_changed<span style="color: #66cc66;">&#40;</span>notification<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #66cc66;">&#40;</span>notification.<span style="color: #b1b100;">type</span> <span style="color: #66cc66;">==</span> <span style="color: #ff0000;">&quot;insert&quot;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">then</span>
+    <span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;new track was inserted at index: %d&quot;</span><span style="color: #66cc66;">&#41;</span>:<span style="color: #b1b100;">format</span><span style="color: #66cc66;">&#40;</span>notification.index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+  <span style="color: #b1b100;">elseif</span> <span style="color: #66cc66;">&#40;</span>notification.<span style="color: #b1b100;">type</span> <span style="color: #66cc66;">==</span> <span style="color: #ff0000;">&quot;remove&quot;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">then</span>
+    <span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;track got removed from index: %d&quot;</span><span style="color: #66cc66;">&#41;</span>:<span style="color: #b1b100;">format</span><span style="color: #66cc66;">&#40;</span>notification.index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+  <span style="color: #b1b100;">elseif</span> <span style="color: #66cc66;">&#40;</span>notification.<span style="color: #b1b100;">type</span> <span style="color: #66cc66;">==</span> <span style="color: #ff0000;">&quot;swap&quot;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">then</span>
+    <span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;track at index: %d and %d swapped their positions&quot;</span><span style="color: #66cc66;">&#41;</span>:<span style="color: #b1b100;">format</span><span style="color: #66cc66;">&#40;</span>
+      notification.index1, notification.index2<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #b1b100;">end</span>
+<span style="color: #b1b100;">end</span>
+&nbsp;
+renoise.song<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>.tracks_observable:add_notifier<span style="color: #66cc66;">&#40;</span>tracks_changed<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>If you only want to use the existing "_observables" in the Renoise API,
+then this is all you need to know. If you want to create your own documents,
+read on.</p>
+
+<h3>Overall API Design</h3>
+
+<p>All renoise.Document classes are wrappers for Renoise's internal document
+classes. The Lua wrappers are not really "the Lua way" of solving
+and expressing things. e.g: theres no support for mixed types in lists,
+tuples at the moment.</p>
+
+<p>The reason behind this limitation is to allow both worlds (Lua in scripts
+and the internal C++ objects) to fully interact with each others: scripts
+can use existing Renoise objects, Renoise documents can be extended with
+Lua classes, and so on.</p>
+
+<p>If all you need is a generic XML import/export (or JSON, or "insert trendy
+format here") and you don't need an Observable mechanism for your values, then
+you should look into using using a generic Lua table serializer instead.
+See <a href="http://lua-users.org/wiki/TableSerialization">http://lua-users.org/wiki/TableSerialization</a> to start.</p>
+
+<p>Related to this, import of renoise.Documents from XML will NOT create new object
+models from the source XML files, but will only assign existing corresponding
+values in your document object (except for lists which are instantiated
+dynamically). This means values which are not present in the original model
+will silently be ignored during import. This behaviour is, most of the time, the
+desired one. For example, when extending an already existing document format.
+However, when dealing with unknown models or formats, you will need to research
+other options.</p>
+
+<h3>Document Basetypes, Building Blocks</h3>
+
+<p>Types that can be in used in renoise.Documents, things that can make up a
+document are:</p>
+
+<ul>
+<li>ObservableBoolean/Number/String (wrappers for the "raw" Lua base types)</li>
+<li>ObservableBoolean/String/NumberList (wrappers of lists for the Lua base types)</li>
+<li>other document objects (create document trees)</li>
+<li>lists of document objects (dynamically sized lists of other document nodes)</li>
+</ul>
+
+<p>ObservableBoolean/Number/String is a simple wrapper for the raw Lua base types.
+Basically, it just stores the corresponding value (a boolean, number, or string)
+and maintains a list of attached notifiers. Each Observable object is strongly
+typed, can only hold a predefined Lua base type, defined when constructing the
+property. Same is true for the basetype list wrappers: Lists can not contain
+multiple objects of different types.</p>
+
+<p>Lua's other fundamental type, the table, has no direct representation in the
+Document API: You can either use strongly typed lists in order to get Lua
+index based table alike behaviour, or use nested document nodes or lists
+(documents in documents) to get an associative table alike layout/behaviour.</p>
+
+<p>Except for the strong typing, ObservableBoolean/String/NumberList and
+DocumentList will behave more or less like Lua tables with number based indices
+(Arrays).</p>
+
+<p>You can use the <code>#</code> operator or <code>[]</code> operators just like you do with tables, but
+can also query all this info via list methods (:size(), :property(name), [...]).</p>
+
+<h3>Creating Documents via "renoise.Document.create()" (models)</h3>
+
+<p>An empty document (node) object can be created with the function</p>
+
+<blockquote>
+  <p>renoise.Document.create("MyDoc"){}</p>
+</blockquote>
+
+<p>Such document objects can be extended with the document's "add_property"
+function. Existing properties can also be removed again with the
+"remove_property" function:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">-- creates an empty document, using &quot;MyDoc&quot; as the model name (a type name)</span>
+<span style="color: #b1b100;">local</span> my_document <span style="color: #66cc66;">=</span> renoise.Document.create<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;MyDoc&quot;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#123;</span> <span style="color: #66cc66;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- adds a number to the document with the initial value 1</span>
+my_document:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;value1&quot;</span>, <span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- adds a string</span>
+my_document:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;value2&quot;</span>, <span style="color: #ff0000;">&quot;bla&quot;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- create another document and adds it</span>
+<span style="color: #b1b100;">local</span> node <span style="color: #66cc66;">=</span> renoise.Document.create<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;MySubDoc&quot;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#123;</span> <span style="color: #66cc66;">&#125;</span>
+node:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;another_value&quot;</span>, <span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- add another already existing node</span>
+my_document:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;nested_node&quot;</span>, node<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- removes a previously added node</span>
+my_document:remove_property<span style="color: #66cc66;">&#40;</span>node<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- access properties</span>
+<span style="color: #b1b100;">local</span> value1 <span style="color: #66cc66;">=</span> my_document.value1
+value1 <span style="color: #66cc66;">=</span> my_document:property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;value1&quot;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>A more comfortable, and often more readable way of creating simple
+document trees, structs, can be done by passing a table to the create()
+function:</p>
+
+<pre class="lua" style="font-family:monospace;">my_document <span style="color: #66cc66;">=</span> renoise.Document.create<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;MyDoc&quot;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  age <span style="color: #66cc66;">=</span> <span style="color: #cc66cc;">1</span>,
+  name <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;bla&quot;</span>, <span style="color: #808080; font-style: italic;">-- implicitly specify a property type</span>
+  is_valid <span style="color: #66cc66;">=</span> renoise.Document.ObservableBoolean<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">false</span><span style="color: #66cc66;">&#41;</span>, <span style="color: #808080; font-style: italic;">-- or explicitly</span>
+  age_list <span style="color: #66cc66;">=</span> <span style="color: #66cc66;">&#123;</span><span style="color: #cc66cc;">1</span>, <span style="color: #cc66cc;">2</span>, <span style="color: #cc66cc;">3</span><span style="color: #66cc66;">&#125;</span>,
+  another_list <span style="color: #66cc66;">=</span> renoise.Document.ObservableNumberList<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>,
+  sub_node <span style="color: #66cc66;">=</span> <span style="color: #66cc66;">&#123;</span>
+    sub_value1 <span style="color: #66cc66;">=</span> <span style="color: #cc66cc;">2</span>,
+    sub_value2 <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;bla2&quot;</span>
+  <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span></pre>
+
+<p>This will create a document node which is !modeled! after the the passed table.
+The table is not used internally by the document after construction, and will
+only be referenced to construct new instances. Also note that you need to assign
+values for all passed table properties in order to automatically determine it's
+type, or specify the types explicitly -> renoise.Document.ObservableXXX().</p>
+
+<p>The passed name ("MyDoc" in the example above) is used to identify the document
+when loading/saving it (loading a XML file which was saved with a different
+model will fail) and to generally specify the "type".</p>
+
+<p>Additionally, once "create" is called, you can use the specified model name to
+create new instances. For example:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">-- create a new instance of &quot;MyDoc&quot;</span>
+my_other_document <span style="color: #66cc66;">=</span> renoise.Document.instantiate<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;MyDoc&quot;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Creating Documents via inheritance (custom Doc classes)</h3>
+
+<p>As an alternative to "renoise.Document.create", you can also inherit from
+renoise.Document.DocumentNode in order to create your own document classes.
+This is especially recommended when dealing with more complex docs, because you
+can also use additional methods to deal with your properties, the data.</p>
+
+<p>Here is a simple example:</p>
+
+<pre class="lua" style="font-family:monospace;">class <span style="color: #ff0000;">&quot;MyDocument&quot;</span><span style="color: #66cc66;">&#40;</span>renoise.Document.DocumentNode<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+  <span style="color: #b1b100;">function</span> MyDocument:__init<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+    <span style="color: #808080; font-style: italic;">-- important! call super first</span>
+    renoise.Document.DocumentNode.__init<span style="color: #66cc66;">&#40;</span>self<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">-- add properties to construct the document model</span>
+    self:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;age&quot;</span>, <span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#41;</span>
+    self:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;name&quot;</span>, renoise.Document.ObservableString<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;value&quot;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">-- other doc renoise.Document.DocumentNode object</span>
+    self:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;sub_node&quot;</span>, MySubNode<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">-- list of renoise.Document.DocumentNode objects</span>
+    self:add_property<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;doc_list&quot;</span>, renoise.Document.DocumentList<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">-- or the create() way:</span>
+    self:add_properties <span style="color: #66cc66;">&#123;</span>
+      something <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;else&quot;</span>
+    <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #b1b100;">end</span></pre>
+
+<p>instantiating such document objects can be done, as previously stated, by
+calling the constructor:</p>
+
+<pre class="lua" style="font-family:monospace;">my_document <span style="color: #66cc66;">=</span> MyDocument<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+<span style="color: #808080; font-style: italic;">-- do something with my_document, load/save, add/remove more properties</span></pre>
+
+<h3>Accessing Document Properties</h3>
+
+<p>Accessing "renoise.Document.DocumentNode" can be done more or less just like you
+do with tables in Lua, except that if you want to get/set the value of some
+property, you have to query the value explicitly. Using my_document from
+the example above:</p>
+
+<pre class="lua" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">-- this returns the !ObservableNumber object, not a number!</span>
+<span style="color: #b1b100;">local</span> age_observable <span style="color: #66cc66;">=</span> my_document.age
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- this sets the value of the object</span>
+my_document.age.value <span style="color: #66cc66;">=</span> <span style="color: #cc66cc;">2</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- this accesses/prints the value of the object</span>
+<span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span>my_document.age.value<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- add notifiers</span>
+my_document.age:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">&quot;something changed 'age'!&quot;</span><span style="color: #66cc66;">&#41;</span>
+<span style="color: #b1b100;">end</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- inserts a new entry to the list</span>
+my_document.age_list:insert<span style="color: #66cc66;">&#40;</span><span style="color: #cc66cc;">22</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- queries the length of the list</span>
+<span style="color: #b1b100;">print</span><span style="color: #66cc66;">&#40;</span>#my_document.age_list<span style="color: #66cc66;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- access a list member</span>
+<span style="color: #b1b100;">local</span> entry <span style="color: #66cc66;">=</span> my_document.age_list<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #66cc66;">&#93;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">-- list members are observables as well</span>
+my_document.age_list<span style="color: #66cc66;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #66cc66;">&#93;</span>.value <span style="color: #66cc66;">=</span> <span style="color: #cc66cc;">33</span></pre>
+
+<p>For more details about document construction and notifiers, have a look
+at the class docs below.</p>
+
+<h1 id="h1_35">renoise.Document</h1>
+
+<h3>Construction</h3>
+
+<p>Create an empty DocumentNode or a DocumentNode that is modelled after the
+passed table. See the general description in this file for more info about
+creating documents. "model name" will be used to identify the documents type
+when loading/saving. It also allows you to instantiate new document
+objects (see renoise.Document.instantiate).</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Document.create<span style="color: #66cc66;">&#40;</span>model_name<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span><span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">table</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Document.DocumentNode object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>create a new instance of the given document model. model_name must have been
+registered with renoise.Document.create before.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Document.instantiate<span style="color: #66cc66;">&#40;</span>model_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Document.DocumentNode object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_36">renoise.Document.Serializable</h2>
+
+<h3>Functions</h3>
+
+<p>Serialize an object to a string.</p>
+
+<pre class="lua" style="font-family:monospace;">serializable:to_string<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Assign the object's value from a string - when possible. Errors are
+silently ignored.</p>
+
+<pre class="lua" style="font-family:monospace;">serializable:from_string<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_37">renoise.Document.Observable</h2>
+
+<h3>Functions</h3>
+
+<p>Checks if the given function, method was already registered as notifier.</p>
+
+<pre class="lua" style="font-family:monospace;">observable:has_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Register a function or method as a notifier, which will be called as soon as
+the observable's value changed.</p>
+
+<pre class="lua" style="font-family:monospace;">observable:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Unregister a previously registered notifier. When only passing an object to
+remove_notifier, all notifier functions that match the given object will be
+removed; a.k.a. all methods of the given object are removed. They will not
+fire errors when none are attached.</p>
+
+<pre class="lua" style="font-family:monospace;">observable:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+ <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_38">renoise.Document.ObservableBang (inherits Observable)</h2>
+
+<p>Observable without a value which sends out notifications when "banging" it.</p>
+
+<h3>Functions</h3>
+
+<p>fire a notification, calling all registered notifiers.</p>
+
+<pre class="lua" style="font-family:monospace;">observable:bang<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_39">renoise.Document.ObservableBoolean/Number/String (inherits Observable, Serializable)</h2>
+
+<p>Observables which send out notifications on value changes.</p>
+
+<h3>Properties</h3>
+
+<p>Read/write access to the value of an Observable.</p>
+
+<pre class="lua" style="font-family:monospace;">observable.value
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean, number <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_40">renoise.Document.ObservableBoolean/String/NumberList (inherits Observable, Serializable)</h2>
+
+<h3>Operators</h3>
+
+<p>Query a list's size (item count).</p>
+
+<pre class="lua" style="font-family:monospace;">#observable_list
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Access an observable item of the list by index (returns nil for non
+existing items).</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list<span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Document.Observable object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Returns the number of entries of the list.</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:size<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>List item access (returns nil for non existing items).</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:property<span style="color: #66cc66;">&#40;</span>index<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">nil</span> <span style="color: #b1b100;">or</span> an renoise.Document.Observable object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Find a value in the list by comparing the list values with the passed
+value. The first successful match is returned. When no match is found, nil
+is returned.</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:find<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>start_pos,<span style="color: #66cc66;">&#93;</span> value<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">nil</span> <span style="color: #b1b100;">or</span> number <span style="color: #66cc66;">&#40;</span>the index<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Insert a new item to the end of the list when no position is specified, or
+at the specified position. Returns the newly created and inserted Observable.</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:insert<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>pos,<span style="color: #66cc66;">&#93;</span> value<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>inserted Observable object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Removes an item (or the last one if no index is specified) from the list.</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:<span style="color: #b1b100;">remove</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>pos<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Swaps the positions of two items without adding/removing the items.
+With a series of swaps you can move the item from/to any position.</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:swap<span style="color: #66cc66;">&#40;</span>pos1, pos2<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Notifiers</h3>
+
+<p>Notifiers from renoise.Document.Observable are available for lists as well,
+but will not broadcast changes made to the items, only changes to the
+!list! layout.</p>
+
+<p>This means you will get notified as soon as an item is added, removed or
+changes its position, but not when an item's value has changed. If you are
+interested in value changes, attach notifiers directly to the items and
+not to the list...</p>
+
+<p>List notifiers will also pass a table with information about what
+happened to the list as the first argument to the notifier, example:</p>
+
+<p><code>function my_list_changed_notifier(notification)</code></p>
+
+<p>When a new element gets added, the "notification" is:</p>
+
+<blockquote>
+  <p>{ type = "insert",<br />
+  index = index_where_element_got_added }</p>
+</blockquote>
+
+<p>When a element gets removed, the "notification" is:</p>
+
+<blockquote>
+  <p>{ type = "remove",<br />
+  index = index_where_element_got_removed_from }</p>
+</blockquote>
+
+<p>When two entries swap their position, the "notification" is:</p>
+
+<blockquote>
+  <p>{ type = "swap",<br />
+  index1 = index_swap_pos1,<br />
+  index2 = index_swap_pos2 }</p>
+</blockquote>
+
+<p>Please note that all notifications are fired !after! the list is
+changed, so the removed object is no longer available at the index you get
+back in the notification. Also, newly inserted objects will already be present
+in the destination index, and so on...</p>
+
+<p>See renoise.Document.Observable for more info about has/add/remove_notifier</p>
+
+<pre class="lua" style="font-family:monospace;">observable_list:has_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+  <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+&nbsp;
+observable_list:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+  <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+observable_list:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+ <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_41">renoise.Document.DocumentList</h2>
+
+<h3>Operators</h3>
+
+<p>Query a list's size (item count).</p>
+
+<pre class="lua" style="font-family:monospace;">#doc_list
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>Number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Access a document item from the list by index (returns nil for non
+existing items).</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list<span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Document.DocumentNode object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Returns the number of entries in the list.</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:size<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>number<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>List item access by index (returns nil for non existing items).</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:property<span style="color: #66cc66;">&#40;</span>index<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">nil</span> <span style="color: #b1b100;">or</span> renoise.Document.DocumentNode object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Insert a new item to the end of the list when no position is specified, or
+at the specified position. Returns the inserted DocumentNode.</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:insert<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>pos,<span style="color: #66cc66;">&#93;</span> doc_object<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>inserted renoise.Document.DocumentNode object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Removes an item (or the last one if no index is specified) from the list.</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:<span style="color: #b1b100;">remove</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#91;</span>pos<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Swaps the positions of two items without adding/removing them.
+With a series of swaps you can move the item from/to any position.</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:swap<span style="color: #66cc66;">&#40;</span>pos1, pos2<span style="color: #66cc66;">&#41;</span></pre>
+
+<h3>Notifiers</h3>
+
+<p>Notifiers behave exactly like renoise.Document.ObservableXXXLists. Please
+have a look at those for more info.</p>
+
+<pre class="lua" style="font-family:monospace;">doc_list:has_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+  <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span>
+&nbsp;
+doc_list:add_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+  <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>
+&nbsp;
+doc_list:remove_notifier<span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object, <span style="color: #b1b100;">function</span><span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span>
+ <span style="color: #66cc66;">&#40;</span><span style="color: #b1b100;">function</span>, object<span style="color: #66cc66;">&#41;</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_42">renoise.Document.DocumentNode</h2>
+
+<h3>Operators</h3>
+
+<pre class="lua" style="font-family:monospace;">doc<span style="color: #66cc66;">&#91;</span>property_name<span style="color: #66cc66;">&#93;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">nil</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>Observable, ObservableList <span style="color: #b1b100;">or</span> DocumentNode, DocumentList object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<pre class="lua" style="font-family:monospace;">doc:has_property<span style="color: #66cc66;">&#40;</span>property_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Access a property by name. Returns the property, or nil when there is no
+such property.</p>
+
+<pre class="lua" style="font-family:monospace;">doc:property<span style="color: #66cc66;">&#40;</span>property_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">nil</span> <span style="color: #b1b100;">or</span> <span style="color: #66cc66;">&#40;</span>Observable, ObservableList <span style="color: #b1b100;">or</span> DocumentNode, DocumentList object<span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Add a new property. Name must be unique: overwriting already existing
+properties with the same name is not allowed and will fire an error.</p>
+
+<pre class="lua" style="font-family:monospace;">doc:add_property<span style="color: #66cc66;">&#40;</span>name, boolean_value<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created ObservableBoolean object<span style="color: #66cc66;">&#93;</span>
+doc:add_property<span style="color: #66cc66;">&#40;</span>name, number_value<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created ObservableNumber object<span style="color: #66cc66;">&#93;</span>
+doc:add_property<span style="color: #66cc66;">&#40;</span>name, string_value<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created ObservableString object<span style="color: #66cc66;">&#93;</span>
+doc:add_property<span style="color: #66cc66;">&#40;</span>name, list<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created ObservableList object<span style="color: #66cc66;">&#93;</span>
+doc:add_property<span style="color: #66cc66;">&#40;</span>name, node<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created DocumentNode object<span style="color: #66cc66;">&#93;</span>
+doc:add_property<span style="color: #66cc66;">&#40;</span>name, node_list<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>newly created DocumentList object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Remove a previously added property. Property must exist.</p>
+
+<pre class="lua" style="font-family:monospace;">doc:remove_property<span style="color: #66cc66;">&#40;</span>document <span style="color: #b1b100;">or</span> observable object<span style="color: #66cc66;">&#41;</span></pre>
+
+<p>Save the whole document tree to an XML file. Overwrites all contents of the
+file when it already exists.</p>
+
+<pre class="lua" style="font-family:monospace;">doc:save_as<span style="color: #66cc66;">&#40;</span>file_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>success, error_string <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span> on success<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Load the document tree from an XML file. This will NOT create new properties,
+except for list items, but will only assign existing property values in the
+document node with existing property values from the XML.
+This means: nodes that only exist in the XML will silently be ignored.
+Nodes that only exist in the document, will not be altered in any way.
+The loaded document's type must match the document type that saved the XML
+data.
+A document's type is specified in the renoise.Document.create() function
+as 'model_name'. For classes which inherit from renoise.Document.DocumentNode
+it's the class name.</p>
+
+<pre class="lua" style="font-family:monospace;">doc:load_from<span style="color: #66cc66;">&#40;</span>file_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>success, error_string <span style="color: #b1b100;">or</span> <span style="color: #b1b100;">nil</span> on success<span style="color: #66cc66;">&#93;</span></pre>
+</body></html>

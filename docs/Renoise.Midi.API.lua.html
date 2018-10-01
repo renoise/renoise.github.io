@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Renoise.Midi.API.lua</title>
+<style type="text/css">
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1em;
+    background: #ffffff;
+    color: #000000;
+}
+
+a:link, a:active {
+    color: #14cc43;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: #ff00fd;
+    background: #000000;
+}
+
+h1, h2, h4 {
+    background: #eeeeee;
+    padding: 10px;
+    background-color: #eeeeee;
+    border: 4px solid #ccc;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.lua {
+    font-weight: bold;
+    font-size: 105%;
+    border: 1px dashed #999;
+    padding: 1em;
+    background: #fff7c1;
+}
+
+code {
+    background: #fff7c1;
+}
+
+pre {
+    margin-bottom: 2.25em;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: small;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 1em;
+}
+</style>
+</head>
+<body>
+<h4>Contents</h4>
+
+<ul>
+<li><a href="#h1_43">Renoise Midi API Reference</a>  </li>
+<li><a href="#h1_44">Midi</a><br />
+
+<ul>
+<li><a href="#h2_45">renoise.Midi</a>  </li>
+<li><a href="#h2_46">renoise.Midi.MidiDevice</a>  </li>
+<li><a href="#h2_47">renoise.Midi.MidiInputDevice</a>  </li>
+<li><a href="#h2_48">renoise.Midi.MidiOutputDevice</a>  </li>
+</ul></li>
+</ul>
+
+<h1 id="h1_43">Renoise Midi API Reference</h1>
+
+<p>This reference describes the raw MIDI IO support for scripts in Renoise; the
+ability to send and receive MIDI data.</p>
+
+<p>Please read the INTRODUCTION first to get an overview about the complete
+API, and scripting for Renoise in general...</p>
+
+<h3>Overview</h3>
+
+<p>The Renoise MIDI API allows you to access any installed MIDI input or output
+device. You can also access unused MIDI in/outputs via Renoise's MIDI Remote,
+Sync settings, and so on; as set up in the preferences.</p>
+
+<h3>Error Handling</h3>
+
+<p>When accessing a new device, not used by Renoise nor by your or other scripts,
+Renoise will try to open that device's driver. If something goes wrong an error
+will be shown to the user. Something like ("MIDI Device Foo failed to open
+(error)"). In contrast, none of the MIDI API functions will fail. In other
+words, if a "real" device fails to open this is not your problem, but the user's
+problem. This is also the reason why none of the MIDI API functions return error
+codes.</p>
+
+<p>All other types of logic errors, such as sending MIDI to a manually closed
+device, sending bogus messages and so on, will be fired as typical Lua runtime
+errors.</p>
+
+<h3>Examples</h3>
+
+<p>For some simple examples on how to use MIDI IO in Renoise, have a look at the
+"Snippets/Midi.lua" file.</p>
+
+<h1 id="h1_44">Midi</h1>
+
+<h2 id="h2_45">renoise.Midi</h2>
+
+<h3>Device Enumeration</h3>
+
+<p>Return a list of strings with the currently available devices. This list can
+change when devices are hot-plugged. See 'devices_changed_observable'</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Midi.available_input_devices<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of strings<span style="color: #66cc66;">&#93;</span>
+renoise.Midi.available_output_devices<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>list of strings<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Fire notifications as soon as new devices become active or a previously
+added device gets removed/unplugged.
+This will only happen on Linux and OSX with real devices. On Windows this
+may happen when using ReWire slaves. ReWire adds virtual MIDI devices to
+Renoise.
+Already opened references to devices which are no longer available will
+do nothing. Aka, you can use them as before and they will not fire any
+errors. The messages will simply go into the void...</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Midi.devices_changed_observable<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>renoise.Observable object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Device Creation</h3>
+
+<p>Listen to incoming MIDI data: opens access to a MIDI input device by
+specifying a device name. Name must be one of "available_input_devices".
+Returns a ready to use MIDI input device object.
+One or both callbacks should be valid, and should either point to a function
+with one parameter(message_table), or a table with an object and class,
+a method.
+All MIDI messages except active sensing will be forwarded to the callbacks.
+When Renoise is already listening to this device, your callback and Renoise
+(or even other scripts) will also handle the message.
+Messages are received until the device reference is manually closed (see
+midi_device:close()) or until the MidiInputDevice object gets garbage
+collected.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Midi.create_input_device<span style="color: #66cc66;">&#40;</span>device_name <span style="color: #66cc66;">&#91;</span>,callback<span style="color: #66cc66;">&#93;</span> <span style="color: #66cc66;">&#91;</span>, sysex_callback<span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>MidiInputDevice object<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>Send MIDI: open access to a MIDI device by specifying the device name.
+Name must be one of "available_input_devices". All other device names will
+fire an error. Returns a ready to use output device.
+The real device driver gets automatically closed when the MidiOutputDevice
+object gets garbage collected or when the device is explicitly closed
+via midi_device:close() and nothing else references it.</p>
+
+<pre class="lua" style="font-family:monospace;">renoise.Midi.create_output_device<span style="color: #66cc66;">&#40;</span>device_name<span style="color: #66cc66;">&#41;</span>
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>MidiOutputDevice object<span style="color: #66cc66;">&#93;</span></pre>
+
+<h2 id="h2_46">renoise.Midi.MidiDevice</h2>
+
+<h3>Properties</h3>
+
+<p>Returns true while the device is open (ready to send or receive messages).
+Your device refs will never be auto-closed, "is_open" will only be false if
+you explicitly call "midi_device:close()" to release a device.</p>
+
+<pre class="lua" style="font-family:monospace;">midi_device.is_open
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span>boolean<span style="color: #66cc66;">&#93;</span></pre>
+
+<p>The name of a device. This is the name you create a device with (via
+'create_input_device' or 'create_output_device')</p>
+
+<pre class="lua" style="font-family:monospace;">midi_device.name
+  <span style="color: #66cc66;">-&gt;</span> <span style="color: #66cc66;">&#91;</span><span style="color: #b1b100;">string</span><span style="color: #66cc66;">&#93;</span></pre>
+
+<h3>Functions</h3>
+
+<p>Close a running MIDI device. When no other client is using a device, Renoise
+will also shut off the device driver so that, for example, Windows OS other
+applications can use the device again. This is automatically done when
+scripts are closed or your device objects are garbage collected.</p>
+
+<pre class="lua" style="font-family:monospace;">midi_device:close<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span></pre>
+
+<h2 id="h2_47">renoise.Midi.MidiInputDevice</h2>
+
+<p>No public properties or functions.</p>
+
+<h2 id="h2_48">renoise.Midi.MidiOutputDevice</h2>
+
+<h3>Functions</h3>
+
+<p>Send raw 1-3 byte MIDI messages or sysex messages. The message is expected
+to be an array of numbers. It must not be empty and can only contain
+numbers >= 0 and &lt;= 0xFF (bytes). Sysex messages must be sent in one block,
+must start  with 0xF0, and end with 0xF7.</p>
+
+<pre class="lua" style="font-family:monospace;">midi_device:send<span style="color: #66cc66;">&#40;</span>message_table<span style="color: #66cc66;">&#41;</span></pre>
+</body></html>
